@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block main_content %}
+<section class="section">
+    <div class="section-header">
+        <h1>Projects</h1>
+        <div class="section-header-button">
+        <a href="#" class="btn btn-primary">Add New</a>
+        </div>
+        <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active">Stream</div>
+        <div class="breadcrumb-item">Projects</div>
+        </div>
+    </div>
+    <div class="section-body">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-lead">
+            You can manage all projects
+        </p>
+
+        <div class="row mt-4">
+            {% if projects %}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>All Projects</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="clearfix mb-3"></div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Created At</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                {% for project in projects %}
+                                <tr>
+                                    <td>{{ project.id }}</td>
+                                    <td>{{ project.title }}</td>
+                                    <td>{{ project.created_at }}</td>
+                                    <td><div class="badge badge-light">{{ project.status }}</div></td>
+                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>All Projects</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="empty-state" data-height="400" style="height: 400px;">
+                            <div class="empty-state-icon">
+                                <i class="far fa-folder-open"></i>
+                            </div>
+                            <h2>We couldn't find any projects</h2>
+                            <p class="lead">
+                                Sorry we can't find any project, to get rid of this message, make at least 1 entry.
+                            </p>
+                            <a href="#" class="btn btn-primary mt-4">Create new One</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
