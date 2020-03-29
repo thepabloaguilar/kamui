@@ -9,6 +9,7 @@ verify_ssl = true
 flask = "*"
 flask-restful = "*"
 punq = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.7"
