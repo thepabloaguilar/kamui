@@ -2,12 +2,17 @@ from flask import Flask
 
 from kamui.entrypoints.rest.health import health_bp
 from kamui.entrypoints.web.home import web_home_bp
+from kamui.entrypoints.web.core import web_core_bp
 
 
 def create_app():
     app = Flask(__name__)
 
+    # Rest
     app.register_blueprint(health_bp)
+
+    # Web
     app.register_blueprint(web_home_bp)
+    app.register_blueprint(web_core_bp)
 
     return app
