@@ -3,6 +3,7 @@ from flask import Flask
 from kamui.entrypoints.rest.health import health_bp
 from kamui.entrypoints.web.home import web_home_bp
 from kamui.entrypoints.web.core import web_core_bp
+from kamui.entrypoints.web.project import web_project_bp
 
 
 def create_app():
@@ -14,5 +15,6 @@ def create_app():
     # Web
     app.register_blueprint(web_home_bp)
     app.register_blueprint(web_core_bp)
+    app.register_blueprint(web_project_bp)
 
     return app
