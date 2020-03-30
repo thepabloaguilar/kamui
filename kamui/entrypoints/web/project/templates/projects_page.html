@@ -40,7 +40,7 @@
                                     <td>{{ project.id }}</td>
                                     <td>{{ project.title }}</td>
                                     <td>{{ project.created_at }}</td>
-                                    <td><div class="badge badge-light">{{ project.status }}</div></td>
+                                    <td><div class="badge badge-light">{{ project.status.value }}</div></td>
                                     <td><a href="#" class="btn btn-secondary">Detail</a></td>
                                 </tr>
                                 {% endfor %}
