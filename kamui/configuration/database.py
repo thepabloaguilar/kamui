@@ -11,3 +11,7 @@ _db_session = scoped_session(sessionmaker(bind=_db_engine))
 DatabaseBase = declarative_base()
 DatabaseBase.metadata.bind = _db_engine
 DatabaseBase.query = _db_session.query_property()
+
+
+def init_db():
+    DatabaseBase.metadata.create_all(_db_engine)
