@@ -1,3 +1,5 @@
+from contextlib import contextmanager
+
 from sqlalchemy import create_engine
 from sqlalchemy.pool import NullPool
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -15,3 +17,13 @@ DatabaseBase.query = _db_session.query_property()
 
 def init_db():
     DatabaseBase.metadata.create_all(_db_engine)
+
+
+@contextmanager
+def database_session():
+    session = _db_session()
+    try:
+        yield session
+    finally:
+        session.rollback()
+        session.close()
