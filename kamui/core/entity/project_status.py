@@ -1,6 +1,6 @@
 from enum import Enum
 
 
-class ProjectStatus:
+class ProjectStatus(Enum):
     ACTIVE = "ACTIVE"
     INACTIVE = "INACTIVE"
