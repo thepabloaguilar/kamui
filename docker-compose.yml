@@ -1,0 +1,12 @@
+version: '3.0'
+
+services:
+  kamui-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: kamui
+      POSTGRES_PASSWORD: kamui
+      POSTGRES_DB: kamui
+    ports:
+      - 5432:5432
