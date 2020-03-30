@@ -6,7 +6,11 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 
 
-_db_engine = create_engine("sqlite:///kamui.sqlite", poolclass=NullPool, echo=False,)
+_db_engine = create_engine(
+    "postgresql+psycopg2://kamui:kamui@localhost:5432/kamui",
+    poolclass=NullPool,
+    echo=False,
+)
 
 _db_session = scoped_session(sessionmaker(bind=_db_engine))
 
