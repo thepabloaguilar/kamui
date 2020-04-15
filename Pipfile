@@ -12,6 +12,10 @@ punq = "*"
 sqlalchemy = "*"
 flask-wtf = "*"
 psycopg2-binary = "*"
+httpx = "*"
+orjson = "*"
+dataclasses-json = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.7"
