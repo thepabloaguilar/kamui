@@ -37,11 +37,11 @@
                                 </tr>
                                 {% for project in projects %}
                                 <tr>
-                                    <td>{{ project.id }}</td>
+                                    <td>{{ project.project_id }}</td>
                                     <td>{{ project.title }}</td>
                                     <td>{{ project.created_at }}</td>
                                     <td><div class="badge badge-light">{{ project.status.value }}</div></td>
-                                    <td><a href="/projects/{{ project.project_key }}" class="btn btn-secondary">Detail</a></td>
+                                    <td><a href="/projects/{{ project.project_id }}" class="btn btn-secondary">Detail</a></td>
                                 </tr>
                                 {% endfor %}
                             </table>
