@@ -1,7 +1,6 @@
 from uuid import uuid4
-from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, DateTime, Enum, func
+from sqlalchemy import Column, String, DateTime, Enum, func
 from sqlalchemy.dialects.postgresql import UUID
 
 from kamui.configuration.database import DatabaseBase

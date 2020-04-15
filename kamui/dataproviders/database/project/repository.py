@@ -1,7 +1,7 @@
 from typing import List
 
 from .model import ProjectModel
-from kamui.configuration.database import DatabaseBase, database_session
+from kamui.configuration.database import database_session
 from kamui.core.entity.project import Project
 from kamui.core.usecase.project.create_new_project import CreateNewProject
 from kamui.core.usecase.project.get_projects_list import GetProjectsList

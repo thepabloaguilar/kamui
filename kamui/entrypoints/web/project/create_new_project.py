@@ -3,8 +3,6 @@ from flask.views import View
 
 from .forms.create_project_form import CreateProjectForm
 from kamui.configuration.dependency_injection import di_container
-from kamui.core.entity.project import Project
-from kamui.core.entity.project_status import ProjectStatus
 from kamui.core.usecase.project.create_new_project import CreateNewProjectUsecase
 
 
