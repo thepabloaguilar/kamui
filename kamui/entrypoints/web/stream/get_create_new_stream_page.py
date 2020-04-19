@@ -11,7 +11,7 @@ from kamui.core.usecase.topic.get_available_topic_names import (
 
 
 class CreateNewStreamForm(FlaskForm):
-    topic = SelectField("Topic")
+    topic = SelectField("Topic", choices=[])
     stream_name = StringField("Stream Name", validators=(DataRequired(),))
     topic_fields = SelectMultipleField("Topic Fields", choices=[("a", "a"), ("b", "b")])
 
