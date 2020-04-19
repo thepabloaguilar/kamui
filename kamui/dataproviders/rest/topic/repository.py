@@ -4,7 +4,7 @@ import orjson
 from returns.result import Result, Success, Failure
 
 from kamui.core.entity.topic import TopicNames
-from kamui.core.entity.topic_schema import TopicSchemaVersions
+from kamui.core.entity.topic_schema import TopicSchemaVersions, TopicSchema
 from kamui.dataproviders.rest import client, HttpClient, JsonResponse
 from kamui.core.usecase.topic.get_available_topic_names import GetTopicNames
 from kamui.core.usecase.topic.get_topic_schema import (
@@ -42,7 +42,7 @@ class GetTopicSchemaRepository(GetTopicSchema):
 
     def __verify_response(self, response: JsonResponse) -> Result[Any, Any]:
         if not response.get("message") == "Subject not found.":
-            return Success(orjson.loads(response["schema"]))
+            return Success(TopicSchema.from_json(response["schema"]))
         return Failure(response)
 
 
