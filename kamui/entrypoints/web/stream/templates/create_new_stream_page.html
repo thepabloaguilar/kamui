@@ -130,7 +130,7 @@
                     })
                     .catch(err => {
                         console.log(err);
-                        $("#getTopicSchemaFailMessage").empty().append(`Message: ${err.responseJSON.failure_message}<br />Reason: ${err.responseJSON.reason}`);
+                        $("#getTopicSchemaFailMessage").empty().append(`Message: ${err.responseJSON.attributes.response.message}<br />Reason: ${err.responseJSON.reason}`);
                         $("#topicSchemaNotFoundModal").modal("show");
                     });
             }
