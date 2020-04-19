@@ -15,6 +15,7 @@ class FailureDetails:
 @dataclass
 class BusinessFailureDetails(FailureDetails):
     failure_message: str
+    failure_due: Any
 
 
 @dataclass_json
