@@ -30,4 +30,4 @@ class CreateNewStreamFromTopicUsecase:
     def __call__(
         self, create_new_stream_command: CreateNewStreamFromTopicCommand
     ) -> Any:
-        self.__create_stream_from_kafka_topic(create_new_stream_command)
+        return self.__create_stream_from_kafka_topic(create_new_stream_command)
