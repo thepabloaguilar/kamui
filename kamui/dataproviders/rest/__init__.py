@@ -3,7 +3,8 @@ from typing import Dict, Any
 
 import httpx
 import orjson
-
+from returns.result import Result, Success, Failure
+from httpx import HTTPError, Response
 
 JsonResponse = Dict[str, Any]
 
@@ -34,7 +35,6 @@ class HttpStatus(Enum):
 
 
 class HttpClient:
-    # TODO: Make exception treatment
     def __make_request(
         self,
         method: HttpMethod,
@@ -42,15 +42,29 @@ class HttpClient:
         payload: Dict[str, Any] = None,
         headers: Dict[str, str] = None,
         timeout: int = 5.0,
-    ) -> JsonResponse:
+    ) -> Result[JsonResponse, str]:
         _data = orjson.dumps(payload) if payload else None
-        return httpx.request(
-            method=method.value, url=url, data=_data, headers=headers, timeout=timeout
-        ).json()
+        try:
+            response = httpx.request(
+                method=method.value,
+                url=url,
+                data=_data,
+                headers=headers,
+                timeout=timeout,
+            )
+            return self.__validate_response(response)
+        except HTTPError as ex:
+            return Failure(ex.__class__.__name__)
+
+    def __validate_response(self, response: Response) -> Result[JsonResponse, str]:
+        http_status = HttpStatus(response.status_code)
+        if http_status in [HttpStatus.OK, HttpStatus.CREATED]:
+            return Success(response.json())
+        return Failure(http_status.name)
 
     def get(
         self, url: str, headers: Dict[str, str] = None, timeout: int = 5.0,
-    ) -> JsonResponse:
+    ) -> Result[JsonResponse, str]:
         response = self.__make_request(
             method=HttpMethod.GET, url=url, headers=headers, timeout=timeout
         )
@@ -62,7 +76,7 @@ class HttpClient:
         payload: Dict[str, str],
         headers: Dict[str, str] = None,
         timeout: int = 5.0,
-    ) -> JsonResponse:
+    ) -> Result[JsonResponse, str]:
         response = self.__make_request(
             method=HttpMethod.POST,
             payload=payload,
