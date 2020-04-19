@@ -1,8 +1,11 @@
+from typing import Any, Dict, Tuple
+
 from flask import request
 from flask_restful import Resource
 from dataclasses_json import dataclass_json
 
 from kamui.configuration.dependency_injection import di_container
+from kamui.core.usecase.failure import FailureDetails, DataProviderFailureDetails
 from kamui.core.usecase.stream.create_new_stream_from_topic import (
     CreateNewStreamFromTopicCommand,
     CreateNewStreamFromTopicUsecase,
@@ -20,7 +23,21 @@ class CreateNewStreamFromTopicResource(Resource):
 
     def post(self):
         deserializable_body_class = dataclass_json(CreateNewStreamFromTopicCommand)
-        self.__create_new_stream_from_topic(
-            deserializable_body_class.from_dict(request.json)
+        return (
+            self.__create_new_stream_from_topic(
+                deserializable_body_class.from_dict(request.json)
+            )
+            .map(self.__process_success)
+            .fix(self.__process_failure)
+            .unwrap()
         )
-        return {"status": "ok"}, 201
+
+    def __process_success(self, something):
+        return something, 201
+
+    def __process_failure(
+        self, failure_details: FailureDetails
+    ) -> Tuple[Dict[str, Any], int]:
+        if isinstance(failure_details, DataProviderFailureDetails):
+            return failure_details.to_dict(), 503
+        return failure_details.to_dict(), 400
