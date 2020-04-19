@@ -54,7 +54,7 @@ class HttpClient:
             )
             return self.__validate_response(response)
         except HTTPError as ex:
-            return Failure(ex.__class__.__name__)
+            return Failure(f"{ex.__class__.__name__} calling {ex.request.url}")
 
     def __validate_response(self, response: Response) -> Result[JsonResponse, str]:
         http_status = HttpStatus(response.status_code)
