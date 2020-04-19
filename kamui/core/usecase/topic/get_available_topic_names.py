@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from returns.result import Result
 
 from kamui.core.entity.topic import TopicNames
-from kamui.core.usecase.failure import FailureDetails, failure_details
+from kamui.core.usecase.failure import BusinessFailureDetails
 
 
 class GetTopicNames(ABC):
@@ -16,11 +16,17 @@ class GetAvailableTopicNamesUsecase:
     def __init__(self, get_topic_names: GetTopicNames) -> None:
         self.__get_topic_names = get_topic_names
 
-    def __call__(self) -> Result[TopicNames, FailureDetails]:
+    def __call__(self) -> Result[TopicNames, BusinessFailureDetails]:
         return (
             self.__get_topic_names()
+            .alt(
+                lambda failure: BusinessFailureDetails(
+                    failure_message="Was not possible to get Topic Names",
+                    reason="NON_BUSINESS_RULE_CAUSE",
+                    failure_due=failure,
+                )
+            )
             .map(self.__filter_topic_names)
-            .alt(failure_details("Was not possible to get Topic Names"))
         )
 
     def __filter_topic_names(self, topic_names: TopicNames) -> TopicNames:
