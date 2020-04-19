@@ -4,7 +4,7 @@ from typing import Any
 
 from returns.result import Result
 
-from kamui.core.entity.topic import TopicSchemaVersions
+from kamui.core.entity.topic_schema import TopicSchemaVersions
 from kamui.core.usecase.failure import failure_details, FailureDetails
 
 
