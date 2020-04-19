@@ -73,7 +73,7 @@
                     const topicSchema = JSON.parse(localStorage.getItem("topicSchema"));
                     const desirableFields = topicSchema.fields.filter(item => selectFields.includes(item.name));
                     const payload = {
-                        "stream_name": $("#{{ form.stream_name.id }}").val(),
+                        "stream_name": $("#stream_name").val(),
                         "fields": desirableFields,
                         "topic_name": $("#topic option:selected").val()
                     };
@@ -96,7 +96,7 @@
             });
 
             const form = $("#wizard");
-            const streamFields = form.find("#{{ form.topic_fields.id }}");
+            const streamFields = form.find("#topic_fields");
             streamFields.select2();
 
             function changeStepTabsColor(currentIndex, newIndex) {
