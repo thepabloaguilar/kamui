@@ -5,7 +5,7 @@ from typing import Any
 from returns.result import Result
 
 from kamui.core.entity.topic_schema import TopicSchemaVersions, TopicSchema
-from kamui.core.usecase.failure import failure_details, FailureDetails
+from kamui.core.usecase.failure import FailureDetails
 
 
 class GetTopicSchema(ABC):
