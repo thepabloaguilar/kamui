@@ -33,7 +33,9 @@ class GetTopicSchemaRepository(GetTopicSchema):
         self.__client: HttpClient = client
         self.__SCHEMA_REGISTRY_URL: str = "http://localhost:8081/"
 
-    def __call__(self, schema_version: int, topic_name: str) -> Result[TopicSchema, Any]:
+    def __call__(
+        self, schema_version: int, topic_name: str
+    ) -> Result[TopicSchema, Any]:
         response = self.__client.get(
             url=f"{self.__SCHEMA_REGISTRY_URL}subjects/{topic_name}-value/versions/{schema_version}",
             headers={"Content-Type": "application/vnd.schemaregistry.v1+json"},
