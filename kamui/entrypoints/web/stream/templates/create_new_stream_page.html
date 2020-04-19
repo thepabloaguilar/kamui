@@ -320,7 +320,8 @@
                                     </div>
                                     <h2>{{ error.failure_message }}</h2>
                                     <p class="lead">
-                                        {{ error.reason }}
+                                        {{ error.reason }} <br />
+                                        {{ error.failure_due.reason }}
                                     </p>
                                 </div>
                             {% endif %}
