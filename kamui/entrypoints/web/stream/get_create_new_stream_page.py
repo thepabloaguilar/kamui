@@ -5,6 +5,8 @@ from wtforms import StringField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired
 
 from kamui.configuration.dependency_injection import di_container
+from kamui.core.entity.topic import TopicNames
+from kamui.core.usecase.failure import FailureDetails
 from kamui.core.usecase.topic.get_available_topic_names import (
     GetAvailableTopicNamesUsecase,
 )
@@ -26,8 +28,15 @@ class GetCreateNewStreamPage(View):
         )
 
     def dispatch_request(self):
-        create_new_stream_form = CreateNewStreamForm()
         available_topic_names = self.__get_available_topic_names()
+        return (
+            available_topic_names.map(self.__process_success_return)
+            .fix(self.__process_failure_return)
+            .unwrap()
+        )
+
+    def __process_success_return(self, available_topic_names: TopicNames):
+        create_new_stream_form = CreateNewStreamForm()
 
         create_new_stream_form.topic.choices = [
             (topic_name, topic_name) for topic_name in available_topic_names
@@ -36,3 +45,6 @@ class GetCreateNewStreamPage(View):
         return render_template(
             "create_new_stream_page.html", form=create_new_stream_form
         )
+
+    def __process_failure_return(self, failure_details: FailureDetails):
+        return render_template("create_new_stream_page.html", error=failure_details)
