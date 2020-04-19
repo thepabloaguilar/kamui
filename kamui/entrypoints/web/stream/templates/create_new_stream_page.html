@@ -129,6 +129,8 @@
                         form.steps("next");
                     })
                     .catch(err => {
+                        console.log(err);
+                        $("#getTopicSchemaFailMessage").empty().append(`Message: ${err.responseJSON.failure_message}<br />Reason: ${err.responseJSON.reason}`);
                         $("#topicSchemaNotFoundModal").modal("show");
                     });
             }
@@ -143,16 +145,24 @@
     <!-- TOPIC SCHEMA NOT FOUND -->
     <div class="modal fade" id="topicSchemaNotFoundModal" tabindex="-1" role="dialog"
          aria-labelledby="topicSchemaNotFoundModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Topic Schema Not Found!</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Topic Schema Error</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Sorry, we couldn't find any schema to specified topic.
+                    <div class="empty-state">
+                        <div class="empty-state-icon bg-danger">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <h2>Something wrong happened when getting topic schema!</h2>
+                        <p id="getTopicSchemaFailMessage" class="lead">
+                            Reason:
+                        </p>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
