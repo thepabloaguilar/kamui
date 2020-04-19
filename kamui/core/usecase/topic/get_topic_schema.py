@@ -4,13 +4,13 @@ from typing import Any
 
 from returns.result import Result
 
-from kamui.core.entity.topic_schema import TopicSchemaVersions
+from kamui.core.entity.topic_schema import TopicSchemaVersions, TopicSchema
 from kamui.core.usecase.failure import failure_details, FailureDetails
 
 
 class GetTopicSchema(ABC):
     @abstractmethod
-    def __call__(self, schema_version: int, topic_name: str) -> Result[Any, Any]:
+    def __call__(self, schema_version: int, topic_name: str) -> Result[TopicSchema, Any]:
         pass
 
 

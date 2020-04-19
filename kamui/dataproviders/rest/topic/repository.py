@@ -33,14 +33,14 @@ class GetTopicSchemaRepository(GetTopicSchema):
         self.__client: HttpClient = client
         self.__SCHEMA_REGISTRY_URL: str = "http://localhost:8081/"
 
-    def __call__(self, schema_version: int, topic_name: str) -> Result[Any, Any]:
+    def __call__(self, schema_version: int, topic_name: str) -> Result[TopicSchema, Any]:
         response = self.__client.get(
             url=f"{self.__SCHEMA_REGISTRY_URL}subjects/{topic_name}-value/versions/{schema_version}",
             headers={"Content-Type": "application/vnd.schemaregistry.v1+json"},
         )
         return response.bind(self.__verify_response)
 
-    def __verify_response(self, response: JsonResponse) -> Result[Any, Any]:
+    def __verify_response(self, response: JsonResponse) -> Result[TopicSchema, Any]:
         if not response.get("message") == "Subject not found.":
             return Success(TopicSchema.from_json(response["schema"]))
         return Failure(response)
