@@ -5,7 +5,7 @@ from typing import Any
 from returns.result import Result
 
 from kamui.core.entity.topic_schema import TopicSchemaVersions, TopicSchema
-from kamui.core.usecase.failure import FailureDetails
+from kamui.core.usecase.failure import BusinessFailureDetails
 
 
 class GetTopicSchema(ABC):
@@ -31,9 +31,17 @@ class GetTopicSchemaUsecase:
         self.__get_topic_schema = get_topic_schema
         self.__get_topic_schema_versions = get_topic_schema_versions
 
-    def __call__(self, topic_name: str) -> Result[Any, FailureDetails]:
-        return self.__get_latest_schema_version(topic_name).bind(
-            partial(self.__get_topic_schema, topic_name=topic_name)
+    def __call__(self, topic_name: str) -> Result[Any, BusinessFailureDetails]:
+        return (
+            self.__get_latest_schema_version(topic_name)
+            .bind(partial(self.__get_topic_schema, topic_name=topic_name))
+            .alt(
+                lambda failure: BusinessFailureDetails(
+                    failure_message="Was not possible to get Topic Schema",
+                    reason="NON_BUSINESS_RULE_CAUSE",
+                    failure_due=failure,
+                )
+            )
         )
 
     def __get_latest_schema_version(self, topic_name: str):
