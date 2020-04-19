@@ -1,4 +1,5 @@
 import orjson
+from returns.result import Result
 
 from kamui.core.entity.topic import TopicNames, TopicSchemaVersions
 from kamui.dataproviders.rest import client, HttpClient
@@ -15,12 +16,12 @@ class GetTopicNamesRepository(GetTopicNames):
         self.__client: HttpClient = client
         self.__KAFKA_REST_PROXY_URL: str = "http://localhost:8082/"
 
-    def __call__(self) -> TopicNames:
+    def __call__(self) -> Result[TopicNames, str]:
         topic_names = self.__client.get(
             url=f"{self.__KAFKA_REST_PROXY_URL}topics",
             headers={"Accept": "application/vnd.kafka.v2+json"},
         )
-        return TopicNames(topic_names)
+        return topic_names.map(lambda names: TopicNames(names))
 
 
 class GetTopicSchemaRepository(GetTopicSchema):
