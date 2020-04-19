@@ -250,69 +250,69 @@
 
                         <div class="card-body">
                             {% if form is defined %}
-                            <form method="POST" id="wizard">
-                                <div class="row mt-4">
-                                    <div class="col-12 col-lg-8 offset-lg-2">
-                                        <div class="wizard-steps">
-                                            <div class="wizard-step wizard-step-active">
-                                                <div class="wizard-step-icon">
-                                                    <i class="fas fa-flask"></i>
+                                <form method="POST" id="wizard">
+                                    <div class="row mt-4">
+                                        <div class="col-12 col-lg-8 offset-lg-2">
+                                            <div class="wizard-steps">
+                                                <div class="wizard-step wizard-step-active">
+                                                    <div class="wizard-step-icon">
+                                                        <i class="fas fa-flask"></i>
+                                                    </div>
+                                                    <div class="wizard-step-label">
+                                                        Stream Name & Topic
+                                                    </div>
                                                 </div>
-                                                <div class="wizard-step-label">
-                                                    Stream Name & Topic
+                                                <div class="wizard-step">
+                                                    <div class="wizard-step-icon">
+                                                        <i class="fas fa-list"></i>
+                                                    </div>
+                                                    <div class="wizard-step-label">
+                                                        Stream Schema
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="wizard-step">
-                                                <div class="wizard-step-icon">
-                                                    <i class="fas fa-list"></i>
-                                                </div>
-                                                <div class="wizard-step-label">
-                                                    Stream Schema
-                                                </div>
+                                        </div>
+                                    </div>
+                                    {{ form.csrf_token }}
+
+                                    <!-- STEP - STREAM NAME & TOPIC -->
+                                    <h4></h4>
+                                    <div class="wizard-pane">
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-4 text-md-right text-left">{{ form.stream_name.label }}</label>
+                                            <div class="col-lg-4 col-md-6">
+                                                <input id="{{ form.stream_name.id }}" type="text"
+                                                       name="{{ form.stream_name.name }}" class="form-control required"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-4 text-md-right text-left">{{ form.topic.label }}</label>
+                                            <div class="col-lg-4 col-md-6">
+                                                <select id="{{ form.topic.id }}" name="{{ form.topic.name }}"
+                                                        class="form-control">
+                                                    {% for choice in form.topic.choices %}
+                                                        <option value="{{ choice[0] }}">{{ choice[1] }}</option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                {{ form.csrf_token }}
 
-                                <!-- STEP - STREAM NAME & TOPIC -->
-                                <h4></h4>
-                                <div class="wizard-pane">
-                                    <div class="form-group row align-items-center">
-                                        <label class="col-md-4 text-md-right text-left">{{ form.stream_name.label }}</label>
-                                        <div class="col-lg-4 col-md-6">
-                                            <input id="{{ form.stream_name.id }}" type="text"
-                                                   name="{{ form.stream_name.name }}" class="form-control required"
-                                                   required>
+                                    <!-- STEP - STREAM SCHEMA -->
+                                    <h4></h4>
+                                    <div class="wizard-pane">
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-4 text-md-right text-left">{{ form.topic_fields.label }}</label>
+                                            <div class="col-lg-4 col-md-6">
+                                                <select id="{{ form.topic_fields.id }}" multiple
+                                                        name="{{ form.topic_fields.name }}" class="form-control select2"
+                                                        style="width: 100%">
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row align-items-center">
-                                        <label class="col-md-4 text-md-right text-left">{{ form.topic.label }}</label>
-                                        <div class="col-lg-4 col-md-6">
-                                            <select id="{{ form.topic.id }}" name="{{ form.topic.name }}"
-                                                    class="form-control">
-                                                {% for choice in form.topic.choices %}
-                                                    <option value="{{ choice[0] }}">{{ choice[1] }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- STEP - STREAM SCHEMA -->
-                                <h4></h4>
-                                <div class="wizard-pane">
-                                    <div class="form-group row align-items-center">
-                                        <label class="col-md-4 text-md-right text-left">{{ form.topic_fields.label }}</label>
-                                        <div class="col-lg-4 col-md-6">
-                                            <select id="{{ form.topic_fields.id }}" multiple
-                                                    name="{{ form.topic_fields.name }}" class="form-control select2"
-                                                    style="width: 100%">
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
                             {% else %}
                                 <div class="empty-state" data-height="400" style="height: 400px;">
                                     <div class="empty-state-icon bg-danger">
@@ -320,7 +320,7 @@
                                     </div>
                                     <h2>{{ error.failure_message }}</h2>
                                     <p class="lead">
-                                        {{ error.reason }} <br />
+                                        {{ error.reason }} <br/>
                                         {{ error.failure_due.reason }}
                                     </p>
                                 </div>
