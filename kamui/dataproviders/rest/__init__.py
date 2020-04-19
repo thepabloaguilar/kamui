@@ -6,6 +6,8 @@ import orjson
 from returns.result import Result, Success, Failure
 from httpx import HTTPError, Response
 
+from kamui.core.usecase.failure import DataProviderFailureDetails
+
 JsonResponse = Dict[str, Any]
 
 
@@ -42,7 +44,7 @@ class HttpClient:
         payload: Dict[str, Any] = None,
         headers: Dict[str, str] = None,
         timeout: int = 5.0,
-    ) -> Result[JsonResponse, str]:
+    ) -> Result[JsonResponse, DataProviderFailureDetails]:
         _data = orjson.dumps(payload) if payload else None
         try:
             response = httpx.request(
@@ -54,17 +56,35 @@ class HttpClient:
             )
             return self.__validate_response(response)
         except HTTPError as ex:
-            return Failure(f"{ex.__class__.__name__} calling {ex.request.url}")
+            return Failure(
+                DataProviderFailureDetails(
+                    dataprovider_type="REST",
+                    reason=ex.__class__.__name__,
+                    attributes={"origin": "EXCEPTION", "url": ex.request.url},
+                )
+            )
 
-    def __validate_response(self, response: Response) -> Result[JsonResponse, str]:
+    def __validate_response(
+        self, response: Response
+    ) -> Result[JsonResponse, DataProviderFailureDetails]:
         http_status = HttpStatus(response.status_code)
         if http_status in [HttpStatus.OK, HttpStatus.CREATED]:
             return Success(response.json())
-        return Failure(http_status.name)
+        return Failure(
+            DataProviderFailureDetails(
+                dataprovider_type="REST",
+                reason=http_status.name,
+                attributes={
+                    "origin": "HTTP_STATUS",
+                    "http_status_code": http_status.value,
+                    "response": response.json(),
+                },
+            )
+        )
 
     def get(
         self, url: str, headers: Dict[str, str] = None, timeout: int = 5.0,
-    ) -> Result[JsonResponse, str]:
+    ) -> Result[JsonResponse, DataProviderFailureDetails]:
         response = self.__make_request(
             method=HttpMethod.GET, url=url, headers=headers, timeout=timeout
         )
@@ -76,7 +96,7 @@ class HttpClient:
         payload: Dict[str, str],
         headers: Dict[str, str] = None,
         timeout: int = 5.0,
-    ) -> Result[JsonResponse, str]:
+    ) -> Result[JsonResponse, DataProviderFailureDetails]:
         response = self.__make_request(
             method=HttpMethod.POST,
             payload=payload,
