@@ -249,6 +249,7 @@
                         </div>
 
                         <div class="card-body">
+                            {% if form is defined %}
                             <form method="POST" id="wizard">
                                 <div class="row mt-4">
                                     <div class="col-12 col-lg-8 offset-lg-2">
@@ -312,6 +313,17 @@
                                     </div>
                                 </div>
                             </form>
+                            {% else %}
+                                <div class="empty-state" data-height="400" style="height: 400px;">
+                                    <div class="empty-state-icon bg-danger">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <h2>{{ error.failure_message }}</h2>
+                                    <p class="lead">
+                                        {{ error.reason }}
+                                    </p>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
