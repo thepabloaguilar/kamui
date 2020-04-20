@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from functools import partial
 from typing import Any, Dict, Optional
 
 from dataclasses_json import dataclass_json
@@ -23,7 +22,3 @@ class BusinessFailureDetails(FailureDetails):
 class DataProviderFailureDetails(FailureDetails):
     dataprovider_type: str
     attributes: Optional[Dict[str, Any]]
-
-
-def failure_details(failure_message):
-    return partial(BusinessFailureDetails, failure_message)
