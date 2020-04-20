@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Any
 
+from returns.result import Result
+
+from kamui.core.usecase.failure import BusinessFailureDetails
+
 
 @dataclass(frozen=True)
 class CreateNewStreamFromTopicCommand:
@@ -29,5 +33,11 @@ class CreateNewStreamFromTopicUsecase:
 
     def __call__(
         self, create_new_stream_command: CreateNewStreamFromTopicCommand
-    ) -> Any:
-        return self.__create_stream_from_kafka_topic(create_new_stream_command)
+    ) -> Result[Any, BusinessFailureDetails]:
+        return self.__create_stream_from_kafka_topic(create_new_stream_command).alt(
+            lambda failure: BusinessFailureDetails(
+                failure_message="Was not possible to create the Stream",
+                reason="NON_BUSINESS_RULE_CAUSE",
+                failure_due=failure,
+            )
+        )
