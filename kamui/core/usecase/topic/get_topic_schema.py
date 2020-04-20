@@ -44,5 +44,5 @@ class GetTopicSchemaUsecase:
             )
         )
 
-    def __get_latest_schema_version(self, topic_name: str):
+    def __get_latest_schema_version(self, topic_name: str) -> Result[int, Any]:
         return self.__get_topic_schema_versions(topic_name).map(max)

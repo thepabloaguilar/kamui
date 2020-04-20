@@ -3,12 +3,12 @@ from abc import ABC, abstractmethod
 from returns.result import Result
 
 from kamui.core.entity.topic import TopicNames
-from kamui.core.usecase.failure import BusinessFailureDetails
+from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
 
 
 class GetTopicNames(ABC):
     @abstractmethod
-    def __call__(self) -> Result[TopicNames, str]:
+    def __call__(self) -> Result[TopicNames, FailureDetails]:
         pass
 
 

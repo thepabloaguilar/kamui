@@ -1,3 +1,8 @@
+from typing import Any
+
+from returns.result import Result
+
+from kamui.core.usecase.failure import DataProviderFailureDetails
 from kamui.dataproviders.rest import client, HttpClient
 from kamui.core.usecase.stream.create_new_stream_from_topic import (
     CreateNewStreamFromTopicCommand,
@@ -7,11 +12,13 @@ from kamui.core.usecase.stream.create_new_stream_from_topic import (
 
 class CreateStreamFromKafkaTopicRepository(CreateStreamFromKafkaTopic):
     # TODO: Make KSQL Server URL configurable
-    def __init__(self):
+    def __init__(self) -> None:
         self.__client: HttpClient = client
         self.__KSQL_SERVER_URL: str = "http://localhost:8088/"
 
-    def __call__(self, creat_new_stream_command: CreateNewStreamFromTopicCommand):
+    def __call__(
+        self, creat_new_stream_command: CreateNewStreamFromTopicCommand
+    ) -> Result[Any, DataProviderFailureDetails]:
         query_fields = [
             f"{field.name} {field.type}" for field in creat_new_stream_command.fields
         ]

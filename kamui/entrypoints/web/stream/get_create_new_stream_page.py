@@ -22,20 +22,20 @@ class GetCreateNewStreamPage(View):
     PATH = "/streams/create/fromtopic"
     methods = ["GET"]
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.__get_available_topic_names = di_container.resolve(
             GetAvailableTopicNamesUsecase
         )
 
-    def dispatch_request(self):
+    def dispatch_request(self) -> str:  # type: ignore
         available_topic_names = self.__get_available_topic_names()
-        return (
+        return (  # type: ignore
             available_topic_names.map(self.__process_success_return)
             .fix(self.__process_failure_return)
             .unwrap()
         )
 
-    def __process_success_return(self, available_topic_names: TopicNames):
+    def __process_success_return(self, available_topic_names: TopicNames) -> str:
         create_new_stream_form = CreateNewStreamForm()
 
         create_new_stream_form.topic.choices = [
@@ -46,5 +46,5 @@ class GetCreateNewStreamPage(View):
             "create_new_stream_page.html", form=create_new_stream_form
         )
 
-    def __process_failure_return(self, failure_details: FailureDetails):
+    def __process_failure_return(self, failure_details: FailureDetails) -> str:
         return render_template("create_new_stream_page.html", error=failure_details)

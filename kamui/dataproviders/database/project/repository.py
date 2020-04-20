@@ -11,8 +11,8 @@ class CreateNewProjectRepository(CreateNewProject):
     def __call__(self, project_title: str) -> Project:
         project = ProjectModel(title=project_title)
         with database_session() as session:
-            session.add(project)
-            session.commit()
+            session.add(project)  # type: ignore
+            session.commit()  # type: ignore
             return project.to_entity()
 
 

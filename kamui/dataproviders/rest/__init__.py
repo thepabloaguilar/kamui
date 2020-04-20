@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Dict, Any
+from typing import Dict, Any, List, Union
 
 import httpx
 import orjson
@@ -8,7 +8,7 @@ from httpx import HTTPError, Response
 
 from kamui.core.usecase.failure import DataProviderFailureDetails
 
-JsonResponse = Dict[str, Any]
+JsonResponse = Union[Dict[Any, Any], List[Any]]
 
 
 class HttpMethod(Enum):
@@ -43,7 +43,7 @@ class HttpClient:
         url: str,
         payload: Dict[str, Any] = None,
         headers: Dict[str, str] = None,
-        timeout: int = 5.0,
+        timeout: int = 5,
     ) -> Result[JsonResponse, DataProviderFailureDetails]:
         _data = orjson.dumps(payload) if payload else None
         try:
@@ -83,7 +83,7 @@ class HttpClient:
         )
 
     def get(
-        self, url: str, headers: Dict[str, str] = None, timeout: int = 5.0,
+        self, url: str, headers: Dict[str, str] = None, timeout: int = 5,
     ) -> Result[JsonResponse, DataProviderFailureDetails]:
         response = self.__make_request(
             method=HttpMethod.GET, url=url, headers=headers, timeout=timeout
@@ -95,7 +95,7 @@ class HttpClient:
         url: str,
         payload: Dict[str, str],
         headers: Dict[str, str] = None,
-        timeout: int = 5.0,
+        timeout: int = 5,
     ) -> Result[JsonResponse, DataProviderFailureDetails]:
         response = self.__make_request(
             method=HttpMethod.POST,

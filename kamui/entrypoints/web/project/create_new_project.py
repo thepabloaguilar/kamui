@@ -1,3 +1,6 @@
+from typing import Union
+
+from werkzeug.wrappers import Response as wResponse
 from flask import render_template, redirect, url_for
 from flask.views import View
 
@@ -10,10 +13,10 @@ class CreateNewProject(View):
     PATH = "/projects/create"
     methods = ["POST"]
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.__create_new_project = di_container.resolve(CreateNewProjectUsecase)
 
-    def dispatch_request(self):
+    def dispatch_request(self) -> Union[wResponse, str]:  # type: ignore
         create_project_form = CreateProjectForm()
         if create_project_form.validate_on_submit():
             project_title = create_project_form.title.data

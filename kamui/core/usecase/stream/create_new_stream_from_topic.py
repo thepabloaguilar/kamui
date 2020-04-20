@@ -4,7 +4,7 @@ from typing import List, Any
 
 from returns.result import Result
 
-from kamui.core.usecase.failure import BusinessFailureDetails
+from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
 
 
 @dataclass(frozen=True)
@@ -21,7 +21,9 @@ class CreateNewStreamFromTopicCommand:
 
 class CreateStreamFromKafkaTopic(ABC):
     @abstractmethod
-    def __call__(self, creat_new_stream_command: CreateNewStreamFromTopicCommand):
+    def __call__(
+        self, creat_new_stream_command: CreateNewStreamFromTopicCommand
+    ) -> Result[Any, FailureDetails]:
         pass
 
 

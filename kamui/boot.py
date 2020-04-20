@@ -5,7 +5,7 @@ application = create_app()
 
 
 @application.cli.command("initdb")
-def _init_db():
+def _init_db() -> None:
     init_db()
 
 

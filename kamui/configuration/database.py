@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+from typing import Iterator
 
 from sqlalchemy import create_engine
 from sqlalchemy.pool import NullPool
@@ -19,12 +20,12 @@ DatabaseBase.metadata.bind = _db_engine
 DatabaseBase.query = _db_session.query_property()
 
 
-def init_db():
+def init_db() -> None:
     DatabaseBase.metadata.create_all(_db_engine)
 
 
 @contextmanager
-def database_session():
+def database_session() -> Iterator[None]:
     session = _db_session()
     try:
         yield session

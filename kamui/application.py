@@ -10,7 +10,7 @@ from kamui.entrypoints.web.project import web_project_bp
 from kamui.entrypoints.web.stream import web_stream_bp
 
 
-def create_app():
+def create_app() -> Flask:
     app = Flask(__name__)
 
     # Rest

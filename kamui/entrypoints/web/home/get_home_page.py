@@ -6,5 +6,5 @@ class GetHomePage(View):
     PATH = "/home"
     methods = ["GET"]
 
-    def dispatch_request(self):
+    def dispatch_request(self) -> str:  # type: ignore
         return render_template("home_page.html")

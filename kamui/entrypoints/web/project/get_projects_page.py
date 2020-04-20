@@ -9,9 +9,9 @@ class GetProjectsPage(View):
     PATH = "/projects"
     methods = ["GET"]
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.__get_projects_list_usecase = di_container.resolve(GetProjectsListUsecase)
 
-    def dispatch_request(self):
+    def dispatch_request(self) -> str:  # type: ignore
         projects = self.__get_projects_list_usecase()
         return render_template("projects_page.html", projects=projects)

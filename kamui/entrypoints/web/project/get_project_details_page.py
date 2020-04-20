@@ -8,5 +8,5 @@ class GetProjectDetailsPage(View):
     PATH = "/projects/<uuid:project_id>"
     methods = ["GET"]
 
-    def dispatch_request(self, project_id: UUID):
+    def dispatch_request(self, project_id: UUID):  # type: ignore
         return render_template("project_details_page.html")
