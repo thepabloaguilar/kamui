@@ -83,8 +83,10 @@
                         url: "/api/streams",
                         contentType: "application/json",
                         data: JSON.stringify(payload),
-                        error: function () {
-                            $("#streamCreateFailModalCenterTitle").modal("show");
+                        error: function (err) {
+                            $("#streamCreationFailMessage").empty().append(`Message: ${err.responseJSON.failure_message}<br />Reason: ${err.responseJSON.reason} (${err.responseJSON.failure_due.reason})`);
+                            $("#streamCreationFailMessage").append(`<br> Details: ${err.responseJSON.failure_due.attributes.response.message}`);
+                            $("#streamCreationFailModal").modal("show");
                         },
                         success: function (response) {
                             $("#streamCreatedSuccessfullyModal").modal("show");
@@ -210,8 +212,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="empty-state">
-                        <div class="empty-state-icon bg-primary">
-                            <i class="far fa-check-circle"></i>
+                        <div class="empty-state-icon bg-danger">
+                            <i class="fas fa-times"></i>
                         </div>
                         <h2>Something wrong happened when we creating your Stream!</h2>
                         <p id="streamCreationFailMessage" class="lead">
