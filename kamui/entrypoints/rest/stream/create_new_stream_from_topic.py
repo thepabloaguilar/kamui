@@ -5,7 +5,7 @@ from flask_restful import Resource
 from dataclasses_json import dataclass_json
 
 from kamui.configuration.dependency_injection import di_container
-from kamui.core.usecase.failure import FailureDetails, DataProviderFailureDetails
+from kamui.core.usecase.failure import DataProviderFailureDetails, BusinessFailureDetails
 from kamui.core.usecase.stream.create_new_stream_from_topic import (
     CreateNewStreamFromTopicCommand,
     CreateNewStreamFromTopicUsecase,
@@ -36,8 +36,8 @@ class CreateNewStreamFromTopicResource(Resource):
         return something, 201
 
     def __process_failure(
-        self, failure_details: FailureDetails
+        self, failure_details: BusinessFailureDetails
     ) -> Tuple[Dict[str, Any], int]:
-        if isinstance(failure_details, DataProviderFailureDetails):
+        if isinstance(failure_details.failure_due, DataProviderFailureDetails):
             return failure_details.to_dict(), 503
         return failure_details.to_dict(), 400
