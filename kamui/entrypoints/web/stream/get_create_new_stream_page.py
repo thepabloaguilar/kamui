@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 from flask.views import View
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SelectMultipleField
@@ -43,7 +43,9 @@ class GetCreateNewStreamPage(View):
         ]
 
         return render_template(
-            "create_new_stream_page.html", form=create_new_stream_form
+            "create_new_stream_page.html",
+            form=create_new_stream_form,
+            project_id=request.args.get("project_id"),
         )
 
     def __process_failure_return(self, failure_details: FailureDetails) -> str:

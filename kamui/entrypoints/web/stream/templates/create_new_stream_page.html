@@ -73,6 +73,7 @@
                     const topicSchema = JSON.parse(localStorage.getItem("topicSchema"));
                     const desirableFields = topicSchema.fields.filter(item => selectFields.includes(item.name));
                     const payload = {
+                        "project_id": $("#project_id").val(),
                         "stream_name": $("#stream_name").val(),
                         "fields": desirableFields,
                         "topic_name": $("#topic option:selected").val()
@@ -280,6 +281,13 @@
                                     <!-- STEP - STREAM NAME & TOPIC -->
                                     <h4></h4>
                                     <div class="wizard-pane">
+                                        <div class="form-group  row align-items-center">
+                                            <label class="col-md-4 text-md-right text-left">Project ID</label>
+                                            <div class="col-lg-4 col-md-6">
+                                                <input id="project_id" type="text" class="form-control form-control-plaintext" readonly=""
+                                                       value="{{ project_id }}">
+                                            </div>
+                                        </div>
                                         <div class="form-group row align-items-center">
                                             <label class="col-md-4 text-md-right text-left">{{ form.stream_name.label }}</label>
                                             <div class="col-lg-4 col-md-6">
