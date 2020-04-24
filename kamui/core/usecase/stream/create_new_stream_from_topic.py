@@ -25,23 +25,38 @@ class CreateStreamFromKafkaTopic(ABC):
     @abstractmethod
     def __call__(
         self, creat_new_stream_command: CreateNewStreamFromTopicCommand
+    ) -> Result[CreateNewStreamFromTopicCommand, FailureDetails]:
+        pass
+
+
+class SaveStream(ABC):
+    @abstractmethod
+    def __call__(
+        self, creat_new_stream_command: CreateNewStreamFromTopicCommand
     ) -> Result[Any, FailureDetails]:
         pass
 
 
 class CreateNewStreamFromTopicUsecase:
     def __init__(
-        self, create_stream_from_kafka_topic: CreateStreamFromKafkaTopic
+        self,
+        create_stream_from_kafka_topic: CreateStreamFromKafkaTopic,
+        save_stream: SaveStream,
     ) -> None:
         self.__create_stream_from_kafka_topic = create_stream_from_kafka_topic
+        self.__save_stream = save_stream
 
     def __call__(
         self, create_new_stream_command: CreateNewStreamFromTopicCommand
     ) -> Result[Any, BusinessFailureDetails]:
-        return self.__create_stream_from_kafka_topic(create_new_stream_command).alt(
-            lambda failure: BusinessFailureDetails(
-                failure_message="Was not possible to create the Stream",
-                reason="NON_BUSINESS_RULE_CAUSE",
-                failure_due=failure,
+        return (
+            self.__create_stream_from_kafka_topic(create_new_stream_command)
+            .map(self.__save_stream)
+            .alt(
+                lambda failure: BusinessFailureDetails(
+                    failure_message="Was not possible to create the Stream",
+                    reason="NON_BUSINESS_RULE_CAUSE",
+                    failure_due=failure,
+                )
             )
         )
