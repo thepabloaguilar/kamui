@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from sqlalchemy import Column, String, DateTime, Enum, func
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
 from kamui.configuration.database import DatabaseBase
 from kamui.core.entity.project import Project
@@ -17,6 +18,8 @@ class ProjectModel(DatabaseBase):
     title = Column("title", String(20))
     created_at = Column("created_at", DateTime(timezone=True), default=func.now())
     status = Column("status", Enum(ProjectStatus), default=ProjectStatus.ACTIVE)
+
+    streams = relationship("StreamModel", back_populates="project")
 
     def to_entity(self) -> Project:
         return Project(
