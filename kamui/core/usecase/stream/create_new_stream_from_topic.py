@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Any
+from uuid import UUID
 
 from returns.result import Result
 
@@ -14,6 +15,7 @@ class CreateNewStreamFromTopicCommand:
         name: str
         type: str
 
+    project_id: UUID
     stream_name: str
     fields: List[StreamField]
     topic_name: str
