@@ -14,7 +14,7 @@ class FailureDetails:
 @dataclass
 class BusinessFailureDetails(FailureDetails):
     failure_message: str
-    failure_due: Any
+    failure_due: Optional[Any] = None
 
 
 @dataclass_json
