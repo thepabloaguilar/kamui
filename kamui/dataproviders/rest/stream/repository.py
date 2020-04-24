@@ -1,5 +1,3 @@
-from typing import Any
-
 from returns.result import Result
 
 from kamui.core.usecase.failure import DataProviderFailureDetails
@@ -18,7 +16,7 @@ class CreateStreamFromKafkaTopicRepository(CreateStreamFromKafkaTopic):
 
     def __call__(
         self, creat_new_stream_command: CreateNewStreamFromTopicCommand
-    ) -> Result[Any, DataProviderFailureDetails]:
+    ) -> Result[CreateNewStreamFromTopicCommand, DataProviderFailureDetails]:
         query_fields = [
             f"{field.name} {field.type}" for field in creat_new_stream_command.fields
         ]
@@ -32,6 +30,6 @@ class CreateStreamFromKafkaTopicRepository(CreateStreamFromKafkaTopic):
                 "Accept": "application/vnd.ksql.v1+json",
                 "Content-Type": "application/vnd.ksql.v1+json",
             },
-        )
+        ).map(lambda result: creat_new_stream_command)
 
         return response
