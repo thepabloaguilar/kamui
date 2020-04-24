@@ -91,6 +91,9 @@
                         },
                         success: function (response) {
                             $("#streamCreatedSuccessfullyModal").modal("show");
+                            window.setTimeout(() => {
+                                $(location).attr('href', '/projects/{{ project_id }}')
+                            }, 5000);
                         }
                     });
 
