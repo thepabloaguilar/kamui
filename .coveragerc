@@ -1,6 +1,8 @@
 [run]
 branch = True
 omit =
+    kamui/application.py
+    kamui/boot.py
     kamui/configuration/*
     kamui/dataproviders/*
     kamui/entrypoints/*
