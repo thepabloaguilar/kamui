@@ -1,0 +1,15 @@
+[run]
+branch = True
+omit =
+    kamui/configuration/*
+    kamui/dataproviders/*
+    kamui/entrypoints/*
+    kamui/core/entity/*
+
+[report]
+exclude_lines =
+    @abstractmethod
+
+[html]
+directory = kamui_coverage
+title = Kamui Coverage Report
