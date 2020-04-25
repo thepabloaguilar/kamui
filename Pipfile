@@ -8,7 +8,6 @@ flake8 = "*"
 mypy = "*"
 pytest = "*"
 pytest-cov = "*"
-tox = "*"
 
 [packages]
 flask = "*"
