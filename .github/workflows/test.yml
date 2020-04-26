@@ -1,0 +1,48 @@
+name: test
+
+on:
+  pull_request:
+    branchs:
+      - master
+  push:
+    branchs:
+      - master
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python_version: ['3.7', '3.8']
+        os: [ubuntu-latest, macOS-latest]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python_version }}
+      - uses: actions/cache@v1
+        if: startsWith(runner.os, 'Linux')
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python_version }}-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python_version }}-
+      - uses: actions/cache@v1
+        if: startsWith(runner.os, 'macOS')
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python_version }}-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python_version }}-
+      - uses: dschep/install-pipenv-action@v1
+      - name: Install dependencies
+        run: pipenv --python ${{ matrix.python_version }} sync -d
+      - name: Run tests
+        run: |
+          export PYTHONPATH="$PYTHONPATH:."
+
+          pipenv run black --check kamui
+          pipenv run mypy kamui
+          pipenv run pytest
