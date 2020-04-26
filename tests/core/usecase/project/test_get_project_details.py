@@ -90,11 +90,7 @@ def test_should_return_projects_details_one_streams(
     )
     project_maybe: Maybe[Project] = Maybe.new(project)
     streams = [
-        Stream(
-            stream_id=uuid4(),
-            name="Test Stream",
-            project_id=project_id,
-        ),
+        Stream(stream_id=uuid4(), name="Test Stream", project_id=project_id,),
     ]
     find_project_by_project_id.return_value = Success(project_maybe)
     find_streams_by_project.return_value = Success(StreamList(streams))
@@ -124,16 +120,8 @@ def test_should_return_projects_details_two_streams(
     )
     project_maybe: Maybe[Project] = Maybe.new(project)
     streams = [
-        Stream(
-            stream_id=uuid4(),
-            name="Test Stream One",
-            project_id=project_id,
-        ),
-        Stream(
-            stream_id=uuid4(),
-            name="Test Stream Two",
-            project_id=project_id,
-        ),
+        Stream(stream_id=uuid4(), name="Test Stream One", project_id=project_id,),
+        Stream(stream_id=uuid4(), name="Test Stream Two", project_id=project_id,),
     ]
     find_project_by_project_id.return_value = Success(project_maybe)
     find_streams_by_project.return_value = Success(StreamList(streams))
