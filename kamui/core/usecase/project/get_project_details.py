@@ -48,7 +48,7 @@ class GetProjectDetailsUsecase:
             self.__verify_if_project_exist
         )
         if isinstance(project, Result.success_type):
-            project_value = project.unwrap()  # type: ignore
+            project_value = project.unwrap()
             return project.bind(self.__find_streams_by_project).map(  # type: ignore
                 partial(ProjectDetails, project_value)
             )
@@ -58,7 +58,7 @@ class GetProjectDetailsUsecase:
         self, project: Maybe[Project]
     ) -> Result[Project, BusinessFailureDetails]:
         if isinstance(project, Maybe.success_type):
-            return Success(project.unwrap())  # type: ignore
+            return Success(project.unwrap())
         return Failure(
             BusinessFailureDetails(
                 reason="NOT_FOUND", failure_message="Project not found"
