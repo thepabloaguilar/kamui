@@ -5,6 +5,7 @@ from uuid import UUID
 
 from returns.result import Result
 
+from kamui.core.entity.stream import Stream
 from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
 
 
@@ -33,7 +34,7 @@ class SaveStream(ABC):
     @abstractmethod
     def __call__(
         self, creat_new_stream_command: CreateNewStreamFromTopicCommand
-    ) -> Result[Any, FailureDetails]:
+    ) -> Result[Stream, FailureDetails]:
         pass
 
 
@@ -48,7 +49,7 @@ class CreateNewStreamFromTopicUsecase:
 
     def __call__(
         self, create_new_stream_command: CreateNewStreamFromTopicCommand
-    ) -> Result[Any, BusinessFailureDetails]:
+    ) -> Result[Stream, BusinessFailureDetails]:
         return (
             self.__create_stream_from_kafka_topic(create_new_stream_command)
             .bind(self.__save_stream)
