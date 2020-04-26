@@ -4,7 +4,7 @@ from returns.result import Result, Success, Failure
 
 from kamui.core.entity.topic import TopicNames
 from kamui.core.entity.topic_schema import TopicSchemaVersions, TopicSchema
-from kamui.core.usecase.failure import DataProviderFailureDetails
+from kamui.core.usecase.failure import DataProviderFailureDetails, FailureDetails
 from kamui.dataproviders.rest import client, HttpClient, JsonResponse
 from kamui.core.usecase.topic.get_available_topic_names import GetTopicNames
 from kamui.core.usecase.topic.get_topic_schema import (
@@ -35,7 +35,7 @@ class GetTopicSchemaRepository(GetTopicSchema):
 
     def __call__(
         self, schema_version: int, topic_name: str
-    ) -> Result[TopicSchema, Any]:
+    ) -> Result[TopicSchema, FailureDetails]:
         response = self.__client.get(
             url=f"{self.__SCHEMA_REGISTRY_URL}subjects/{topic_name}-value/versions/{schema_version}",
             headers={"Content-Type": "application/vnd.schemaregistry.v1+json"},
@@ -57,7 +57,7 @@ class GetTopicSchemaVersionsRepository(GetTopicSchemaVersions):
         self.__client: HttpClient = client
         self.__SCHEMA_REGISTRY_URL: str = "http://localhost:8081/"
 
-    def __call__(self, topic_name: str) -> Result[TopicSchemaVersions, Any]:
+    def __call__(self, topic_name: str) -> Result[TopicSchemaVersions, FailureDetails]:
         response = self.__client.get(
             url=f"{self.__SCHEMA_REGISTRY_URL}subjects/{topic_name}-value/versions",
             headers={"Content-Type": "application/vnd.schemaregistry.v1+json"},

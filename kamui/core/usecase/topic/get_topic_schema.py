@@ -5,20 +5,20 @@ from typing import Any
 from returns.result import Result
 
 from kamui.core.entity.topic_schema import TopicSchemaVersions, TopicSchema
-from kamui.core.usecase.failure import BusinessFailureDetails
+from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
 
 
 class GetTopicSchema(ABC):
     @abstractmethod
     def __call__(
         self, schema_version: int, topic_name: str
-    ) -> Result[TopicSchema, Any]:
+    ) -> Result[TopicSchema, FailureDetails]:
         pass
 
 
 class GetTopicSchemaVersions(ABC):
     @abstractmethod
-    def __call__(self, topic_name: str) -> Result[TopicSchemaVersions, Any]:
+    def __call__(self, topic_name: str) -> Result[TopicSchemaVersions, FailureDetails]:
         pass
 
 
@@ -31,7 +31,7 @@ class GetTopicSchemaUsecase:
         self.__get_topic_schema = get_topic_schema
         self.__get_topic_schema_versions = get_topic_schema_versions
 
-    def __call__(self, topic_name: str) -> Result[Any, BusinessFailureDetails]:
+    def __call__(self, topic_name: str) -> Result[TopicSchema, BusinessFailureDetails]:
         return (
             self.__get_latest_schema_version(topic_name)
             .bind(partial(self.__get_topic_schema, topic_name=topic_name))
@@ -44,5 +44,7 @@ class GetTopicSchemaUsecase:
             )
         )
 
-    def __get_latest_schema_version(self, topic_name: str) -> Result[int, Any]:
+    def __get_latest_schema_version(
+        self, topic_name: str
+    ) -> Result[int, FailureDetails]:
         return self.__get_topic_schema_versions(topic_name).map(max)
