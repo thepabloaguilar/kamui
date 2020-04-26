@@ -51,7 +51,7 @@ class CreateNewStreamFromTopicUsecase:
     ) -> Result[Any, BusinessFailureDetails]:
         return (
             self.__create_stream_from_kafka_topic(create_new_stream_command)
-            .map(self.__save_stream)
+            .bind(self.__save_stream)
             .alt(
                 lambda failure: BusinessFailureDetails(
                     failure_message="Was not possible to create the Stream",
