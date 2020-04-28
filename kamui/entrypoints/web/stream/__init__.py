@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from .get_create_new_stream_page import GetCreateNewStreamPage
+from .get_create_new_stream_from_topic_page import GetCreateNewStreamPage
 
 
 web_stream_bp = Blueprint("web_stream", __name__, template_folder="templates")
