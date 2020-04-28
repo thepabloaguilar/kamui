@@ -1,7 +1,11 @@
-from returns.result import Result
+from typing import List
 
-from kamui.core.usecase.failure import DataProviderFailureDetails
-from kamui.dataproviders.rest import client, HttpClient
+from returns.result import Result, Failure, Success
+
+from kamui.core.entity.stream import KSQLStream
+from kamui.core.usecase.failure import DataProviderFailureDetails, FailureDetails
+from kamui.core.usecase.stream.get_ksql_streams import GetKSQLStreams
+from kamui.dataproviders.rest import client, HttpClient, JsonResponse
 from kamui.core.usecase.stream.create_new_stream_from_topic import (
     CreateNewStreamFromTopicCommand,
     CreateStreamFromKafkaTopic,
@@ -33,3 +37,44 @@ class CreateStreamFromKafkaTopicRepository(CreateStreamFromKafkaTopic):
         ).map(lambda result: creat_new_stream_command)
 
         return response
+
+
+class GetKSQLStreamsRepository(GetKSQLStreams):
+    # TODO: Make KSQL Server URL configurable
+    def __init__(self) -> None:
+        self.__client: HttpClient = client
+        self.__KSQL_SERVER_URL: str = "http://localhost:8088/"
+
+    def __call__(self) -> Result[List[KSQLStream], FailureDetails]:
+        response = self.__client.post(
+            url=f"{self.__KSQL_SERVER_URL}ksql",
+            payload={
+                "ksql": "SHOW STREAMS;",
+                "streamsProperties": {"auto.offset.reset": "latest"},
+            },
+            headers={
+                "Accept": "application/vnd.ksql.v1+json",
+                "Content-Type": "application/vnd.ksql.v1+json",
+            },
+        )
+
+        return response.bind(self.__verify_response)
+
+    def __verify_response(
+        self, response: JsonResponse
+    ) -> Result[List[KSQLStream], DataProviderFailureDetails]:
+        _response = response[0]
+        if _response.get("@type") == "statement_error":
+            return Failure(
+                DataProviderFailureDetails(
+                    reason="STATEMENT_ERROR",
+                    dataprovider_type="REST",
+                    attributes={
+                        "message": _response["message"],
+                        "statementText": _response["statementText"],
+                    },
+                )
+            )
+        return Success(
+            [KSQLStream.from_dict(stream) for stream in _response["streams"]]  # type: ignore
+        )
