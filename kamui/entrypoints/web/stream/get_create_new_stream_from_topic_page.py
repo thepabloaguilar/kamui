@@ -18,7 +18,7 @@ class CreateNewStreamForm(FlaskForm):
     topic_fields = SelectMultipleField("Topic Fields", choices=[("a", "a"), ("b", "b")])
 
 
-class GetCreateNewStreamPage(View):
+class GetCreateNewStreamFromTopicPage(View):
     PATH = "/streams/create/fromtopic"
     methods = ["GET"]
 
