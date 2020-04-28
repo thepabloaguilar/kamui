@@ -43,10 +43,12 @@ class GetCreateNewStreamFromTopicPage(View):
         ]
 
         return render_template(
-            "create_new_stream_page.html",
+            "create_new_stream_from_topic_page.html",
             form=create_new_stream_form,
             project_id=request.args.get("project_id"),
         )
 
     def __process_failure_return(self, failure_details: FailureDetails) -> str:
-        return render_template("create_new_stream_page.html", error=failure_details)
+        return render_template(
+            "create_new_stream_from_topic_page.html", error=failure_details
+        )
