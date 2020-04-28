@@ -32,5 +32,7 @@ class FindProjectByProjectIdRepository(FindProjectByProjectId):
         project = ProjectModel.query.filter(
             ProjectModel.project_id == project_id
         ).first()
-        maybe_project: Maybe[Project] = Maybe.new(project).map(lambda p: p.to_entity())  # type: ignore
+        maybe_project: Maybe[Project] = Maybe.new(project).map(
+            lambda _project: _project.to_entity()  # type: ignore
+        )
         return Success(maybe_project)
