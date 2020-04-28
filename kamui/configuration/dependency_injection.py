@@ -14,6 +14,10 @@ from kamui.core.usecase.project.get_projects_list import (
     GetProjectsListUsecase,
     GetProjectsList,
 )
+from kamui.core.usecase.stream.get_ksql_streams import (
+    GetKSQLStreamsUsecase,
+    GetKSQLStreams,
+)
 from kamui.core.usecase.topic.get_available_topic_names import (
     GetAvailableTopicNamesUsecase,
     GetTopicNames,
@@ -39,6 +43,7 @@ from kamui.dataproviders.database.stream.repository import (
 )
 from kamui.dataproviders.rest.stream.repository import (
     CreateStreamFromKafkaTopicRepository,
+    GetKSQLStreamsRepository,
 )
 from kamui.dataproviders.rest.topic.repository import (
     GetTopicNamesRepository,
@@ -58,6 +63,7 @@ di_container.register(GetTopicSchema, GetTopicSchemaRepository)
 di_container.register(GetTopicSchemaVersions, GetTopicSchemaVersionsRepository)
 di_container.register(CreateStreamFromKafkaTopic, CreateStreamFromKafkaTopicRepository)
 di_container.register(SaveStream, SaveStreamRepository)
+di_container.register(GetKSQLStreams, GetKSQLStreamsRepository)
 
 # Usecases
 di_container.register(CreateNewProjectUsecase)
@@ -66,3 +72,4 @@ di_container.register(GetProjectDetailsUsecase)
 di_container.register(GetAvailableTopicNamesUsecase)
 di_container.register(GetTopicSchemaUsecase)
 di_container.register(CreateNewStreamFromTopicUsecase)
+di_container.register(GetKSQLStreamsUsecase)
