@@ -12,3 +12,9 @@ web_stream_bp.add_url_rule(
         "web_get_create_new_stream_from_topic_page"
     ),
 )
+web_stream_bp.add_url_rule(
+    GetCreateNewStreamFromStreamPage.PATH,
+    view_func=GetCreateNewStreamFromStreamPage.as_view(
+        "web_get_create_new_stream_from_stream_page"
+    ),
+)
