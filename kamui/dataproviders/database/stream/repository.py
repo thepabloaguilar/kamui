@@ -1,5 +1,3 @@
-from typing import Any
-
 from returns.result import Result, Success
 
 from kamui.configuration.database import database_session

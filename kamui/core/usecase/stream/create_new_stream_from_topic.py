@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Any
+from typing import List
 from uuid import UUID
 
 from returns.result import Result
