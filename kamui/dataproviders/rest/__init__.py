@@ -93,7 +93,7 @@ class HttpClient:
     def post(
         self,
         url: str,
-        payload: Dict[str, str],
+        payload: Dict[str, Any],
         headers: Dict[str, str] = None,
         timeout: int = 5,
     ) -> Result[JsonResponse, DataProviderFailureDetails]:
