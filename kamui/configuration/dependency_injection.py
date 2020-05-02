@@ -31,9 +31,9 @@ def _register_usecases(module_path: str, container: Container) -> None:
 def _register_dataproviders(module_path: str, container: Container) -> None:
     # TODO: find a better way to do this verification before register
     def register(container_: Container, clazz: Any) -> None:
-        __, first_parent_class, *__ = inspect.getmro(clazz)
+        class_to_register, first_parent_class, *__ = inspect.getmro(clazz)
         if inspect.isabstract(first_parent_class):
-            container_.register(first_parent_class, clazz)
+            container_.register(first_parent_class, class_to_register)
 
     _register_classes(module_path, partial(register, container))
 
