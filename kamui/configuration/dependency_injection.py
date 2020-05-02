@@ -1,75 +1,42 @@
-# TODO: Make register automatic
+import pkgutil
+import inspect
+import importlib
+from functools import partial
+from typing import List, Callable, Any
+
 from punq import Container
 
-from kamui.core.usecase.project.create_new_project import (
-    CreateNewProjectUsecase,
-    CreateNewProject,
-)
-from kamui.core.usecase.project.get_project_details import (
-    GetProjectDetailsUsecase,
-    FindProjectByProjectId,
-    FindStreamsByProject,
-)
-from kamui.core.usecase.project.get_projects_list import (
-    GetProjectsListUsecase,
-    GetProjectsList,
-)
-from kamui.core.usecase.stream.get_ksql_streams import (
-    GetKSQLStreamsUsecase,
-    GetKSQLStreams,
-)
-from kamui.core.usecase.topic.get_available_topic_names import (
-    GetAvailableTopicNamesUsecase,
-    GetTopicNames,
-)
-from kamui.core.usecase.topic.get_topic_schema import (
-    GetTopicSchemaUsecase,
-    GetTopicSchema,
-    GetTopicSchemaVersions,
-)
-from kamui.core.usecase.stream.create_new_stream_from_topic import (
-    CreateNewStreamFromTopicUsecase,
-    CreateStreamFromKafkaTopic,
-    SaveStream,
-)
-from kamui.dataproviders.database.project.repository import (
-    CreateNewProjectRepository,
-    GetProjectsListRepository,
-    FindProjectByProjectIdRepository,
-)
-from kamui.dataproviders.database.stream.repository import (
-    SaveStreamRepository,
-    FindStreamsByProjectRepository,
-)
-from kamui.dataproviders.rest.stream.repository import (
-    CreateStreamFromKafkaTopicRepository,
-    GetKSQLStreamsRepository,
-)
-from kamui.dataproviders.rest.topic.repository import (
-    GetTopicNamesRepository,
-    GetTopicSchemaRepository,
-    GetTopicSchemaVersionsRepository,
-)
 
 di_container = Container()
 
-# Dependencies
-di_container.register(CreateNewProject, CreateNewProjectRepository)
-di_container.register(GetProjectsList, GetProjectsListRepository)
-di_container.register(FindProjectByProjectId, FindProjectByProjectIdRepository)
-di_container.register(FindStreamsByProject, FindStreamsByProjectRepository)
-di_container.register(GetTopicNames, GetTopicNamesRepository)
-di_container.register(GetTopicSchema, GetTopicSchemaRepository)
-di_container.register(GetTopicSchemaVersions, GetTopicSchemaVersionsRepository)
-di_container.register(CreateStreamFromKafkaTopic, CreateStreamFromKafkaTopicRepository)
-di_container.register(SaveStream, SaveStreamRepository)
-di_container.register(GetKSQLStreams, GetKSQLStreamsRepository)
 
-# Usecases
-di_container.register(CreateNewProjectUsecase)
-di_container.register(GetProjectsListUsecase)
-di_container.register(GetProjectDetailsUsecase)
-di_container.register(GetAvailableTopicNamesUsecase)
-di_container.register(GetTopicSchemaUsecase)
-di_container.register(CreateNewStreamFromTopicUsecase)
-di_container.register(GetKSQLStreamsUsecase)
+def _get_sub_modules(module_path: str) -> List[str]:
+    module = importlib.import_module(module_path)
+    for __, sub_name, is_package in pkgutil.iter_modules(module.__path__):
+        if is_package:
+            yield importlib.import_module(f"{module_path}.{sub_name}.__init__")
+
+
+def _register_classes(module_path: str, register: Callable[[Any], None]) -> None:
+    for sub_module in _get_sub_modules(module_path):
+        for name, clazz in inspect.getmembers(sub_module, inspect.isclass):
+            register(clazz)
+
+
+def _register_usecases(module_path: str, container: Container) -> None:
+    _register_classes(module_path, container.register)
+
+
+def _register_dataproviders(module_path: str, container: Container) -> None:
+    # TODO: find a better way to do this verification before register
+    def register(container_: Container, clazz: Any) -> None:
+        __, first_parent_class, *__ = inspect.getmro(clazz)
+        if inspect.isabstract(first_parent_class):
+            container_.register(first_parent_class, clazz)
+
+    _register_classes(module_path, partial(register, container))
+
+
+_register_usecases("kamui.core.usecase", di_container)
+_register_dataproviders("kamui.dataproviders.database", di_container)
+_register_dataproviders("kamui.dataproviders.rest", di_container)
