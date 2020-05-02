@@ -2,7 +2,8 @@ import pkgutil
 import inspect
 import importlib
 from functools import partial
-from typing import List, Callable, Any
+from types import ModuleType
+from typing import Callable, Any, Generator
 
 from punq import Container
 
@@ -10,9 +11,9 @@ from punq import Container
 di_container = Container()
 
 
-def _get_sub_modules(module_path: str) -> List[str]:
+def _get_sub_modules(module_path: str) -> Generator[ModuleType, None, None]:
     module = importlib.import_module(module_path)
-    for __, sub_name, is_package in pkgutil.iter_modules(module.__path__):
+    for __, sub_name, is_package in pkgutil.iter_modules(getattr(module, "__path__")):
         if is_package:
             yield importlib.import_module(f"{module_path}.{sub_name}.__init__")
 
