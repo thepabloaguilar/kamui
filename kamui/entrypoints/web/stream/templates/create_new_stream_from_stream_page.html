@@ -51,8 +51,22 @@
                     finish: "Create Stream"
                 },
                 onStepChanging: function (event, currentIndex, newIndex) {
-                    {# TODO: IMPLEMENTS GET STREAM SCHEMA #}
-                    return true;
+                    form.validate().settings.ignore = ":disabled,:hidden";
+                    if (form.valid()) {
+                        if (IS_ASYNC_STEP) {
+                            IS_ASYNC_STEP = false;
+                            return true;
+                        }
+
+                        if (currentIndex === 0) {
+                            const streamName = $("#from_stream option:selected").val();
+                            setStreamSchema(streamName, () => changeStepTabsColor(currentIndex, newIndex))
+                        } else {
+                            changeStepTabsColor(currentIndex, newIndex);
+                            return true;
+                        }
+                    }
+                    return false;
                 },
                 onFinishing: function (event, currentIndex) {
                     {# TODO: IMPLEMENTS FINISH TO CREATE A STREAM #}
@@ -61,8 +75,44 @@
             });
 
             const form = $("#wizard");
-            const streamFields = form.find("#topic_fields");
+            const streamFields = form.find("#stream_fields");
             streamFields.select2();
+
+            function changeStepTabsColor(currentIndex, newIndex) {
+                $(`.wizard-steps > div:nth-child(${++currentIndex})`).removeClass('wizard-step-active');
+                $(`.wizard-steps > div:nth-child(${++newIndex})`).addClass('wizard-step-active');
+            }
+
+            function cleanSelect2Field(field) {
+                field.val(null).trigger("change");
+                field.empty().trigger("change");
+            }
+
+            function setStreamSchema(streamName, callback) {
+                return $.ajax({
+                    type: "GET",
+                    url: `http://localhost:5000/api/streams/${streamName}`,
+                    cache: false
+                })
+                    .then(response => {
+                        cleanSelect2Field(streamFields);
+                        localStorage.setItem("stream", JSON.stringify(response));
+
+                        response["fields"].forEach(item =>
+                            streamFields.append(new Option(item["name"], item["name"]))
+                        );
+                        streamFields.trigger("change");
+
+                        IS_ASYNC_STEP = true;
+                        callback();
+                        form.steps("next");
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        $("#getTopicSchemaFailMessage").empty().append(`Message: ${err.responseJSON.failure_due.attributes.response.message}<br />Reason: ${err.responseJSON.reason} (${err.responseJSON.failure_due.reason})`);
+                        $("#topicSchemaNotFoundModal").modal("show");
+                    });
+            }
 
             // Remove Jquery-Steps default header
             $('div.steps').attr('hidden', 'true')
