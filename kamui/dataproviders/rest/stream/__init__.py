@@ -1,1 +1,5 @@
-from .repository import CreateStreamFromKafkaTopicRepository, GetKSQLStreamsRepository
+from .repository import (
+    CreateStreamFromKafkaTopicRepository,
+    GetKSQLStreamsRepository,
+    GetStreamByNameRepository,
+)
