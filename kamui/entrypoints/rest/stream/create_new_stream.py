@@ -13,6 +13,8 @@ from kamui.core.usecase.failure import (
 from kamui.core.usecase.stream.create_new_stream import (
     CreateNewStreamCommand,
     CreateNewStreamFromTopicUsecase,
+    SourceType,
+    CreateNewStreamFromStreamUsecase,
 )
 
 
@@ -23,6 +25,9 @@ class CreateNewStreamResource(Resource):
         super().__init__(*args, **kwargs)
         self.__create_new_stream_from_topic: CreateNewStreamFromTopicUsecase = (
             di_container.resolve(CreateNewStreamFromTopicUsecase)
+        )
+        self.__create_new_stream_from_stream: CreateNewStreamFromStreamUsecase = (
+            di_container.resolve(CreateNewStreamFromStreamUsecase)
         )
 
     def post(self) -> Union[Tuple[Any, int], Tuple[Dict[str, Any], int]]:
@@ -37,8 +42,9 @@ class CreateNewStreamResource(Resource):
     def __create_new_stream(
         self, command: CreateNewStreamCommand
     ) -> Result[Stream, BusinessFailureDetails]:
-        # TODO: Verify all cases of `command.source_type`
-        return self.__create_new_stream_from_topic(command)
+        if command.source_type == SourceType.TOPIC:
+            return self.__create_new_stream_from_topic(command)
+        return self.__create_new_stream_from_stream(command)
 
     def __process_success(self, something: Any) -> Tuple[Any, int]:
         return something, 201
