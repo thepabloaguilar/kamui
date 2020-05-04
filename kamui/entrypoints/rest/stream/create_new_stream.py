@@ -16,7 +16,7 @@ from kamui.core.usecase.stream.create_new_stream import (
 )
 
 
-class CreateNewStreamFromTopicResource(Resource):
+class CreateNewStreamResource(Resource):
     API_PATH = "/streams/"
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
