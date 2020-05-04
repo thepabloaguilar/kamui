@@ -10,6 +10,7 @@ from kamui.dataproviders.rest import client, HttpClient, JsonResponse
 from kamui.core.usecase.stream.create_new_stream import (
     CreateNewStreamCommand,
     CreateStreamFromKafkaTopic,
+    CreateNewStreamFromStream,
 )
 
 
@@ -121,3 +122,34 @@ class GetStreamByNameRepository(GetStreamByName):
             _response["sourceDescription"]
         )
         return Success(stream)
+
+
+class CreateNewStreamFromStreamRepository(CreateNewStreamFromStream):
+    # TODO: Make KSQL Server URL configurable
+    def __init__(self) -> None:
+        self.__client: HttpClient = client
+        self.__KSQL_SERVER_URL: str = "http://localhost:8088/"
+
+    def __call__(
+        self, create_new_stream_command: CreateNewStreamCommand
+    ) -> Result[CreateNewStreamCommand, FailureDetails]:
+        desired_stream_fields = ",".join(
+            [field.name for field in create_new_stream_command.fields]
+        )
+
+        response = self.__client.post(
+            url=f"{self.__KSQL_SERVER_URL}ksql",
+            payload={
+                "ksql": f"""
+                            CREATE STREAM {create_new_stream_command.stream_name} AS
+                            SELECT {desired_stream_fields}
+                            FROM {create_new_stream_command.source_name} EMIT CHANGES;
+                        """
+            },
+            headers={
+                "Accept": "application/vnd.ksql.v1+json",
+                "Content-Type": "application/vnd.ksql.v1+json",
+            },
+        ).map(lambda result: create_new_stream_command)
+
+        return response
