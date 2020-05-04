@@ -29,7 +29,7 @@ class CreateStreamFromKafkaTopicRepository(CreateStreamFromKafkaTopic):
         response = self.__client.post(
             url=f"{self.__KSQL_SERVER_URL}ksql",
             payload={
-                "ksql": f"CREATE STREAM {creat_new_stream_command.stream_name} ({', '.join(query_fields)}) WITH (kafka_topic='{creat_new_stream_command.topic_name}', value_format='AVRO');"
+                "ksql": f"CREATE STREAM {creat_new_stream_command.stream_name} ({', '.join(query_fields)}) WITH (kafka_topic='{creat_new_stream_command.source_name}', value_format='AVRO');"
             },
             headers={
                 "Accept": "application/vnd.ksql.v1+json",

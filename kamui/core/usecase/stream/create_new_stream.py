@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from enum import Enum
 from typing import List
 from uuid import UUID
 
@@ -8,6 +9,11 @@ from returns.result import Result
 
 from kamui.core.entity.stream import Stream
 from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
+
+
+class SourceType(Enum):
+    TOPIC = "TOPIC"
+    STREAM = "STREAM"
 
 
 @dataclass_json
@@ -22,7 +28,8 @@ class CreateNewStreamCommand:
     project_id: UUID
     stream_name: str
     fields: List[StreamField]
-    topic_name: str
+    source_name: str
+    source_type: SourceType
 
 
 class CreateStreamFromKafkaTopic(ABC):

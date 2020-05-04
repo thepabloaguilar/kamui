@@ -1,9 +1,7 @@
-from dataclasses import dataclass
 from typing import Any, Dict, Tuple, Union
 
 from flask import request
 from flask_restful import Resource
-from dataclasses_json import dataclass_json
 from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
@@ -18,13 +16,6 @@ from kamui.core.usecase.stream.create_new_stream import (
 )
 
 
-@dataclass_json
-@dataclass(frozen=True)
-class CreateNewStreamCommandVO:
-    stream_origin: str
-    create_new_stream_command: CreateNewStreamCommand
-
-
 class CreateNewStreamFromTopicResource(Resource):
     API_PATH = "/streams/"
 
@@ -35,7 +26,7 @@ class CreateNewStreamFromTopicResource(Resource):
         )
 
     def post(self) -> Union[Tuple[Any, int], Tuple[Dict[str, Any], int]]:
-        body_request = CreateNewStreamCommandVO.from_dict(request.json)  # type: ignore
+        body_request = CreateNewStreamCommand.from_dict(request.json)  # type: ignore
         return (
             self.__create_new_stream(body_request)
             .map(self.__process_success)
@@ -44,10 +35,10 @@ class CreateNewStreamFromTopicResource(Resource):
         )
 
     def __create_new_stream(
-        self, command: CreateNewStreamCommandVO
+        self, command: CreateNewStreamCommand
     ) -> Result[Stream, BusinessFailureDetails]:
-        # TODO: Verify all cases of `command.stream_origin`
-        return self.__create_new_stream_from_topic(command.create_new_stream_command)
+        # TODO: Verify all cases of `command.source_type`
+        return self.__create_new_stream_from_topic(command)
 
     def __process_success(self, something: Any) -> Tuple[Any, int]:
         return something, 201

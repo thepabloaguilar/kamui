@@ -73,13 +73,11 @@
                     const topicSchema = JSON.parse(localStorage.getItem("topicSchema"));
                     const desirableFields = topicSchema.fields.filter(item => selectFields.includes(item.name));
                     const payload = {
-                        "stream_origin": "TOPIC",
-                        "create_new_stream_command": {
-                            "project_id": $("#project_id").val(),
-                            "stream_name": $("#stream_name").val(),
-                            "fields": desirableFields,
-                            "topic_name": $("#topic option:selected").val()
-                        }
+                        "project_id": $("#project_id").val(),
+                        "stream_name": $("#stream_name").val(),
+                        "fields": desirableFields,
+                        "source_name": $("#topic option:selected").val(),
+                        "source_type": "TOPIC"
                     };
 
                     $.ajax({

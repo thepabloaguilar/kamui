@@ -11,6 +11,7 @@ from kamui.core.usecase.stream.create_new_stream import (
     SaveStream,
     CreateNewStreamFromTopicUsecase,
     CreateNewStreamCommand,
+    SourceType,
 )
 
 
@@ -46,7 +47,8 @@ def test_should_return_stream_entity_correctly(
             CreateNewStreamCommand.StreamField(name="field_one", type="STRING"),
             CreateNewStreamCommand.StreamField(name="field_two", type="INTEGER"),
         ],
-        topic_name="from_this_test_success_topic",
+        source_name="from_this_test_success_topic",
+        source_type=SourceType.TOPIC,
     )
     stream = Stream(
         stream_id=uuid4(), name="test_stream_success", project_id=project_id
@@ -71,7 +73,8 @@ def test_should_return_failure_when_create_stream_from_kafka_topic_fails(
         project_id=uuid4(),
         stream_name="test_stream_failure",
         fields=[CreateNewStreamCommand.StreamField(name="field_test", type="STRING")],
-        topic_name="from_this_test_topic",
+        source_name="from_this_test_topic",
+        source_type=SourceType.TOPIC,
     )
     failure = Failure(FailureDetails(reason="create_new_stream_from_kafka_topic"))
     create_new_stream_from_kafka_topic.return_value = failure
@@ -99,7 +102,8 @@ def test_should_return_failure_when_save_stream_fails(
                 name="another_field_test", type="STRING"
             ),
         ],
-        topic_name="from_this_test_topic",
+        source_name="from_this_test_topic",
+        source_type=SourceType.TOPIC,
     )
     failure = Failure(FailureDetails(reason="save_stream"))
     create_new_stream_from_kafka_topic.return_value = Success(command)
