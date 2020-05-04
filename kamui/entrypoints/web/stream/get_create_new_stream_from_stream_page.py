@@ -15,9 +15,7 @@ from kamui.core.usecase.stream.get_ksql_streams import GetKSQLStreamsUsecase
 class CreateNewStreamForm(FlaskForm):
     from_stream = SelectField("Stream", choices=[])
     stream_name = StringField("Stream Name", validators=(DataRequired(),))
-    stream_fields = SelectMultipleField(
-        "Stream Fields", choices=[("a", "a"), ("b", "b")]
-    )
+    stream_fields = SelectMultipleField("Stream Fields", choices=[])
 
 
 class GetCreateNewStreamFromStreamPage(View):
