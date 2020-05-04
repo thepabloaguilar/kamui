@@ -17,7 +17,7 @@ class SaveStreamRepository(SaveStream):
         self, creat_new_stream_command: CreateNewStreamCommand
     ) -> Result[Stream, FailureDetails]:
         stream = StreamModel(
-            name=creat_new_stream_command.source_name,
+            name=creat_new_stream_command.stream_name,
             project_id=creat_new_stream_command.project_id,
         )
         with database_session() as session:
