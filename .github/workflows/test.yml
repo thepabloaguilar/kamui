@@ -36,6 +36,7 @@ jobs:
         run: |
           source "$HOME/.poetry/env"
 
+          poetry run flake8 .
           poetry run black --check kamui
           poetry run mypy kamui
           poetry run pytest
