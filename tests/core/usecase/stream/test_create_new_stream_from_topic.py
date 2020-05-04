@@ -6,7 +6,7 @@ from returns.result import Failure, Result, Success
 
 from kamui.core.entity.stream import Stream
 from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.stream.create_new_stream_from_topic import (
+from kamui.core.usecase.stream.create_new_stream import (
     CreateStreamFromKafkaTopic,
     SaveStream,
     CreateNewStreamFromTopicUsecase,

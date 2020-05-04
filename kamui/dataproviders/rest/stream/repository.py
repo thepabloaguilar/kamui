@@ -7,7 +7,7 @@ from kamui.core.usecase.failure import DataProviderFailureDetails, FailureDetail
 from kamui.core.usecase.stream.get_ksql_streams import GetKSQLStreams
 from kamui.core.usecase.stream.get_stream_by_name import GetStreamByName
 from kamui.dataproviders.rest import client, HttpClient, JsonResponse
-from kamui.core.usecase.stream.create_new_stream_from_topic import (
+from kamui.core.usecase.stream.create_new_stream import (
     CreateNewStreamCommand,
     CreateStreamFromKafkaTopic,
 )

@@ -12,7 +12,7 @@ from kamui.core.usecase.failure import (
     DataProviderFailureDetails,
     BusinessFailureDetails,
 )
-from kamui.core.usecase.stream.create_new_stream_from_topic import (
+from kamui.core.usecase.stream.create_new_stream import (
     CreateNewStreamCommand,
     CreateNewStreamFromTopicUsecase,
 )

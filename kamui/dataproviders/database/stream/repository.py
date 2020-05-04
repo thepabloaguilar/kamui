@@ -5,7 +5,7 @@ from kamui.core.entity.project import Project
 from kamui.core.entity.stream import StreamList, Stream
 from kamui.core.usecase.failure import FailureDetails
 from kamui.core.usecase.project.get_project_details import FindStreamsByProject
-from kamui.core.usecase.stream.create_new_stream_from_topic import (
+from kamui.core.usecase.stream.create_new_stream import (
     SaveStream,
     CreateNewStreamCommand,
 )
