@@ -10,7 +10,7 @@ from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
 
 
 @dataclass(frozen=True)
-class CreateNewStreamFromTopicCommand:
+class CreateNewStreamCommand:
     @dataclass(frozen=True)
     class StreamField:
         name: str
@@ -25,15 +25,15 @@ class CreateNewStreamFromTopicCommand:
 class CreateStreamFromKafkaTopic(ABC):
     @abstractmethod
     def __call__(
-        self, creat_new_stream_command: CreateNewStreamFromTopicCommand
-    ) -> Result[CreateNewStreamFromTopicCommand, FailureDetails]:
+        self, creat_new_stream_command: CreateNewStreamCommand
+    ) -> Result[CreateNewStreamCommand, FailureDetails]:
         pass
 
 
 class SaveStream(ABC):
     @abstractmethod
     def __call__(
-        self, creat_new_stream_command: CreateNewStreamFromTopicCommand
+        self, creat_new_stream_command: CreateNewStreamCommand
     ) -> Result[Stream, FailureDetails]:
         pass
 
@@ -48,7 +48,7 @@ class CreateNewStreamFromTopicUsecase:
         self.__save_stream = save_stream
 
     def __call__(
-        self, create_new_stream_command: CreateNewStreamFromTopicCommand
+        self, create_new_stream_command: CreateNewStreamCommand
     ) -> Result[Stream, BusinessFailureDetails]:
         return (
             self.__create_stream_from_kafka_topic(create_new_stream_command)

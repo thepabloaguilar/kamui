@@ -7,14 +7,14 @@ from kamui.core.usecase.failure import FailureDetails
 from kamui.core.usecase.project.get_project_details import FindStreamsByProject
 from kamui.core.usecase.stream.create_new_stream_from_topic import (
     SaveStream,
-    CreateNewStreamFromTopicCommand,
+    CreateNewStreamCommand,
 )
 from kamui.dataproviders.database.stream.model import StreamModel
 
 
 class SaveStreamRepository(SaveStream):
     def __call__(
-        self, creat_new_stream_command: CreateNewStreamFromTopicCommand
+        self, creat_new_stream_command: CreateNewStreamCommand
     ) -> Result[Stream, FailureDetails]:
         stream = StreamModel(
             name=creat_new_stream_command.stream_name,

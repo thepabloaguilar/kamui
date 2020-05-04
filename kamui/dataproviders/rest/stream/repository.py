@@ -8,7 +8,7 @@ from kamui.core.usecase.stream.get_ksql_streams import GetKSQLStreams
 from kamui.core.usecase.stream.get_stream_by_name import GetStreamByName
 from kamui.dataproviders.rest import client, HttpClient, JsonResponse
 from kamui.core.usecase.stream.create_new_stream_from_topic import (
-    CreateNewStreamFromTopicCommand,
+    CreateNewStreamCommand,
     CreateStreamFromKafkaTopic,
 )
 
@@ -20,8 +20,8 @@ class CreateStreamFromKafkaTopicRepository(CreateStreamFromKafkaTopic):
         self.__KSQL_SERVER_URL: str = "http://localhost:8088/"
 
     def __call__(
-        self, creat_new_stream_command: CreateNewStreamFromTopicCommand
-    ) -> Result[CreateNewStreamFromTopicCommand, DataProviderFailureDetails]:
+        self, creat_new_stream_command: CreateNewStreamCommand
+    ) -> Result[CreateNewStreamCommand, DataProviderFailureDetails]:
         query_fields = [
             f"{field.name} {field.type}" for field in creat_new_stream_command.fields
         ]

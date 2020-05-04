@@ -10,7 +10,7 @@ from kamui.core.usecase.failure import (
     BusinessFailureDetails,
 )
 from kamui.core.usecase.stream.create_new_stream_from_topic import (
-    CreateNewStreamFromTopicCommand,
+    CreateNewStreamCommand,
     CreateNewStreamFromTopicUsecase,
 )
 
@@ -25,7 +25,7 @@ class CreateNewStreamFromTopicResource(Resource):
         )
 
     def post(self) -> Union[Tuple[Any, int], Tuple[Dict[str, Any], int]]:
-        deserializable_body_class = dataclass_json(CreateNewStreamFromTopicCommand)
+        deserializable_body_class = dataclass_json(CreateNewStreamCommand)
         return (  # type: ignore
             self.__create_new_stream_from_topic(
                 deserializable_body_class.from_dict(request.json)

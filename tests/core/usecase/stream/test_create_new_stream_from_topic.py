@@ -10,7 +10,7 @@ from kamui.core.usecase.stream.create_new_stream_from_topic import (
     CreateStreamFromKafkaTopic,
     SaveStream,
     CreateNewStreamFromTopicUsecase,
-    CreateNewStreamFromTopicCommand,
+    CreateNewStreamCommand,
 )
 
 
@@ -39,16 +39,12 @@ def test_should_return_stream_entity_correctly(
     save_stream: Mock,
 ) -> None:
     project_id = uuid4()
-    command = CreateNewStreamFromTopicCommand(
+    command = CreateNewStreamCommand(
         project_id=project_id,
         stream_name="test_stream_success",
         fields=[
-            CreateNewStreamFromTopicCommand.StreamField(
-                name="field_one", type="STRING"
-            ),
-            CreateNewStreamFromTopicCommand.StreamField(
-                name="field_two", type="INTEGER"
-            ),
+            CreateNewStreamCommand.StreamField(name="field_one", type="STRING"),
+            CreateNewStreamCommand.StreamField(name="field_two", type="INTEGER"),
         ],
         topic_name="from_this_test_success_topic",
     )
@@ -71,14 +67,10 @@ def test_should_return_failure_when_create_stream_from_kafka_topic_fails(
     create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUsecase,
     create_new_stream_from_kafka_topic: Mock,
 ) -> None:
-    command = CreateNewStreamFromTopicCommand(
+    command = CreateNewStreamCommand(
         project_id=uuid4(),
         stream_name="test_stream_failure",
-        fields=[
-            CreateNewStreamFromTopicCommand.StreamField(
-                name="field_test", type="STRING"
-            )
-        ],
+        fields=[CreateNewStreamCommand.StreamField(name="field_test", type="STRING")],
         topic_name="from_this_test_topic",
     )
     failure = Failure(FailureDetails(reason="create_new_stream_from_kafka_topic"))
@@ -98,14 +90,12 @@ def test_should_return_failure_when_save_stream_fails(
     create_new_stream_from_kafka_topic: Mock,
     save_stream: Mock,
 ) -> None:
-    command = CreateNewStreamFromTopicCommand(
+    command = CreateNewStreamCommand(
         project_id=uuid4(),
         stream_name="test_stream_failure",
         fields=[
-            CreateNewStreamFromTopicCommand.StreamField(
-                name="field_test", type="STRING"
-            ),
-            CreateNewStreamFromTopicCommand.StreamField(
+            CreateNewStreamCommand.StreamField(name="field_test", type="STRING"),
+            CreateNewStreamCommand.StreamField(
                 name="another_field_test", type="STRING"
             ),
         ],
