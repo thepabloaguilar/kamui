@@ -3,14 +3,17 @@ from dataclasses import dataclass
 from typing import List
 from uuid import UUID
 
+from dataclasses_json import dataclass_json
 from returns.result import Result
 
 from kamui.core.entity.stream import Stream
 from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
 
 
+@dataclass_json
 @dataclass(frozen=True)
 class CreateNewStreamCommand:
+    @dataclass_json
     @dataclass(frozen=True)
     class StreamField:
         name: str
