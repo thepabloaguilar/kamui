@@ -37,7 +37,7 @@ class GetTopicSchemaRepository(GetTopicSchema):
         self, schema_version: int, topic_name: str
     ) -> Result[TopicSchema, FailureDetails]:
         response = self.__client.get(
-            url=f"{self.__SCHEMA_REGISTRY_URL}subjects/{topic_name}-value/versions/{schema_version}",
+            url=f"{self.__SCHEMA_REGISTRY_URL}subjects/{topic_name}-value/versions/{schema_version}",  # noqa: E501
             headers={"Content-Type": "application/vnd.schemaregistry.v1+json"},
         )
         return response.bind(self.__verify_response)

@@ -23,14 +23,22 @@ class CreateStreamFromKafkaTopicRepository(CreateStreamFromKafkaTopic):
     def __call__(
         self, creat_new_stream_command: CreateNewStreamCommand
     ) -> Result[CreateNewStreamCommand, DataProviderFailureDetails]:
-        query_fields = [
-            f"{field.name} {field.type}" for field in creat_new_stream_command.fields
-        ]
+        query_fields = ", ".join(
+            [f"{field.name} {field.type}" for field in creat_new_stream_command.fields]
+        )
 
         response = self.__client.post(
             url=f"{self.__KSQL_SERVER_URL}ksql",
             payload={
-                "ksql": f"CREATE STREAM {creat_new_stream_command.stream_name} ({', '.join(query_fields)}) WITH (kafka_topic='{creat_new_stream_command.source_name}', value_format='AVRO');"
+                "ksql": f"""
+                            CREATE STREAM
+                                {creat_new_stream_command.stream_name} ({query_fields})
+                            WITH
+                                (
+                                    kafka_topic='{creat_new_stream_command.source_name}',
+                                    value_format='AVRO'
+                                );
+                        """
             },
             headers={
                 "Accept": "application/vnd.ksql.v1+json",
@@ -78,7 +86,7 @@ class GetKSQLStreamsRepository(GetKSQLStreams):
                 )
             )
         return Success(
-            [KSQLStream.from_dict(stream) for stream in _response["streams"]]  # type: ignore
+            [KSQLStream.from_dict(stream) for stream in _response["streams"]]  # type: ignore  # noqa: E501
         )
 
 
