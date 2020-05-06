@@ -1,4 +1,81 @@
 {% extends "layout.html" %}
+{% block custom_style %}
+  .live.map {
+    width: 100%;
+    height: 100%;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f9f9f9;
+  }
+
+  .live.map text {
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  .live.map .node rect {
+    stroke-width: 1.5px;
+    stroke: #bbb;
+    fill: #666;
+  }
+
+  .live.map .status {
+    height: 100%;
+    width: 15px;
+    display: block;
+    float: left;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-right: 4px;
+  }
+
+  .live.map .stream .status {
+    background-color: #6777ef;
+  }
+
+  .live.map .topic .status {
+    background-color: #fff;
+  }
+
+  .live.map .streamBox {
+    text-align: center;
+  }
+
+  .live.map .name {
+    position: relative;
+    top: 25%;
+  }
+
+  .live.map .node g div {
+    width: 200px;
+    height: 40px;
+    color: #fff;
+  }
+
+  .live.map .node g div span.consumers {
+    display: inline-block;
+    width: 20px;
+  }
+
+  .live.map .edgeLabel text {
+    width: 50px;
+    fill: #fff;
+  }
+
+  .live.map .edgePath path {
+    stroke: #999;
+    stroke-width: 1.5px;
+    fill: #999;
+  }
+{% endblock %}
+{% block header_js_scripts %}
+<script src="https://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dagre-d3/0.6.4/dagre-d3.min.js"></script>
+{% endblock %}
 {% block main_content %}
 <section class="section">
     <div class="section-header">
@@ -38,21 +115,45 @@
                     </div>
                     <div class="card-body">
                         <div class="clearfix mb-3"></div>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <tr>
-                                    <th>Stream ID</th>
-                                    <th>Name</th>
-                                    <th>Action</th>
-                                </tr>
-                                {% for stream in project_details.streams %}
-                                <tr>
-                                    <td>{{ stream.stream_id }}</td>
-                                    <td>{{ stream.name }}</td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                {% endfor %}
-                            </table>
+
+                        <ul class="nav nav-pills" id="streamsTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active show" id="graph-tab" data-toggle="tab" href="#graph" role="tab"
+                                   aria-controls="graph" aria-selected="true">Graph</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="streamList-tab" data-toggle="tab" href="#streamList" role="tab"
+                                   aria-controls="streamList" aria-selected="false">Stream List</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="tabContent">
+                            <div class="tab-pane fade active show" id="graph" role="tabpanel"
+                                 aria-labelledby="graph-tab">
+                                <div class="live map" data-height="700" style="height: 700px;">
+                                    <svg>
+                                        <g/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="streamList" role="tabpanel" aria-labelledby="streamList-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>Stream ID</th>
+                                            <th>Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        {% for stream in project_details.streams %}
+                                            <tr>
+                                                <td>{{ stream.stream_id }}</td>
+                                                <td>{{ stream.name }}</td>
+                                                <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -94,4 +195,76 @@
         </div>
     </div>
 </section>
+{% endblock %}
+{% block body_js %}
+    var workers = {
+        {% for stream in project_details.streams %}
+        "{{ stream.name }}": {
+            "sourceType": "{{ stream.source_type.value }}",
+            "sourceName": "{{ stream.source_name }}"
+        },
+        {% endfor %}
+    };
+
+    // Set up zoom support
+    var svg = d3.select("svg"),
+        inner = svg.select("g"),
+        zoom = d3.zoom().on("zoom", function () {
+            inner.attr("transform", d3.event.transform);
+        });
+    svg.call(zoom);
+
+    var render = new dagreD3.render();
+
+    // Left-to-right layout
+    var g = new dagreD3.graphlib.Graph();
+    g.setGraph({
+        nodesep: 70,
+        ranksep: 50,
+        rankdir: "LR",
+        marginx: 20,
+        marginy: 20
+    });
+
+    function draw(isUpdate) {
+        for (var id in workers) {
+            var worker = workers[id];
+
+            var html = "<div class=streamBox>";
+            html += "<span class=status></span>";
+            html += "<span class=name>" + id + "</span>";
+            html += "</div>";
+
+            g.setNode(id, {
+                labelType: "html",
+                label: html,
+                rx: 5,
+                ry: 5,
+                padding: 0,
+                class: worker.sourceType.toLowerCase()
+            });
+
+            if (worker.sourceName in workers) {
+                g.setEdge(worker.sourceName, id, {
+                    width: 40
+                });
+            }
+        }
+
+        inner.call(render, g);
+
+        // Zoom and scale to fit
+        var graphWidth = g.graph().width + 80;
+        var graphHeight = g.graph().height + 40;
+        var width = parseInt(svg.style("width").replace(/px/, ""));
+        var height = parseInt(svg.style("height").replace(/px/, ""));
+        var zoomScale = Math.min(width / graphWidth, height / graphHeight);
+        var translateX = (width / 2) - ((graphWidth * zoomScale) / 2)
+        var translateY = (height / 2) - ((graphHeight * zoomScale) / 2);
+        var svgZoom = isUpdate ? svg.transition().duration(500) : svg;
+        svgZoom.call(zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(zoomScale));
+    }
+
+    // Initial draw, once the DOM is ready
+    document.addEventListener("DOMContentLoaded", draw);
 {% endblock %}
