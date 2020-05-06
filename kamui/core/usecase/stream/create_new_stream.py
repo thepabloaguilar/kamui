@@ -1,19 +1,14 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from enum import Enum
 from typing import List
 from uuid import UUID
 
 from dataclasses_json import dataclass_json
 from returns.result import Result
 
+from kamui.core.entity.source import SourceType
 from kamui.core.entity.stream import Stream
 from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
-
-
-class SourceType(Enum):
-    TOPIC = "TOPIC"
-    STREAM = "STREAM"
 
 
 @dataclass_json
