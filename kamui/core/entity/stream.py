@@ -4,11 +4,15 @@ from uuid import UUID
 
 from dataclasses_json import dataclass_json
 
+from kamui.core.entity.source import SourceType
+
 
 @dataclass
 class Stream:
     stream_id: UUID
     name: str
+    source_type: SourceType
+    source_name: str
     project_id: UUID
 
 
