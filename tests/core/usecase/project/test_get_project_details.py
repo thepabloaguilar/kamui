@@ -8,6 +8,7 @@ from returns.result import Success, Result
 
 from kamui.core.entity.project import Project
 from kamui.core.entity.project_status import ProjectStatus
+from kamui.core.entity.source import SourceType
 from kamui.core.entity.stream import StreamList, Stream
 from kamui.core.usecase.failure import BusinessFailureDetails
 from kamui.core.usecase.project.get_project_details import (
@@ -90,7 +91,13 @@ def test_should_return_projects_details_one_streams(
     )
     project_maybe: Maybe[Project] = Maybe.new(project)
     streams = [
-        Stream(stream_id=uuid4(), name="Test Stream", project_id=project_id,),
+        Stream(
+            stream_id=uuid4(),
+            name="Test Stream",
+            source_type=SourceType.TOPIC,
+            source_name="test_one_stream",
+            project_id=project_id,
+        ),
     ]
     find_project_by_project_id.return_value = Success(project_maybe)
     find_streams_by_project.return_value = Success(StreamList(streams))
@@ -120,8 +127,20 @@ def test_should_return_projects_details_two_streams(
     )
     project_maybe: Maybe[Project] = Maybe.new(project)
     streams = [
-        Stream(stream_id=uuid4(), name="Test Stream One", project_id=project_id,),
-        Stream(stream_id=uuid4(), name="Test Stream Two", project_id=project_id,),
+        Stream(
+            stream_id=uuid4(),
+            name="Test Stream One",
+            source_type=SourceType.STREAM,
+            source_name="test_two_stream",
+            project_id=project_id,
+        ),
+        Stream(
+            stream_id=uuid4(),
+            name="Test Stream Two",
+            source_type=SourceType.TOPIC,
+            source_name="test_two_stream_detail",
+            project_id=project_id,
+        ),
     ]
     find_project_by_project_id.return_value = Success(project_maybe)
     find_streams_by_project.return_value = Success(StreamList(streams))
