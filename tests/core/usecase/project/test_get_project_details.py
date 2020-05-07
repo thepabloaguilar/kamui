@@ -96,7 +96,6 @@ def test_should_return_projects_details_one_streams(
             name="Test Stream",
             source_type=SourceType.TOPIC,
             source_name="test_one_stream",
-            project_id=project_id,
         ),
     ]
     find_project_by_project_id.return_value = Success(project_maybe)
@@ -132,14 +131,12 @@ def test_should_return_projects_details_two_streams(
             name="Test Stream One",
             source_type=SourceType.STREAM,
             source_name="test_two_stream",
-            project_id=project_id,
         ),
         Stream(
             stream_id=uuid4(),
             name="Test Stream Two",
             source_type=SourceType.TOPIC,
             source_name="test_two_stream_detail",
-            project_id=project_id,
         ),
     ]
     find_project_by_project_id.return_value = Success(project_maybe)

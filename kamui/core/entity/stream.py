@@ -13,7 +13,6 @@ class Stream:
     name: str
     source_type: SourceType
     source_name: str
-    project_id: UUID
 
 
 @dataclass_json

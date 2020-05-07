@@ -55,7 +55,6 @@ def test_should_return_stream_entity_correctly(
         name="test_stream_success",
         source_type=SourceType.TOPIC,
         source_name="test_create_stream",
-        project_id=project_id,
     )
     create_new_stream_from_kafka_topic.return_value = Success(command)
     save_stream.return_value = Success(stream)

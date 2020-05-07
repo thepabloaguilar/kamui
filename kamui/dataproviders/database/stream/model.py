@@ -26,5 +26,4 @@ class StreamModel(DatabaseBase):
             name=self.name,
             source_type=self.source_type,
             source_name=self.source_name,
-            project_id=uuid4(),
         )
