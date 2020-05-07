@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 from kamui.configuration.database import DatabaseBase
 from kamui.core.entity.project import Project
 from kamui.core.entity.project_status import ProjectStatus
+from kamui.dataproviders.database.stream_project.model import StreamProjectModel
 
 
 class ProjectModel(DatabaseBase):
@@ -19,7 +20,7 @@ class ProjectModel(DatabaseBase):
     created_at = Column("created_at", DateTime(timezone=True), default=func.now())
     status = Column("status", Enum(ProjectStatus), default=ProjectStatus.ACTIVE)
 
-    streams = relationship("StreamModel", back_populates="project")
+    streams = relationship(StreamProjectModel, back_populates="project")
 
     def to_entity(self) -> Project:
         return Project(
