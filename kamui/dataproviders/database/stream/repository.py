@@ -9,6 +9,7 @@ from kamui.core.usecase.stream.create_new_stream import (
     SaveStream,
     CreateNewStreamCommand,
 )
+from kamui.core.usecase.stream.get_streams import FindStreams
 from kamui.dataproviders.database.stream_project.model import StreamProjectModel
 from kamui.dataproviders.database.stream.model import StreamModel
 
@@ -29,6 +30,14 @@ class SaveStreamRepository(SaveStream):
             session.add(stream_project)  # type: ignore
             session.commit()  # type: ignore
             return Success(stream.to_entity())
+
+
+class FindStreamsRepository(FindStreams):
+    def __call__(self) -> Result[StreamList, FailureDetails]:
+        find_streams_query = StreamModel.query.all()
+        return Success(
+            StreamList([stream.to_entity() for stream in find_streams_query])
+        )
 
 
 class FindStreamsByProjectRepository(FindStreamsByProject):

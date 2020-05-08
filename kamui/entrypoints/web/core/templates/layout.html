@@ -40,12 +40,18 @@
             </div>
             <ul class="sidebar-menu">
                 <li class="menu-header">Stream</li>
-                <li><a class="nav-link active" href="/projects"><i class="fas fa-project-diagram"></i> <span>Projects</span></a></li>
+                <li {% if is_projects_page %}class="active"{% endif %}><a class="nav-link active" href="/projects"><i class="fas fa-project-diagram"></i> <span>Projects</span></a></li>
+                <li class="dropdown {% if is_added_streams_page %}active{% endif %}">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fab fa-hubspot"></i><span>Streams</span></a>
+                    <ul class="dropdown-menu">
+                        <li {% if is_added_streams_page %}class="active"{% endif %}><a class="nav-link" href="{{ url_for('web_stream.web_get_streams_page') }}">Streams</a></li>
+                    </ul>
+                </li>
             </ul>
 
             <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                 <a href="https://github.com/phakiller/kamui" class="btn btn-primary btn-lg btn-block btn-icon-split">
-                <i class="fas fa-rocket"></i> GitHub
+                <i class="fab fa-github-alt"></i> GitHub
                 </a>
             </div>
             </aside>
