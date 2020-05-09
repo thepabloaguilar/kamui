@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% set is_added_streams_page = True %}
+{% block main_content %}
+<section class="section">
+    <div class="section-header">
+        <div class="section-header-back">
+            <a href="/streams" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        </div>
+        <h1>{{ stream_details.stream.name }}</h1>
+        <div class="section-header-breadcrumb">
+        <div class="breadcrumb-item active">Streams</div>
+        <div class="breadcrumb-item">{{ stream_details.stream.name }}</div>
+        </div>
+    </div>
+    <div class="section-body">
+        <h2 class="section-title">{{ stream_details.stream.name }}</h2>
+        <p class="section-lead">
+            Stream details
+        </p>
+
+        <div class="row mt-sm-4">
+            <div class="col-12 col-md-12 col-lg-5">
+                <div class="card profile-widget">
+                    <div class="profile-widget-header">
+
+                        <div class="profile-widget-items">
+                            <div class="profile-widget-item">
+                                <div class="profile-widget-item-label">Name</div>
+                                <div class="profile-widget-item-value">{{ stream_details.stream.name }}</div>
+                            </div>
+                            <div class="profile-widget-item">
+                                <div class="profile-widget-item-label">Source Type</div>
+                                <div class="profile-widget-item-value">{{ stream_details.stream.source_type.value }}</div>
+                            </div>
+                            <div class="profile-widget-item">
+                                <div class="profile-widget-item-label">Source Name</div>
+                                <div class="profile-widget-item-value">{{ stream_details.stream.source_name }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-widget-description">
+                        <div class="profile-widget-name">Stream Schema
+                            <div class="text-muted d-inline font-weight-normal">
+                                <div class="slash"></div>
+                                From Zookeeper
+                            </div>
+                        </div>
+                        <b>STREAM SCHEMA WILL BE HERE</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-7">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Projects using this stream</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    {% for project in stream_details.projects %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ url_for('web_project.web_get_project_details_page', project_id=project.project_id) }}">
+                                                    {{ project.title }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <div class="badge badge-light">{{ project.status.value }}</div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

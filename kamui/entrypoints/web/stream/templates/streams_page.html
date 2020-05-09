@@ -38,7 +38,7 @@
                                     <td>{{ stream.name }}</td>
                                     <td>{{ stream.source_type.value }}</td>
                                     <td>{{ stream.source_name }}</td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                    <td><a href="{{ url_for('web_stream.web_get_stream_details_page', stream_id=stream.stream_id) }}" class="btn btn-secondary">Detail</a></td>
                                 </tr>
                                 {% endfor %}
                             </table>
