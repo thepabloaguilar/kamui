@@ -4,13 +4,16 @@ from uuid import UUID
 from returns.maybe import Maybe
 from returns.result import Result, Success
 
+from kamui.core.entity.stream import Stream
 from kamui.core.usecase.failure import FailureDetails
 from kamui.core.usecase.project.get_project_details import FindProjectByProjectId
+from kamui.core.usecase.stream.get_stream_details import FindProjectsByStream
 from .model import ProjectModel
 from kamui.configuration.database import database_session
 from kamui.core.entity.project import Project
 from kamui.core.usecase.project.create_new_project import CreateNewProject
 from kamui.core.usecase.project.get_projects_list import GetProjectsList
+from ..stream.model import StreamModel
 
 
 class CreateNewProjectRepository(CreateNewProject):
@@ -36,3 +39,11 @@ class FindProjectByProjectIdRepository(FindProjectByProjectId):
             lambda _project: _project.to_entity()  # type: ignore
         )
         return Success(maybe_project)
+
+
+class FindProjectsByStreamRepository(FindProjectsByStream):
+    def __call__(self, stream: Stream) -> Result[List[Project], FailureDetails]:
+        projects = ProjectModel.query.filter(
+            ProjectModel.streams.any(StreamModel.stream_id == stream.stream_id)
+        )
+        return Success([project.to_entity() for project in projects])
