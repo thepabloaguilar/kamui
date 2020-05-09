@@ -1,3 +1,6 @@
+from uuid import UUID
+
+from returns.maybe import Maybe
 from returns.result import Result, Success
 
 from kamui.configuration.database import database_session
@@ -9,6 +12,7 @@ from kamui.core.usecase.stream.create_new_stream import (
     SaveStream,
     CreateNewStreamCommand,
 )
+from kamui.core.usecase.stream.get_stream_details import FindStreamByStreamId
 from kamui.core.usecase.stream.get_streams import FindStreams
 from kamui.dataproviders.database.stream_project.model import StreamProjectModel
 from kamui.dataproviders.database.stream.model import StreamModel
@@ -38,6 +42,15 @@ class FindStreamsRepository(FindStreams):
         return Success(
             StreamList([stream.to_entity() for stream in find_streams_query])
         )
+
+
+class FindStreamByStreamIdRepository(FindStreamByStreamId):
+    def __call__(self, stream_id: UUID) -> Result[Maybe[Stream], FailureDetails]:
+        stream = StreamModel.query.filter(StreamModel.stream_id == stream_id).first()
+        maybe_stream: Maybe[Stream] = Maybe.new(stream).map(
+            lambda _stream: _stream.to_entity()  # type: ignore
+        )
+        return Success(maybe_stream)
 
 
 class FindStreamsByProjectRepository(FindStreamsByProject):
