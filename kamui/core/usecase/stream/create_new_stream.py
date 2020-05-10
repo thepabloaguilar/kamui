@@ -12,10 +12,10 @@ from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
 
 
 @dataclass_json
-@dataclass(frozen=True)
+@dataclass
 class CreateNewStreamCommand:
     @dataclass_json
-    @dataclass(frozen=True)
+    @dataclass
     class StreamField:
         name: str
         type: str
@@ -63,6 +63,9 @@ class CreateNewStreamFromTopicUsecase:
     def __call__(
         self, create_new_stream_command: CreateNewStreamCommand
     ) -> Result[Stream, BusinessFailureDetails]:
+        create_new_stream_command.stream_name = (
+            create_new_stream_command.stream_name.upper()
+        )
         return (
             self.__create_stream_from_kafka_topic(create_new_stream_command)
             .bind(self.__save_stream)
@@ -89,6 +92,9 @@ class CreateNewStreamFromStreamUsecase:
         self, create_new_stream_command: CreateNewStreamCommand
     ) -> Result[Stream, BusinessFailureDetails]:
         # TODO: verify if fields in command are present in the stream
+        create_new_stream_command.stream_name = (
+            create_new_stream_command.stream_name.upper()
+        )
         return (
             self.__create_new_stream_from_stream(create_new_stream_command)
             .bind(self.__save_stream)
