@@ -42,10 +42,26 @@
                         <div class="profile-widget-name">Stream Schema
                             <div class="text-muted d-inline font-weight-normal">
                                 <div class="slash"></div>
-                                From Zookeeper
+                                From Schema Registry
                             </div>
                         </div>
-                        <b>STREAM SCHEMA WILL BE HERE</b>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Field Name</th>
+                                    <th>Field Type</th>
+                                </tr>
+                                {% for stream_fields in stream_details.ksql_stream_detailed.fields %}
+                                    <tr>
+                                        <td>{{ stream_fields.name }}</td>
+                                        <td>{{ stream_fields.schema.type }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center pt-0">
+                        <div class="font-weight-bold mb-2 text-small">Format: <b>{{ stream_details.ksql_stream_detailed.format }}</b></div>
                     </div>
                 </div>
             </div>
