@@ -146,7 +146,8 @@
                                         </tr>
                                         {% for stream in project_details.streams %}
                                             <tr>
-                                                <td>{{ stream.stream_id }}</td>
+                                                {% set stream_id_as_string = stream.stream_id|string %}
+                                                <td>{{ stream_id_as_string[:8] }}</td>
                                                 <td><a href="{{ url_for('web_stream.web_get_stream_details_page', stream_id=stream.stream_id) }}">{{ stream.name }}</a></td>
                                             </tr>
                                         {% endfor %}

@@ -34,7 +34,8 @@
                                 </tr>
                                 {% for stream in streams %}
                                 <tr>
-                                    <td>{{ stream.stream_id }}</td>
+                                    {% set stream_id_as_string = stream.stream_id|string %}
+                                    <td>{{ stream_id_as_string[:8] }}</td>
                                     <td>{{ stream.name }}</td>
                                     <td>{{ stream.source_type.value }}</td>
                                     <td>{{ stream.source_name }}</td>

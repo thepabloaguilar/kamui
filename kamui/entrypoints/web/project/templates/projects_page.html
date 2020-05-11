@@ -38,7 +38,8 @@
                                 </tr>
                                 {% for project in projects %}
                                 <tr>
-                                    <td>{{ project.project_id }}</td>
+                                    {% set project_id_as_string = project.project_id|string %}
+                                    <td>{{ project_id_as_string[:8] }}</td>
                                     <td>{{ project.title }}</td>
                                     <td>{{ project.created_at }}</td>
                                     <td><div class="badge badge-light">{{ project.status.value }}</div></td>
