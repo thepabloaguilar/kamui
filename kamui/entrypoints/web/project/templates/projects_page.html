@@ -5,11 +5,11 @@
     <div class="section-header">
         <h1>Projects</h1>
         <div class="section-header-button">
-        <a href="/projects/create" class="btn btn-primary">Add New</a>
+            <a href="{{ url_for('web_project.web_get_create_project_page') }}" class="btn btn-primary">Add New</a>
         </div>
         <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active">Stream</div>
-        <div class="breadcrumb-item">Projects</div>
+            <div class="breadcrumb-item active">Stream</div>
+            <div class="breadcrumb-item">Projects</div>
         </div>
     </div>
     <div class="section-body">
@@ -65,7 +65,7 @@
                             <p class="lead">
                                 Sorry we can't find any project, to get rid of this message, make at least 1 entry.
                             </p>
-                            <a href="/projects/create" class="btn btn-primary mt-4">Create new One</a>
+                            <a href="{{ url_for('web_project.web_get_create_project_page') }}" class="btn btn-primary mt-4">Create new One</a>
                         </div>
                     </div>
                 </div>

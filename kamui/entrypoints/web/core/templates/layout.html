@@ -33,14 +33,14 @@
         <div class="main-sidebar sidebar-style-2">
             <aside id="sidebar-wrapper">
             <div class="sidebar-brand">
-                <a href="/home">KAMUI</a>
+                <a href="{{ url_for('web_home.web_get_home_page') }}">KAMUI</a>
             </div>
             <div class="sidebar-brand sidebar-brand-sm">
-                <a href="/home"><i class="fas fa-stream"></i></a>
+                <a href="{{ url_for('web_home.web_get_home_page') }}"><i class="fas fa-stream"></i></a>
             </div>
             <ul class="sidebar-menu">
                 <li class="menu-header">Stream</li>
-                <li {% if is_projects_page %}class="active"{% endif %}><a class="nav-link active" href="/projects"><i class="fas fa-project-diagram"></i> <span>Projects</span></a></li>
+                <li {% if is_projects_page %}class="active"{% endif %}><a class="nav-link active" href="{{ url_for('web_project.web_get_projects_page') }}"><i class="fas fa-project-diagram"></i> <span>Projects</span></a></li>
                 <li class="dropdown {% if is_added_streams_page %}active{% endif %}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fab fa-hubspot"></i><span>Streams</span></a>
                     <ul class="dropdown-menu">

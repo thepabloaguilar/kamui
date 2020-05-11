@@ -4,7 +4,7 @@
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="/streams" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ url_for('web_stream.web_get_streams_page') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
         <h1>{{ stream_details.stream.name }}</h1>
         <div class="section-header-breadcrumb">

@@ -81,7 +81,7 @@
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="/projects" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ url_for('web_project.web_get_projects_page') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
         <h1>{{ project_details.project.title }}</h1>
         <div class="section-header-button">
@@ -90,8 +90,8 @@
                     Add Stream
                 </button>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" href="/streams/create/fromtopic?project_id={{ project_details.project.project_id }}">From Topic</a>
-                    <a class="dropdown-item" href="/streams/create/from-stream?project_id={{ project_details.project.project_id }}">From Stream</a>
+                    <a class="dropdown-item" href="{{ url_for('web_stream.web_get_create_new_stream_from_topic_page', project_id=project_details.project.project_id) }}">From Topic</a>
+                    <a class="dropdown-item" href="{{ url_for('web_stream.web_get_create_new_stream_from_stream_page', project_id=project_details.project.project_id) }}">From Stream</a>
                 </div>
             </div>
         </div>
@@ -181,9 +181,9 @@
                                 <div class="dropdown-menu" x-placement="bottom-start"
                                      style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
                                     <a class="dropdown-item"
-                                       href="/streams/create/fromtopic?project_id={{ project_details.project.project_id }}">From
+                                       href="{{ url_for('web_stream.web_get_create_new_stream_from_topic_page', project_id=project_details.project.project_id) }}">From
                                         Topic</a>
-                                    <a class="dropdown-item" href="/streams/create/from-stream?project_id={{ project_details.project.project_id }}">From Stream</a>
+                                    <a class="dropdown-item" href="{{ url_for('web_stream.web_get_create_new_stream_from_stream_page', project_id=project_details.project.project_id) }}">From Stream</a>
                                 </div>
                             </div>
                         </div>

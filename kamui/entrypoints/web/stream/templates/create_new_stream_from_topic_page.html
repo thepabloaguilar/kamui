@@ -119,7 +119,7 @@
             function setTopicSchema(topicName, callback) {
                 return $.ajax({
                     type: "GET",
-                    url: `http://localhost:5000/api/topics/${topicName}/schema`,
+                    url: `/api/topics/${topicName}/schema`,
                     cache: false
                 })
                     .then(response => {
@@ -234,7 +234,7 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="/projects" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ url_for('web_project.web_get_project_details_page', project_id=project_id) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>Create New Stream from Topic</h1>
             <div class="section-header-breadcrumb">

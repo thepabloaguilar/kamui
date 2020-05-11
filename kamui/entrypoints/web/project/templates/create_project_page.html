@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <form method="POST" action="/projects/create">
+                    <form method="POST" action="{{ url_for('web_project.web_create_new_project') }}">
                         {{ form.csrf_token }}
                         <div class="card-header">
                             <h4>Project's Information</h4>
