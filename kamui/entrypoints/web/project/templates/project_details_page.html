@@ -143,13 +143,11 @@
                                         <tr>
                                             <th>Stream ID</th>
                                             <th>Name</th>
-                                            <th>Action</th>
                                         </tr>
                                         {% for stream in project_details.streams %}
                                             <tr>
                                                 <td>{{ stream.stream_id }}</td>
-                                                <td>{{ stream.name }}</td>
-                                                <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                                <td><a href="{{ url_for('web_stream.web_get_stream_details_page', stream_id=stream.stream_id) }}">{{ stream.name }}</a></td>
                                             </tr>
                                         {% endfor %}
                                     </table>
