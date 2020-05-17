@@ -4,7 +4,8 @@ import { bindActionCreators } from "redux";
 import { getAllProjects } from "./actions";
 
 import SiteWrapper from "../../SiteWrapper";
-import {Grid, Page, Table, Card, Text, Button} from "tabler-react";
+import { Grid, Page, Table, Card, Text, Button } from "tabler-react";
+import { Link } from "react-router-dom";
 
 function Projects(props) {
   useEffect(() => {
@@ -19,7 +20,7 @@ function Projects(props) {
             <Card
               title="All Projects"
               options={
-                <Button icon="plus" color="primary" outline>
+                <Button RootComponent={Link} to="/projects/create" icon="plus" color="primary" outline>
                   Add new
                 </Button>
               }

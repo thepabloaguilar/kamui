@@ -7,3 +7,6 @@ const headers = () => ({
 
 export const getProjects = () =>
   service.axios.get('/projects', { headers: headers() })
+
+export const createProject = (payload) =>
+  service.axios.post('/projects', payload, { headers: headers() })
