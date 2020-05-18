@@ -1,0 +1,66 @@
+.streamsGraph {
+    width: 100%;
+    height: 700px;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.streamsGraph text {
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.streamsGraph .node rect {
+    stroke-width: 1.5px;
+    stroke: #bbb;
+    fill: #666;
+}
+
+.streamsGraph .status {
+    height: 100%;
+    width: 15px;
+    display: block;
+    float: left;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-right: 4px;
+}
+
+.streamsGraph .stream .status {
+    background-color: #6777ef;
+}
+
+.streamsGraph .topic .status {
+    background-color: #fff;
+}
+
+.streamsGraph .streamBox {
+    text-align: center;
+}
+
+.streamsGraph .name {
+    position: relative;
+    top: 25%;
+}
+
+.streamsGraph .node g div {
+    width: 200px;
+    height: 40px;
+    color: #fff;
+}
+
+.streamsGraph .edgeLabel text {
+    width: 50px;
+    fill: #fff;
+}
+
+.streamsGraph .edgePath path {
+    stroke: #999;
+    stroke-width: 1.5px;
+    fill: #999;
+}
