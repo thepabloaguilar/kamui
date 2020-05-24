@@ -1,7 +1,7 @@
 import Projects from "./projects";
-import CreateProject from "./create_project";
-import ProjectDetails from "./project_details";
-import CreateNewStreamFromTopic from "./create_new_stream_from_topic";
+import CreateProject from "./createProject";
+import ProjectDetails from "./projectDetails";
+import CreateNewStreamFromTopic from "./createNewStreamFromTopic";
 
 export {
   Projects,
