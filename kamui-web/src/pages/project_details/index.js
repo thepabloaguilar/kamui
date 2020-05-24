@@ -109,7 +109,7 @@ function ProjectDetails(props) {
                 title="Streams Graph"
                 className="streamsGraph"
                 options={
-                  <Button RootComponent={Link} to="/projects/streams/create" icon="plus" color="primary" outline>
+                  <Button RootComponent={Link} to={`/projects/${projectId}/streams/create`} icon="plus" color="primary" outline>
                     Add new stream
                   </Button>
                 }
