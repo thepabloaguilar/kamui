@@ -105,15 +105,20 @@ function ProjectDetails(props) {
           </Grid.Row>
           <Grid.Row cards>
             <Grid.Col width={12}>
-              <Card
-                title="Streams Graph"
-                className="streamsGraph"
-                options={
-                  <Button RootComponent={Link} to={`/projects/${projectId}/streams/create`} icon="plus" color="primary" outline>
-                    Add new stream
-                  </Button>
-                }
-              >
+              <Card className="streamsGraph">
+                <Card.Header>
+                  <Card.Title>Streams Graph</Card.Title>
+                  <Card.Options>
+                    <Button RootComponent={Link} to={`/projects/${projectId}/streams/create/from-topic`} icon="plus"
+                            color="primary" outline>
+                      Add new stream from topic
+                    </Button>
+                    <Button RootComponent={Link} to={`/projects/${projectId}/streams/create/from-stream`} icon="plus"
+                            color="primary" outline>
+                      Add new stream
+                    </Button>
+                  </Card.Options>
+                </Card.Header>
                 <DagreGraph
                   nodes={nodes}
                   links={links}
