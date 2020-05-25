@@ -31,6 +31,6 @@ export default (state = INITIAL_STATE, action) => {
     case CREATE_NEW_STREAM_FROM_TOPIC_DATA_RECEIVED:
       return { ...state, submitFormResponse: action.payload, waitingSubmitFormResponse: false }
     default:
-      return INITIAL_STATE
+      return state
   }
 }
