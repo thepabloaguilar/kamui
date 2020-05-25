@@ -25,7 +25,6 @@ function CreateNewStreamFromTopic(props) {
       "source_name": values.sourceName.value,
       "source_type": "TOPIC",
     }
-    window.alert(JSON.stringify(payload, null, 2));
     props.createStreamAction(payload);
     actions.setSubmitting(false);
   }
