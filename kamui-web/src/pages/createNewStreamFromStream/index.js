@@ -3,11 +3,70 @@ import SiteWrapper from "../../SiteWrapper";
 import { bindActionCreators } from "redux";
 import { createStreamAction, getStreamDetailAction, getStreamListAction } from "./actions";
 import { connect } from "react-redux";
-import { Card, Form, Grid, Page } from "tabler-react";
+import { Button, Card, Form, Grid, Page } from "tabler-react";
 import Wizard from "../../components/wizard";
 import * as Yup from "yup";
 import CustomFormikField from "../../components/customFormikField";
 import ReactSelectFormik from "../../components/reactSelectFormik";
+import { FieldArray, useField, Form as FormikForm } from "formik";
+
+const CustomFieldArray = ({fieldOptions, ...props }) => {
+  const [field] = useField(props);
+
+  const conditionsOptions = [
+    { value: "=", label: "EQUAL" },
+    { value: "!=", label: "DIFFERENT" },
+    { value: ">", label: "GREATER THAN" },
+    { value: ">=", label: "EQUAL OR GREATER THAN" },
+    { value: "<", label: "LESS THAN" },
+    { value: "<=", label: "EQUAL OR LESS THAN" }
+  ]
+
+  return (
+    <FormikForm>
+      <FieldArray
+        {...field}
+        render={arrayHelpers => (
+          <div>
+            {field.value && field.value.length > 0 ? (
+              field.value.map((friend, index) => (
+                <div key={index}>
+                  <Grid.Row>
+                    <Grid.Col width={4}>
+                      <ReactSelectFormik
+                        name={`${field.name}.${index}.field`}
+                        options={fieldOptions}
+                      />
+                    </Grid.Col>
+                    <Grid.Col width={3}>
+                      <ReactSelectFormik
+                        name={`${field.name}.${index}.condition`}
+                        options={conditionsOptions}
+                      />
+                    </Grid.Col>
+                    <Grid.Col width={3}>
+                      <CustomFormikField RootComponent={Form.Input} name={`${field.name}.${index}.value`}/>
+                    </Grid.Col>
+                    <Grid.Col width={2}>
+                      <Button.List>
+                        <Button type='button' color='primary' onClick={() => arrayHelpers.remove(index)}
+                                outline>-</Button>
+                        <Button type='button' color='primary' onClick={() => arrayHelpers.insert(index + 1, '')}
+                                outline>+</Button>
+                      </Button.List>
+                    </Grid.Col>
+                  </Grid.Row>
+                </div>
+              ))
+            ) : (
+              <Button type='button' color='primary' onClick={() => arrayHelpers.push('')} outline>Add a filter</Button>
+            )}
+          </div>
+        )}
+      />
+    </FormikForm>
+  )
+}
 
 function CreateNewStreamFromStream(props) {
   useEffect(() =>{
@@ -21,6 +80,9 @@ function CreateNewStreamFromStream(props) {
       "stream_name": values.streamName,
       "fields": values.fields.map(field => ({ name: field.value.name, type: field.value.schema.type })),
       "source_name": values.sourceName.value.name,
+      "filters": values.filters.map(
+        filter => ({ field: filter.field.value.name, condition: filter.condition.value, value: filter.value })
+      ),
       "source_type": "STREAM",
     }
     props.createStreamAction(payload);
@@ -28,7 +90,9 @@ function CreateNewStreamFromStream(props) {
   }
 
   const streamsOptions = props.streamList.map(stream => ({ value: stream, label: stream.name }))
-  const fieldOptions = props.streamDetail ? props.streamDetail.fields.map(field => ({ value: field, label: field.name })) : []
+  const fieldOptions = props.streamDetail
+    ? props.streamDetail.fields.map(field => ({ value: { ...field, name: `${props.streamDetail.name}.${field.name}` }, label: `${props.streamDetail.name}.${field.name}` }))
+    : []
 
   return (
     <SiteWrapper>
@@ -42,6 +106,7 @@ function CreateNewStreamFromStream(props) {
                     streamName: "",
                     sourceName: {},
                     fields: [],
+                    filters: [],
                   }}
                   onSubmit={onSubmit}
                   finalizeButtonText="Create Stream"
@@ -101,6 +166,25 @@ function CreateNewStreamFromStream(props) {
                       closeMenuOnSelect={false}
                       options={fieldOptions}
                     />
+                  </Wizard.Page>
+                  <Wizard.Page
+                    validationSchema={
+                      Yup.object({
+                        filters: Yup.array()
+                          .of(
+                            Yup.object().shape({
+                              field: Yup.object().required('Select field'),
+                              condition: Yup.object().required('Select condition'),
+                              value: Yup.string()
+                                .matches(/^[a-zA-Z0-9\s]+$/, {message: 'Value could not contain special characters'})
+                            })
+                          )
+                      })
+                    }
+                  >
+                    <Form.Group label='Filters'>
+                      <CustomFieldArray fieldOptions={fieldOptions} name="filters"/>
+                    </Form.Group>
                   </Wizard.Page>
                 </Wizard>
               </Card.Body>
