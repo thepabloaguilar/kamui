@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import List
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import List, Union
 from uuid import UUID
 
 from dataclasses_json import dataclass_json
@@ -9,6 +10,15 @@ from returns.result import Result
 from kamui.core.entity.source import SourceType
 from kamui.core.entity.stream import Stream
 from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
+
+
+class FilterCondition(Enum):
+    EQUAL = "="
+    DIFFERENT = "!="
+    GREATER_THAN = ">"
+    LESS_THAN = "<"
+    GREATER_OR_EQUAL_THAN = ">="
+    LESS_OR_EQUAL_THAN = "<="
 
 
 @dataclass_json
@@ -20,11 +30,22 @@ class CreateNewStreamCommand:
         name: str
         type: str
 
+    @dataclass_json
+    @dataclass
+    class FilterCondition:
+        field: str
+        condition: FilterCondition
+        value: Union[int, float, bool, str]
+
+        def to_statement(self) -> str:
+            return f"{self.field} {self.condition.value} '{self.value}'"
+
     project_id: UUID
     stream_name: str
     fields: List[StreamField]
     source_name: str
     source_type: SourceType
+    filters: List[FilterCondition] = field(default_factory=list)
 
 
 class CreateStreamFromKafkaTopic(ABC):

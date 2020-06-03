@@ -144,6 +144,9 @@ class CreateNewStreamFromStreamRepository(CreateNewStreamFromStream):
         desired_stream_fields = ",".join(
             [field.name for field in create_new_stream_command.fields]
         )
+        filters = " AND ".join(
+            filter_.to_statement() for filter_ in create_new_stream_command.filters
+        )
 
         response = self.__client.post(
             url=f"{self.__KSQL_SERVER_URL}ksql",
@@ -151,7 +154,9 @@ class CreateNewStreamFromStreamRepository(CreateNewStreamFromStream):
                 "ksql": f"""
                             CREATE STREAM {create_new_stream_command.stream_name} AS
                             SELECT {desired_stream_fields}
-                            FROM {create_new_stream_command.source_name} EMIT CHANGES;
+                            FROM {create_new_stream_command.source_name}
+                            {f'WHERE {filters}' if filters else ''}
+                            EMIT CHANGES;
                         """
             },
             headers={
