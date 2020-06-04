@@ -9,7 +9,7 @@ from kamui.core.usecase.stream import GetKSQLStreamsUsecase
 
 
 class GetKSQLStreamsListResource(Resource):
-    API_PATH = "/streams"
+    API_PATH = "/ksql-streams"
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
