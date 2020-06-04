@@ -7,6 +7,7 @@ from dataclasses_json import dataclass_json
 from kamui.core.entity.source import SourceType
 
 
+@dataclass_json
 @dataclass
 class Stream:
     stream_id: UUID
