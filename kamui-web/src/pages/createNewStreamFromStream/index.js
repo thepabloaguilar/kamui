@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import SiteWrapper from "../../SiteWrapper";
 import { bindActionCreators } from "redux";
-import { createStreamAction, getStreamDetailAction, getStreamListAction } from "./actions";
+import { createStreamAction, getKSQLStreamDetailAction, getStreamListAction } from "./actions";
 import { connect } from "react-redux";
 import { Button, Card, Form, Grid, Page } from "tabler-react";
 import Wizard from "../../components/wizard";
@@ -141,7 +141,7 @@ function CreateNewStreamFromStream(props) {
                         isDisabled={props.waitingStreamList || props.waitingStreamDetail}
                         isLoading={props.waitingStreamList || props.waitingStreamDetail}
                         options={streamsOptions}
-                        onChange={(value) => props.getStreamDetailAction(value.label)}
+                        onChange={(value) => props.getKSQLStreamDetailAction(value.label)}
                       />
                     </Form.Group>
                   </Wizard.Page>
@@ -206,7 +206,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     getStreamListAction,
-    getStreamDetailAction,
+    getKSQLStreamDetailAction,
     createStreamAction,
   }, dispatch)
 
