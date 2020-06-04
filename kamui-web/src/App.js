@@ -22,8 +22,8 @@ function App(props: Props) {
           <Route exact path="/projects/create" component={CreateProject} />
           <Route exact path="/projects/:projectId/streams/create/from-topic" component={CreateNewStreamFromTopic} />
           <Route exact path="/projects/:projectId/streams/create/from-stream" component={CreateNewStreamFromStream} />
-          <Route excat path="/projects/:projectId" component={ProjectDetails} />
-          <Route excat path="/streams" component={Streams} />
+          <Route exact path="/projects/:projectId" component={ProjectDetails} />
+          <Route exact path="/streams" component={Streams} />
         </Switch>
       </Router>
     </React.StrictMode>
