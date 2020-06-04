@@ -2,7 +2,14 @@ import * as React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "tabler-react/dist/Tabler.css";
-import { Projects, CreateProject, ProjectDetails, CreateNewStreamFromTopic, CreateNewStreamFromStream } from "./pages";
+import {
+  Projects,
+  CreateProject,
+  ProjectDetails,
+  CreateNewStreamFromTopic,
+  CreateNewStreamFromStream,
+  Streams,
+} from "./pages";
 import "./App.css"
 
 function App(props: Props) {
@@ -16,6 +23,7 @@ function App(props: Props) {
           <Route exact path="/projects/:projectId/streams/create/from-topic" component={CreateNewStreamFromTopic} />
           <Route exact path="/projects/:projectId/streams/create/from-stream" component={CreateNewStreamFromStream} />
           <Route excat path="/projects/:projectId" component={ProjectDetails} />
+          <Route excat path="/streams" component={Streams} />
         </Switch>
       </Router>
     </React.StrictMode>

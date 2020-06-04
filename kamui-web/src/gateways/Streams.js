@@ -8,6 +8,9 @@ const headers = () => ({
 export const createStream = (payload) =>
   service.axios.post('/streams', payload, { headers: headers() })
 
+export const getStreams = () =>
+  service.axios.get('/streams', { headers: headers() })
+
 export const getKSQLStreams = () =>
   service.axios.get('/ksql-streams', { headers: headers() })
 
