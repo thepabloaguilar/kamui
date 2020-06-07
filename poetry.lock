@@ -538,7 +538,7 @@ description = "Make your functions return something meaningful, typed, and safe!
 name = "returns"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.13.0"
+version = "0.14.0"
 
 [package.dependencies]
 typing-extensions = ">=3.7,<4.0"
@@ -697,7 +697,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "95e08a98f03a99f2297c3f311c432d0ee25246e21eeffc008b96c5bb8b94e1fd"
+content-hash = "20c035898f6da093e04e81990b6713674c83c481800c1e465dc6589318a81cc9"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1025,8 +1025,8 @@ regex = [
     {file = "regex-2020.4.4.tar.gz", hash = "sha256:295badf61a51add2d428a46b8580309c520d8b26e769868b922750cf3ce67142"},
 ]
 returns = [
-    {file = "returns-0.13.0-py3-none-any.whl", hash = "sha256:2de5bd9c1a754c76aead1af33cd183ad0ed71fa7199cf67865e28f4fae349b6c"},
-    {file = "returns-0.13.0.tar.gz", hash = "sha256:6003e1a4ef414ec36b42b1cf29a8a87c65f305ab5c9ef7a794eaa4cfb5ad5b6e"},
+    {file = "returns-0.14.0-py3-none-any.whl", hash = "sha256:6b529544ec64dffce72dd183165ed76acfd41bb1a17eb08f2fc0df85c74c9e89"},
+    {file = "returns-0.14.0.tar.gz", hash = "sha256:42e490d7e35ce6ba939bcfedaf1173b4b8cec286bdd1c3792043368f08cd0125"},
 ]
 rfc3986 = [
     {file = "rfc3986-1.4.0-py2.py3-none-any.whl", hash = "sha256:af9147e9aceda37c91a05f4deb128d4b4b49d6b199775fd2d2927768abdc8f50"},
