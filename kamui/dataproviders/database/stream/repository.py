@@ -47,7 +47,7 @@ class FindStreamsRepository(FindStreams):
 class FindStreamByStreamIdRepository(FindStreamByStreamId):
     def __call__(self, stream_id: UUID) -> Result[Maybe[Stream], FailureDetails]:
         stream = StreamModel.query.filter(StreamModel.stream_id == stream_id).first()
-        maybe_stream: Maybe[Stream] = Maybe.new(stream).map(
+        maybe_stream: Maybe[Stream] = Maybe.from_value(stream).map(
             lambda _stream: _stream.to_entity()  # type: ignore
         )
         return Success(maybe_stream)
