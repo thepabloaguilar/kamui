@@ -1,11 +1,15 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from functools import partial
-from typing import List, Optional, Any
+from typing import List
 from uuid import UUID
 
+from dataclasses_json import dataclass_json
+from returns.converters import maybe_to_result
+from returns.pointfree import bind
+from returns.curry import curry, partial
 from returns.maybe import Maybe
-from returns.result import Result, Success, Failure
+from returns.pipeline import flow
+from returns.result import Result, Success
 
 from kamui.core.entity.project import Project
 from kamui.core.entity.stream import Stream, KSQLStreamDetailed
@@ -13,11 +17,22 @@ from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
 from kamui.core.usecase.stream import GetStreamByNameUsecase
 
 
+@dataclass_json
 @dataclass
 class StreamDetails:
-    stream: Optional[Stream] = None
-    projects: Optional[List[Project]] = None
-    ksql_stream_detailed: Optional[KSQLStreamDetailed] = None
+    stream: Stream
+    projects: List[Project]
+    ksql_stream_detailed: KSQLStreamDetailed
+
+    @classmethod
+    @curry
+    def build(
+        cls,
+        stream: Stream,
+        projects: List[Project],
+        ksql_stream_detailed: KSQLStreamDetailed,
+    ) -> "StreamDetails":
+        return cls(stream, projects, ksql_stream_detailed)
 
 
 class FindStreamByStreamId(ABC):
@@ -44,29 +59,26 @@ class GetStreamDetailsUsecase:
         self.__get_stream_by_name = get_stream_by_name
 
     def __call__(self, stream_id: UUID) -> Result[StreamDetails, FailureDetails]:
-        stream_details = StreamDetails()
-        return (
-            self.__find_stream_by_stream_id(stream_id)
-            .bind(self.__verify_if_stream_exist)
-            .map(partial(self.__set_attr, stream_details, "stream"))
-            .bind(self.__find_projects_by_stream)
-            .map(partial(self.__set_attr, stream_details, "projects"))
-            .bind(lambda _: self.__get_stream_by_name(stream_details.stream.name))  # type: ignore # noqa: E501
-            .map(partial(self.__set_attr, stream_details, "ksql_stream_detailed"))
-            .map(lambda _: stream_details)
+        stream = self.__find_stream_by_stream_id(stream_id).bind(
+            self.__verify_if_stream_exist
+        )
+        partial_projects = partial(stream.bind, self.__find_projects_by_stream)
+        partial_ksql = partial(
+            stream.bind, lambda stream_: self.__get_stream_by_name(stream_.name)
         )
 
-    def __set_attr(self, obj: Any, attr: str, value: Any) -> Any:
-        setattr(obj, attr, value)
-        return value
+        return flow(
+            Result.from_value(StreamDetails.build),
+            stream.apply,
+            bind(lambda to_apply: partial_projects().apply(Success(to_apply))),
+            bind(lambda to_apply: partial_ksql().apply(Success(to_apply))),
+        )
 
     def __verify_if_stream_exist(
         self, stream: Maybe[Stream]
     ) -> Result[Stream, BusinessFailureDetails]:
-        if isinstance(stream, Maybe.success_type):
-            return Success(stream.unwrap())
-        return Failure(
-            BusinessFailureDetails(
+        return maybe_to_result(stream).alt(
+            lambda __: BusinessFailureDetails(
                 reason="NOT_FOUND", failure_message="Stream not found"
             )
         )
