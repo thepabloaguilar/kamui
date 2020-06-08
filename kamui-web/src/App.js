@@ -9,6 +9,7 @@ import {
   CreateNewStreamFromTopic,
   CreateNewStreamFromStream,
   Streams,
+  StreamDetails,
 } from "./pages";
 import "./App.css"
 
@@ -24,6 +25,7 @@ function App(props: Props) {
           <Route exact path="/projects/:projectId/streams/create/from-stream" component={CreateNewStreamFromStream} />
           <Route exact path="/projects/:projectId" component={ProjectDetails} />
           <Route exact path="/streams" component={Streams} />
+          <Route exact path="/streams/:streamId" component={StreamDetails} />
         </Switch>
       </Router>
     </React.StrictMode>

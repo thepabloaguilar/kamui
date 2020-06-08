@@ -4,6 +4,7 @@ import ProjectDetails from "./projectDetails";
 import CreateNewStreamFromTopic from "./createNewStreamFromTopic";
 import CreateNewStreamFromStream from "./createNewStreamFromStream";
 import Streams from "./streams";
+import StreamDetails from "./streamDetails";
 
 export {
   Projects,
@@ -12,4 +13,5 @@ export {
   CreateNewStreamFromTopic,
   CreateNewStreamFromStream,
   Streams,
+  StreamDetails,
 };

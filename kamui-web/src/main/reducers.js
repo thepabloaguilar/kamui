@@ -5,6 +5,7 @@ import ProjectDetailsReducer from "../pages/projectDetails/projectDetailsReducer
 import CreateNewStreamFromTopicReducer from "../pages/createNewStreamFromTopic/createNewStreamFromTopicReducer";
 import CreateNewStreamFromStreamReducer from "../pages/createNewStreamFromStream/createNewStreamFromStreamReducer";
 import StreamsReducer from "../pages/streams/streamsReducer";
+import StreamDetailsReducer from "../pages/streamDetails/streamDetailsReducer";
 
 const rootReducer = combineReducers({
   projectsState: ProjectsReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   createNewStreamFromTopicState: CreateNewStreamFromTopicReducer,
   createNewStreamFromStreamState: CreateNewStreamFromStreamReducer,
   streamsState: StreamsReducer,
+  streamDetailsState: StreamDetailsReducer,
 })
 
 export default rootReducer

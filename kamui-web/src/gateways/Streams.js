@@ -11,6 +11,9 @@ export const createStream = (payload) =>
 export const getStreams = () =>
   service.axios.get('/streams', { headers: headers() })
 
+export const getStreamDetails = (streamId) =>
+  service.axios.get(`/streams/${streamId}`, { headers: headers() })
+
 export const getKSQLStreams = () =>
   service.axios.get('/ksql-streams', { headers: headers() })
 
