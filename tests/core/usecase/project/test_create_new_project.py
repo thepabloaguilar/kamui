@@ -9,6 +9,7 @@ from kamui.core.entity.project_status import ProjectStatus
 from kamui.core.usecase.project.create_new_project import (
     CreateNewProjectUsecase,
     CreateNewProject,
+    CreateNewProjectCommand,
 )
 
 
@@ -25,7 +26,7 @@ def create_new_project_usecase(create_new_project: Mock) -> CreateNewProjectUsec
 def test_create_new_project(
     create_new_project_usecase: CreateNewProjectUsecase, create_new_project: Mock
 ) -> None:
-    project_title = "Test Project Title"
+    command = CreateNewProjectCommand(title="Test Project Title")
     expected_project = Project(
         project_id=uuid4(),
         title="Test Project Title",
@@ -34,8 +35,8 @@ def test_create_new_project(
     )
 
     create_new_project.return_value = expected_project
-    actual_project = create_new_project_usecase(project_title)
+    actual_project = create_new_project_usecase(command)
 
     create_new_project.assert_called_once()
-    create_new_project.assert_called_with(project_title)
+    create_new_project.assert_called_with("Test Project Title")
     assert expected_project == actual_project
