@@ -40,7 +40,7 @@ def test_should_return_failure_not_found_when_project_was_not_found(
     find_project_by_project_id: Mock,
 ) -> None:
     project_id = uuid4()
-    project: Maybe[None] = Maybe.new(None)
+    project: Maybe[None] = Maybe.from_value(None)
     find_project_by_project_id.return_value = Success(project)
 
     actual = get_project_details_usecase(project_id)
@@ -63,7 +63,7 @@ def test_should_return_projects_details_without_streams(
         created_at=datetime.now(),
         status=ProjectStatus.ACTIVE,
     )
-    project_maybe: Maybe[Project] = Maybe.new(project)
+    project_maybe: Maybe[Project] = Maybe.from_value(project)
     find_project_by_project_id.return_value = Success(project_maybe)
     find_streams_by_project.return_value = Success(StreamList([]))
 
@@ -89,7 +89,7 @@ def test_should_return_projects_details_one_streams(
         created_at=datetime.now(),
         status=ProjectStatus.ACTIVE,
     )
-    project_maybe: Maybe[Project] = Maybe.new(project)
+    project_maybe: Maybe[Project] = Maybe.from_value(project)
     streams = [
         Stream(
             stream_id=uuid4(),
@@ -124,7 +124,7 @@ def test_should_return_projects_details_two_streams(
         created_at=datetime.now(),
         status=ProjectStatus.ACTIVE,
     )
-    project_maybe: Maybe[Project] = Maybe.new(project)
+    project_maybe: Maybe[Project] = Maybe.from_value(project)
     streams = [
         Stream(
             stream_id=uuid4(),
