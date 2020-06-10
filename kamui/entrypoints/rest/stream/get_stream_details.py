@@ -19,8 +19,9 @@ class GetStreamDetailsResource(Resource):
 
     def get(self, stream_id: UUID) -> Any:
         # TODO: Threat errors
+        stream_details = self.__get_stream_details(stream_id)
         return Response(
-            response=self.__get_stream_details(stream_id).unwrap().to_json(),
+            response=stream_details.unwrap().to_json(),  # type: ignore
             status=200,
             mimetype="application/json",
         )

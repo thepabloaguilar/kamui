@@ -19,8 +19,9 @@ class GetProjectDetailsResource(Resource):
 
     def get(self, project_id: UUID) -> Any:
         # TODO: Threat errors
+        project_details = self.__get_project_details(project_id)
         return Response(
-            response=self.__get_project_details(project_id).unwrap().to_json(),
+            response=project_details.unwrap().to_json(),  # type: ignore
             status=200,
             mimetype="application/json",
         )

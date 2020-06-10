@@ -11,13 +11,13 @@ from kamui.core.usecase.topic import GetAvailableTopicNamesUsecase
 class GetTopicNamesResource(Resource):
     API_PATH = "/topics"
 
-    def __init__(self, *args: Any, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.__get_available_topic_names = di_container.resolve(
             GetAvailableTopicNamesUsecase
         )
 
-    def dispatch_request(self) -> str:
+    def dispatch_request(self) -> Any:
         available_topic_names = self.__get_available_topic_names()
         return (
             available_topic_names.map(self.__process_success_return)

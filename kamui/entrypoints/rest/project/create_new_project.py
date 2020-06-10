@@ -18,9 +18,9 @@ class CreateNewProjectResource(Resource):
         )
 
     def post(self) -> Any:
-        command = CreateNewProjectCommand.from_dict(request.json)
+        command = CreateNewProjectCommand.from_dict(request.json)  # type: ignore
         return Response(
-            response=self.__create_new_project(command).to_json(),
+            response=self.__create_new_project(command).to_json(),  # type: ignore
             status=201,
             mimetype="application/json",
         )

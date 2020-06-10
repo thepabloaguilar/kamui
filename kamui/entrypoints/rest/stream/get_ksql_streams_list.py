@@ -17,9 +17,9 @@ class GetKSQLStreamsListResource(Resource):
             GetKSQLStreamsUsecase
         )
 
-    def get(self):
+    def get(self) -> Response:
         streams = [
-            json.loads(stream.to_json())
+            json.loads(stream.to_json())  # type: ignore
             for stream in self.__get_ksql_streams().unwrap()
         ]
         return Response(

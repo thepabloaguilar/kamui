@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List
+from typing import List, Any, Callable
 from uuid import UUID
 
 from dataclasses_json import dataclass_json
@@ -67,11 +67,13 @@ class GetStreamDetailsUsecase:
             stream.bind, lambda stream_: self.__get_stream_by_name(stream_.name)
         )
 
-        return flow(
-            Result.from_value(StreamDetails.build),
+        # TODO: Removes every `type: ignore` after resolution of
+        #  https://github.com/dry-python/returns/issues/410
+        return flow(  # type: ignore
+            Result.from_value(StreamDetails.build),  # type: ignore
             stream.apply,
-            bind(lambda to_apply: partial_projects().apply(Success(to_apply))),
-            bind(lambda to_apply: partial_ksql().apply(Success(to_apply))),
+            bind(self.__call_and_apply(partial_projects)),
+            bind(self.__call_and_apply(partial_ksql)),
         )
 
     def __verify_if_stream_exist(
@@ -82,3 +84,9 @@ class GetStreamDetailsUsecase:
                 reason="NOT_FOUND", failure_message="Stream not found"
             )
         )
+
+    @curry
+    def __call_and_apply(
+        self, function: Callable[[], Result[Any, Any]], value_to_apply: Any
+    ) -> Result[Any, Any]:
+        return function().apply(Success(value_to_apply))
