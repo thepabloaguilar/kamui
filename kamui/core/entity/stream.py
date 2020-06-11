@@ -34,7 +34,7 @@ class KSQLStreamDetailed:
         @dataclass
         class KSQLStreamFieldSchema:
             type: str
-            fields: Optional[Any]
+            fields: Optional[Any] = None
 
         name: str
         schema: KSQLStreamFieldSchema
