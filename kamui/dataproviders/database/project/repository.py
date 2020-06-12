@@ -17,12 +17,12 @@ from ..stream.model import StreamModel
 
 
 class CreateNewProjectRepository(CreateNewProject):
-    def __call__(self, project_title: str) -> Project:
+    def __call__(self, project_title: str) -> Result[Project, FailureDetails]:
         project = ProjectModel(title=project_title)
         with database_session() as session:
             session.add(project)
             session.commit()
-            return project.to_entity()
+            return Success(project.to_entity())
 
 
 class GetProjectsListRepository(GetProjectsList):
