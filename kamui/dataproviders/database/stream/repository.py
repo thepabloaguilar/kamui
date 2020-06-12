@@ -31,8 +31,8 @@ class SaveStreamRepository(SaveStream):
             stream=stream, project_id=creat_new_stream_command.project_id
         )
         with database_session() as session:
-            session.add(stream_project)  # type: ignore
-            session.commit()  # type: ignore
+            session.add(stream_project)
+            session.commit()
             return Success(stream.to_entity())
 
 

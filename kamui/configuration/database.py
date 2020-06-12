@@ -3,7 +3,7 @@ from typing import Iterator
 
 from sqlalchemy import create_engine
 from sqlalchemy.pool import NullPool
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session, Session
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -25,7 +25,7 @@ def init_db() -> None:
 
 
 @contextmanager
-def database_session() -> Iterator[None]:
+def database_session() -> Iterator[Session]:
     session = _db_session()
     try:
         yield session
