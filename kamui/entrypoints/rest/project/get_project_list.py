@@ -16,9 +16,8 @@ class GetProjectListResource(Resource):
         self.__get_projects_list = di_container.resolve(GetProjectsListUsecase)
 
     def get(self) -> Any:
-        projects_list = [
-            json.loads(project.to_json()) for project in self.__get_projects_list()
-        ]
+        projects_list = self.__get_projects_list()
+        projects_list = [json.loads(project.to_json()) for project in projects_list]
         return Response(
             response=json.dumps(projects_list), status=200, mimetype="application/json",
         )

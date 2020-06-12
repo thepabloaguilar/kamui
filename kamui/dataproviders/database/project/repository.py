@@ -26,8 +26,8 @@ class CreateNewProjectRepository(CreateNewProject):
 
 
 class GetProjectsListRepository(GetProjectsList):
-    def __call__(self) -> List[Project]:
-        return [project.to_entity() for project in ProjectModel.query.all()]
+    def __call__(self) -> Result[List[Project], FailureDetails]:
+        return Success([project.to_entity() for project in ProjectModel.query.all()])
 
 
 class FindProjectByProjectIdRepository(FindProjectByProjectId):
