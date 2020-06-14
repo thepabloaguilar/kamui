@@ -1,11 +1,14 @@
 from typing import Any
 from uuid import UUID
 
-from flask import Response
 from flask_restful import Resource
+from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
+from kamui.core.usecase.failure import FailureDetails
 from kamui.core.usecase.stream import GetStreamDetailsUsecase
+from kamui.core.usecase.stream.get_stream_details import StreamDetails
+from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 
 class GetStreamDetailsResource(Resource):
@@ -17,11 +20,7 @@ class GetStreamDetailsResource(Resource):
             GetStreamDetailsUsecase
         )
 
-    def get(self, stream_id: UUID) -> Any:
-        # TODO: Threat errors
-        stream_details = self.__get_stream_details(stream_id)
-        return Response(
-            response=stream_details.unwrap().to_json(),  # type: ignore
-            status=200,
-            mimetype="application/json",
-        )
+    @json_response
+    @unwrap_result_response(success_status_code=200)
+    def get(self, stream_id: UUID) -> Result[StreamDetails, FailureDetails]:
+        return self.__get_stream_details(stream_id)

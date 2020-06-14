@@ -1,11 +1,15 @@
-from typing import Any
+from typing import Any, Union
 from uuid import UUID
 
-from flask import Response
 from flask_restful import Resource
+from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
+from kamui.core.entity.project import Project
+from kamui.core.usecase.failure import FailureDetails
 from kamui.core.usecase.project import GetProjectDetailsUsecase
+from kamui.core.usecase.project.get_project_details import ProjectDetails
+from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 
 class GetProjectDetailsResource(Resource):
@@ -17,11 +21,9 @@ class GetProjectDetailsResource(Resource):
             GetProjectDetailsUsecase
         )
 
-    def get(self, project_id: UUID) -> Any:
-        # TODO: Threat errors
-        project_details = self.__get_project_details(project_id)
-        return Response(
-            response=project_details.unwrap().to_json(),  # type: ignore
-            status=200,
-            mimetype="application/json",
-        )
+    @json_response
+    @unwrap_result_response(success_status_code=200)
+    def get(
+        self, project_id: UUID
+    ) -> Result[Union[ProjectDetails, Project], FailureDetails]:
+        return self.__get_project_details(project_id)

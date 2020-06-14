@@ -1,11 +1,13 @@
-import json
 from typing import Any
 
-from flask import Response
 from flask_restful import Resource
+from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
+from kamui.core.entity.stream import StreamList
+from kamui.core.usecase.failure import BusinessFailureDetails
 from kamui.core.usecase.stream import GetStreamsUsecase
+from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 
 class GetStreamListResource(Resource):
@@ -15,11 +17,7 @@ class GetStreamListResource(Resource):
         super().__init__(*args, **kwargs)
         self.__get_streams: GetStreamsUsecase = di_container.resolve(GetStreamsUsecase)
 
-    def get(self) -> Any:
-        streams = self.__get_streams()
-        stream_list = [
-            json.loads(stream.to_json()) for stream in streams.unwrap()  # type: ignore
-        ]
-        return Response(
-            response=json.dumps(stream_list), status=201, mimetype="application/json",
-        )
+    @json_response
+    @unwrap_result_response(success_status_code=200)
+    def get(self) -> Result[StreamList, BusinessFailureDetails]:
+        return self.__get_streams()

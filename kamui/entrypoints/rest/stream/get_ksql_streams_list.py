@@ -1,11 +1,13 @@
-import json
-from typing import Any
+from typing import Any, List
 
-from flask import Response
 from flask_restful import Resource
+from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
+from kamui.core.entity.stream import KSQLStream
+from kamui.core.usecase.failure import BusinessFailureDetails
 from kamui.core.usecase.stream import GetKSQLStreamsUsecase
+from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 
 class GetKSQLStreamsListResource(Resource):
@@ -17,11 +19,7 @@ class GetKSQLStreamsListResource(Resource):
             GetKSQLStreamsUsecase
         )
 
-    def get(self) -> Response:
-        streams = [
-            json.loads(stream.to_json())  # type: ignore
-            for stream in self.__get_ksql_streams().unwrap()
-        ]
-        return Response(
-            response=json.dumps(streams), status=200, mimetype="application/json",
-        )
+    @json_response
+    @unwrap_result_response(success_status_code=200)
+    def get(self) -> Result[List[KSQLStream], BusinessFailureDetails]:
+        return self.__get_ksql_streams()
