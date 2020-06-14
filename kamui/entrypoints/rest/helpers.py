@@ -13,11 +13,9 @@ def json_response(function: Callable[..., Tuple[Any, int]]) -> Callable[..., Res
     @wraps(function)
     def decorator(*args: Any, **kwargs: Any) -> Response:
         return_, status_code = function(*args, **kwargs)
-        return Response(
-            response=orjson.dumps(return_),
-            status=status_code,
-            mimetype="application/json",
-        )
+        if isinstance(return_, Response):
+            return return_
+        return _create_response(return_, status_code)
 
     return decorator
 
