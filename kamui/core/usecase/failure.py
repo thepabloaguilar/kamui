@@ -1,3 +1,4 @@
+from dataclasses import field
 from typing import Any, Dict, Optional
 
 from pydantic.dataclasses import dataclass
@@ -18,3 +19,10 @@ class BusinessFailureDetails(FailureDetails):
 class DataProviderFailureDetails(FailureDetails):
     dataprovider_type: str
     attributes: Optional[Dict[str, Any]]
+
+
+@dataclass
+class NewFailureDetails:
+    reason: str
+    failure_message: str
+    attributes: Dict[str, Any] = field(default_factory=dict)
