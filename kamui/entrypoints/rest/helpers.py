@@ -36,7 +36,7 @@ def unwrap_result_response(
             return (
                 function(*args, **kwargs)
                 .map(lambda response: (response, success_status_code))
-                .alt(lambda failure: (failure, 503))
+                .fix(lambda failure: (failure, 503))
                 .unwrap()
             )
 
