@@ -43,3 +43,11 @@ def unwrap_result_response(
         return decorator
 
     return _unwrap_result_response
+
+
+def _create_response(response_body: Any, status_code: int) -> Response:
+    return Response(
+        response=orjson.dumps(response_body),
+        status=status_code,
+        mimetype="application/json",
+    )
