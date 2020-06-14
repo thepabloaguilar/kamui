@@ -1,11 +1,19 @@
-from typing import Any
+from typing import Any, Union
 
-from flask import request, Response
+from flask import Response
 from flask_restful import Resource
+from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
+from kamui.core.entity.project import Project
+from kamui.core.usecase.failure import FailureDetails
 from kamui.core.usecase.project import CreateNewProjectUsecase
 from kamui.core.usecase.project.create_new_project import CreateNewProjectCommand
+from kamui.entrypoints.rest.helpers import (
+    parse_request_body,
+    unwrap_result_response,
+    json_response,
+)
 
 
 class CreateNewProjectResource(Resource):
@@ -17,11 +25,10 @@ class CreateNewProjectResource(Resource):
             CreateNewProjectUsecase
         )
 
-    def post(self) -> Any:
-        command = CreateNewProjectCommand.from_dict(request.json)  # type: ignore
-        project = self.__create_new_project(command)
-        return Response(
-            response=project.unwrap().to_json(),  # type: ignore
-            status=201,
-            mimetype="application/json",
-        )
+    @json_response
+    @unwrap_result_response(success_status_code=201)
+    @parse_request_body(CreateNewProjectCommand)
+    def post(
+        self, request_body: Result[CreateNewProjectCommand, Response]
+    ) -> Result[Project, Union[Response, FailureDetails]]:
+        return request_body.unify(self.__create_new_project)
