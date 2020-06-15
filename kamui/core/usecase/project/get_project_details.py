@@ -17,7 +17,7 @@ from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
 @dataclass
 class ProjectDetails:
     project: Project
-    streams: Optional[Stream]
+    streams: List[Stream]
 
 
 class FindProjectByProjectId(ABC):
