@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
 from enum import Enum
 from typing import List, Union
 from uuid import UUID
 
-from dataclasses_json import dataclass_json
+from pydantic.dataclasses import dataclass
+from pydantic import BaseModel, Field
 from returns.result import Result
 
 from kamui.core.entity.source import SourceType
@@ -21,16 +21,12 @@ class FilterCondition(Enum):
     LESS_OR_EQUAL_THAN = "<="
 
 
-@dataclass_json
-@dataclass
-class CreateNewStreamCommand:
-    @dataclass_json
+class CreateNewStreamCommand(BaseModel):
     @dataclass
     class StreamField:
         name: str
         type: str
 
-    @dataclass_json
     @dataclass
     class FilterCondition:
         field: str
@@ -42,10 +38,10 @@ class CreateNewStreamCommand:
 
     project_id: UUID
     stream_name: str
-    fields: List[StreamField]
+    fields_: List[StreamField] = Field(alias="fields")
     source_name: str
     source_type: SourceType
-    filters: List[FilterCondition] = field(default_factory=list)
+    filters: List[FilterCondition] = Field(default_factory=list)
 
 
 class CreateStreamFromKafkaTopic(ABC):

@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from typing import List, Any, Callable
 from uuid import UUID
 
-from dataclasses_json import dataclass_json
+from pydantic.dataclasses import dataclass
 from returns.converters import maybe_to_result
 from returns.pointfree import bind
 from returns.curry import curry, partial
@@ -17,7 +16,6 @@ from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
 from kamui.core.usecase.stream import GetStreamByNameUsecase
 
 
-@dataclass_json
 @dataclass
 class StreamDetails:
     stream: Stream

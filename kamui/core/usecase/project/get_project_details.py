@@ -1,10 +1,9 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from functools import partial
-from typing import Optional, Union
+from typing import Union, List
 from uuid import UUID
 
-from dataclasses_json import dataclass_json
+from pydantic.dataclasses import dataclass
 from returns.maybe import Maybe
 from returns.result import Result, Success, Failure
 
@@ -13,7 +12,6 @@ from kamui.core.entity.stream import Stream, StreamList
 from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
 
 
-@dataclass_json
 @dataclass
 class ProjectDetails:
     project: Project

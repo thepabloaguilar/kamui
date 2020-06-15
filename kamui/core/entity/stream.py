@@ -1,13 +1,12 @@
-from dataclasses import dataclass
 from typing import List, NewType, Optional, Any
 from uuid import UUID
 
-from dataclasses_json import dataclass_json
+from pydantic import BaseModel, Field
+from pydantic.dataclasses import dataclass
 
 from kamui.core.entity.source import SourceType
 
 
-@dataclass_json
 @dataclass
 class Stream:
     stream_id: UUID
@@ -16,7 +15,6 @@ class Stream:
     source_name: str
 
 
-@dataclass_json
 @dataclass
 class KSQLStream:
     type: str
@@ -24,23 +22,17 @@ class KSQLStream:
     format: str
 
 
-@dataclass_json
-@dataclass
-class KSQLStreamDetailed:
-    @dataclass_json
-    @dataclass
-    class KSQLStreamField:
-        @dataclass_json
-        @dataclass
-        class KSQLStreamFieldSchema:
+class KSQLStreamDetailed(BaseModel):
+    class KSQLStreamField(BaseModel):
+        class KSQLStreamFieldSchema(BaseModel):
             type: str
-            fields: Optional[Any] = None
+            fields_: Optional[Any] = Field(default=None, alias="fields")
 
         name: str
-        schema: KSQLStreamFieldSchema
+        schema_: KSQLStreamFieldSchema = Field(alias="schema")
 
     name: str
-    fields: List[KSQLStreamField]
+    fields_: List[KSQLStreamField] = Field(alias="fields")
     type: str
     format: str
     topic: str

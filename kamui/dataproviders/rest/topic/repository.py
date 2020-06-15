@@ -1,5 +1,6 @@
 from typing import Any
 
+import orjson
 from returns.result import Result, Success, Failure
 
 from kamui.core.entity.topic import TopicNames
@@ -47,7 +48,8 @@ class GetTopicSchemaRepository(GetTopicSchema):
             isinstance(response, dict)
             and not response.get("message") == "Subject not found."
         ):
-            return Success(TopicSchema.from_json(response["schema"]))  # type: ignore
+            schema = orjson.loads(response["schema"])
+            return Success(TopicSchema(**schema))
         return Failure(response)
 
 

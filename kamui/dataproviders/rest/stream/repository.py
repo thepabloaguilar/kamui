@@ -24,7 +24,7 @@ class CreateStreamFromKafkaTopicRepository(CreateStreamFromKafkaTopic):
         self, creat_new_stream_command: CreateNewStreamCommand
     ) -> Result[CreateNewStreamCommand, DataProviderFailureDetails]:
         query_fields = ", ".join(
-            [f"{field.name} {field.type}" for field in creat_new_stream_command.fields]
+            [f"{field.name} {field.type}" for field in creat_new_stream_command.fields_]
         )
 
         response = self.__client.post(
@@ -85,9 +85,7 @@ class GetKSQLStreamsRepository(GetKSQLStreams):
                     },
                 )
             )
-        return Success(
-            [KSQLStream.from_dict(stream) for stream in _response["streams"]]  # type: ignore  # noqa: E501
-        )
+        return Success([KSQLStream(**stream) for stream in _response["streams"]])
 
 
 class GetStreamByNameRepository(GetStreamByName):
@@ -126,9 +124,7 @@ class GetStreamByNameRepository(GetStreamByName):
                     },
                 )
             )
-        stream = KSQLStreamDetailed.from_dict(  # type: ignore # fmt: ignore
-            _response["sourceDescription"]
-        )
+        stream = KSQLStreamDetailed(**_response["sourceDescription"])
         return Success(stream)
 
 
@@ -142,7 +138,7 @@ class CreateNewStreamFromStreamRepository(CreateNewStreamFromStream):
         self, create_new_stream_command: CreateNewStreamCommand
     ) -> Result[CreateNewStreamCommand, FailureDetails]:
         desired_stream_fields = ",".join(
-            [field.name for field in create_new_stream_command.fields]
+            [field.name for field in create_new_stream_command.fields_]
         )
         filters = " AND ".join(
             filter_.to_statement() for filter_ in create_new_stream_command.filters

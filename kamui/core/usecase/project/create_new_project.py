@@ -1,14 +1,12 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 
-from dataclasses_json import dataclass_json
+from pydantic.dataclasses import dataclass
 from returns.result import Result
 
 from kamui.core.entity.project import Project
 from kamui.core.usecase.failure import FailureDetails
 
 
-@dataclass_json
 @dataclass
 class CreateNewProjectCommand:
     title: str
