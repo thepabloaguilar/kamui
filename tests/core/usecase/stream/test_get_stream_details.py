@@ -36,7 +36,7 @@ def get_stream_by_name() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_stream_details_usecase(
+def get_stream_details_use_case(
     find_stream_by_stream_id: Mock,
     find_projects_by_stream: Mock,
     get_stream_by_name: Mock,
@@ -47,7 +47,7 @@ def get_stream_details_usecase(
 
 
 def test_should_return_stream_details_correctly(
-    get_stream_details_usecase: GetStreamDetailsUseCase,
+    get_stream_details_use_case: GetStreamDetailsUseCase,
     find_stream_by_stream_id: Mock,
     find_projects_by_stream: Mock,
     get_stream_by_name: Mock,
@@ -93,7 +93,7 @@ def test_should_return_stream_details_correctly(
     find_projects_by_stream.return_value = Success(project_list)
     get_stream_by_name.return_value = Success(ksql_stream_detailed)
 
-    actual = get_stream_details_usecase(stream_id)
+    actual = get_stream_details_use_case(stream_id)
 
     get_stream_by_name.assert_called_once()
     get_stream_by_name.assert_called_with(stream.name)
@@ -103,13 +103,13 @@ def test_should_return_stream_details_correctly(
 
 
 def test_should_return_failure_when_stream_not_found(
-    get_stream_details_usecase: GetStreamDetailsUseCase, find_stream_by_stream_id: Mock
+    get_stream_details_use_case: GetStreamDetailsUseCase, find_stream_by_stream_id: Mock
 ) -> None:
     stream_id = uuid4()
     stream = Nothing
     find_stream_by_stream_id.return_value = Success(stream)
 
-    actual = get_stream_details_usecase(stream_id)
+    actual = get_stream_details_use_case(stream_id)
 
     find_stream_by_stream_id.assert_called_once()
     find_stream_by_stream_id.assert_called_with(stream_id)
@@ -119,13 +119,13 @@ def test_should_return_failure_when_stream_not_found(
 
 
 def test_should_return_failure_when_find_stream_by_stream_id_fails(
-    get_stream_details_usecase: GetStreamDetailsUseCase, find_stream_by_stream_id: Mock
+    get_stream_details_use_case: GetStreamDetailsUseCase, find_stream_by_stream_id: Mock
 ) -> None:
     stream_id = uuid4()
     failure = FailureDetails(reason="TEST_FIND_STREAM_FAILS")
     find_stream_by_stream_id.return_value = Failure(failure)
 
-    actual = get_stream_details_usecase(stream_id)
+    actual = get_stream_details_use_case(stream_id)
 
     find_stream_by_stream_id.assert_called_once()
     find_stream_by_stream_id.assert_called_with(stream_id)
@@ -135,7 +135,7 @@ def test_should_return_failure_when_find_stream_by_stream_id_fails(
 
 
 def test_should_return_failure_when_find_projects_by_stream_fails(
-    get_stream_details_usecase: GetStreamDetailsUseCase,
+    get_stream_details_use_case: GetStreamDetailsUseCase,
     find_stream_by_stream_id: Mock,
     find_projects_by_stream: Mock,
 ) -> None:
@@ -151,7 +151,7 @@ def test_should_return_failure_when_find_projects_by_stream_fails(
     find_stream_by_stream_id.return_value = Success(Maybe.from_value(stream))
     find_projects_by_stream.return_value = Failure(failure)
 
-    actual = get_stream_details_usecase(stream_id)
+    actual = get_stream_details_use_case(stream_id)
 
     find_projects_by_stream.assert_called_once()
     find_projects_by_stream.assert_called_with(stream)
@@ -161,7 +161,7 @@ def test_should_return_failure_when_find_projects_by_stream_fails(
 
 
 def test_should_return_failure_when_get_stream_by_name_fails(
-    get_stream_details_usecase: GetStreamDetailsUseCase,
+    get_stream_details_use_case: GetStreamDetailsUseCase,
     find_stream_by_stream_id: Mock,
     find_projects_by_stream: Mock,
     get_stream_by_name: Mock,
@@ -193,7 +193,7 @@ def test_should_return_failure_when_get_stream_by_name_fails(
     find_projects_by_stream.return_value = Success(project_list)
     get_stream_by_name.return_value = Failure(failure)
 
-    actual = get_stream_details_usecase(stream_id)
+    actual = get_stream_details_use_case(stream_id)
 
     get_stream_by_name.assert_called_once()
     get_stream_by_name.assert_called_with(stream.name)

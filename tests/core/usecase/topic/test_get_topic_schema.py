@@ -27,14 +27,14 @@ def get_topic_schema_versions() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_topic_schema_usecase(
+def get_topic_schema_use_case(
     get_topic_schema: Mock, get_topic_schema_versions: Mock
 ) -> GetTopicSchemaUseCase:
     return GetTopicSchemaUseCase(get_topic_schema, get_topic_schema_versions)
 
 
 def test_should_return_correctly_topic_schema(
-    get_topic_schema_usecase: GetTopicSchemaUseCase,
+    get_topic_schema_use_case: GetTopicSchemaUseCase,
     get_topic_schema_versions: Mock,
     get_topic_schema: Mock,
 ) -> None:
@@ -51,7 +51,7 @@ def test_should_return_correctly_topic_schema(
     get_topic_schema_versions.return_value = Success(TopicSchemaVersions([1, 2]))
     get_topic_schema.return_value = Success(topic_schema)
 
-    actual = get_topic_schema_usecase(topic_name)
+    actual = get_topic_schema_use_case(topic_name)
 
     get_topic_schema_versions.assert_called_with(topic_name)
     get_topic_schema.assert_called_with(2, topic_name=topic_name)
@@ -61,13 +61,13 @@ def test_should_return_correctly_topic_schema(
 
 
 def test_should_return_failure_when_get_topic_schema_versions_fails(
-    get_topic_schema_usecase: GetTopicSchemaUseCase, get_topic_schema_versions: Mock
+    get_topic_schema_use_case: GetTopicSchemaUseCase, get_topic_schema_versions: Mock
 ) -> None:
     topic_name = "TopicName"
     failure = Failure(FailureDetails(reason="get_topic_schema_versions"))
     get_topic_schema_versions.return_value = failure
 
-    actual = get_topic_schema_usecase(topic_name)
+    actual = get_topic_schema_use_case(topic_name)
 
     get_topic_schema_versions.assert_called_with(topic_name)
     assert isinstance(actual, Result.failure_type)
@@ -77,7 +77,7 @@ def test_should_return_failure_when_get_topic_schema_versions_fails(
 
 
 def test_should_return_failure_when_get_topic_schema_fails(
-    get_topic_schema_usecase: GetTopicSchemaUseCase,
+    get_topic_schema_use_case: GetTopicSchemaUseCase,
     get_topic_schema_versions: Mock,
     get_topic_schema: Mock,
 ) -> None:
@@ -86,7 +86,7 @@ def test_should_return_failure_when_get_topic_schema_fails(
     get_topic_schema_versions.return_value = Success(TopicSchemaVersions([1]))
     get_topic_schema.return_value = failure
 
-    actual = get_topic_schema_usecase(topic_name)
+    actual = get_topic_schema_use_case(topic_name)
 
     get_topic_schema_versions.assert_called_with(topic_name)
     get_topic_schema.assert_called_with(1, topic_name=topic_name)

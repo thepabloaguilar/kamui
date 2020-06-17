@@ -16,12 +16,12 @@ def find_streams() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_streams_usecase(find_streams: Mock) -> GetStreamsUseCase:
+def get_streams_use_case(find_streams: Mock) -> GetStreamsUseCase:
     return GetStreamsUseCase(find_streams)
 
 
 def test_should_return_streams_correctly(
-    get_streams_usecase: GetStreamsUseCase, find_streams: Mock
+    get_streams_use_case: GetStreamsUseCase, find_streams: Mock
 ) -> None:
     streams_list = [
         Stream(
@@ -39,7 +39,7 @@ def test_should_return_streams_correctly(
     ]
     find_streams.return_value = Success(streams_list)
 
-    actual = get_streams_usecase()
+    actual = get_streams_use_case()
 
     find_streams.assert_called_once()
     assert isinstance(actual, Result.success_type)
@@ -48,12 +48,12 @@ def test_should_return_streams_correctly(
 
 
 def test_should_return_failure_when_find_streams_fails(
-    get_streams_usecase: GetStreamsUseCase, find_streams: Mock
+    get_streams_use_case: GetStreamsUseCase, find_streams: Mock
 ) -> None:
     failure = FailureDetails(reason="TEST_FIND_STREAMS_FAIL")
     find_streams.return_value = Failure(failure)
 
-    actual = get_streams_usecase()
+    actual = get_streams_use_case()
 
     find_streams.assert_called_once()
     assert isinstance(actual, Result.failure_type)

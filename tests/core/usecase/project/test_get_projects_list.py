@@ -18,12 +18,12 @@ def get_projects_list() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_projects_list_usecase(get_projects_list: Mock) -> GetProjectsListUseCase:
+def get_projects_list_use_case(get_projects_list: Mock) -> GetProjectsListUseCase:
     return GetProjectsListUseCase(get_projects_list)
 
 
 def test_get_projects_details(
-    get_projects_list_usecase: GetProjectsListUseCase, get_projects_list: Mock
+    get_projects_list_use_case: GetProjectsListUseCase, get_projects_list: Mock
 ) -> None:
     expected_projects_list = [
         Project(
@@ -41,7 +41,7 @@ def test_get_projects_details(
     ]
     get_projects_list.return_value = expected_projects_list
 
-    actual_projects_list = get_projects_list_usecase()
+    actual_projects_list = get_projects_list_use_case()
 
     get_projects_list.assert_called_once()
     assert expected_projects_list == actual_projects_list

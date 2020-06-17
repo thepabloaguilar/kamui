@@ -17,12 +17,12 @@ def get_ksql_streams() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_ksql_streams_usecase(get_ksql_streams: Mock) -> GetKSQLStreamsUseCase:
+def get_ksql_streams_use_case(get_ksql_streams: Mock) -> GetKSQLStreamsUseCase:
     return GetKSQLStreamsUseCase(get_ksql_streams)
 
 
 def test_should_return_list_of_ksql_stream_correctly(
-    get_ksql_streams_usecase: GetKSQLStreamsUseCase, get_ksql_streams: Mock
+    get_ksql_streams_use_case: GetKSQLStreamsUseCase, get_ksql_streams: Mock
 ) -> None:
     ksql_streams_list = [
         KSQLStream("STREAM", "STREAM_ONE", "AVRO"),
@@ -31,7 +31,7 @@ def test_should_return_list_of_ksql_stream_correctly(
     ]
     get_ksql_streams.return_value = Success(ksql_streams_list)
 
-    actual = get_ksql_streams_usecase()
+    actual = get_ksql_streams_use_case()
 
     get_ksql_streams.assert_called_once()
     assert isinstance(actual, Result.success_type)
@@ -40,12 +40,12 @@ def test_should_return_list_of_ksql_stream_correctly(
 
 
 def test_should_return_failure_when_an_error_occurred_while_getting_ksql_streams(
-    get_ksql_streams_usecase: GetKSQLStreamsUseCase, get_ksql_streams: Mock
+    get_ksql_streams_use_case: GetKSQLStreamsUseCase, get_ksql_streams: Mock
 ) -> None:
     failure = Failure(FailureDetails(reason="FAILURE_TEST"))
     get_ksql_streams.return_value = failure
 
-    actual = get_ksql_streams_usecase()
+    actual = get_ksql_streams_use_case()
 
     get_ksql_streams.assert_called_once()
     assert isinstance(actual, Result.failure_type)

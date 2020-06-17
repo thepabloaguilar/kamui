@@ -29,21 +29,21 @@ def find_streams_by_project() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_project_details_usecase(
+def get_project_details_use_case(
     find_project_by_project_id: Mock, find_streams_by_project: Mock
 ) -> GetProjectDetailsUseCase:
     return GetProjectDetailsUseCase(find_project_by_project_id, find_streams_by_project)
 
 
 def test_should_return_failure_not_found_when_project_was_not_found(
-    get_project_details_usecase: GetProjectDetailsUseCase,
+    get_project_details_use_case: GetProjectDetailsUseCase,
     find_project_by_project_id: Mock,
 ) -> None:
     project_id = uuid4()
     project: Maybe[None] = Maybe.from_value(None)
     find_project_by_project_id.return_value = Success(project)
 
-    actual = get_project_details_usecase(project_id)
+    actual = get_project_details_use_case(project_id)
 
     find_project_by_project_id.assert_called_once()
     assert isinstance(actual, Result.failure_type)
@@ -52,7 +52,7 @@ def test_should_return_failure_not_found_when_project_was_not_found(
 
 
 def test_should_return_projects_details_without_streams(
-    get_project_details_usecase: GetProjectDetailsUseCase,
+    get_project_details_use_case: GetProjectDetailsUseCase,
     find_project_by_project_id: Mock,
     find_streams_by_project: Mock,
 ) -> None:
@@ -67,7 +67,7 @@ def test_should_return_projects_details_without_streams(
     find_project_by_project_id.return_value = Success(project_maybe)
     find_streams_by_project.return_value = Success(StreamList([]))
 
-    actual = get_project_details_usecase(project_id)
+    actual = get_project_details_use_case(project_id)
 
     find_project_by_project_id.assert_called_once()
     find_streams_by_project.assert_called_once()
@@ -78,7 +78,7 @@ def test_should_return_projects_details_without_streams(
 
 
 def test_should_return_projects_details_one_streams(
-    get_project_details_usecase: GetProjectDetailsUseCase,
+    get_project_details_use_case: GetProjectDetailsUseCase,
     find_project_by_project_id: Mock,
     find_streams_by_project: Mock,
 ) -> None:
@@ -101,7 +101,7 @@ def test_should_return_projects_details_one_streams(
     find_project_by_project_id.return_value = Success(project_maybe)
     find_streams_by_project.return_value = Success(StreamList(streams))
 
-    actual = get_project_details_usecase(project_id)
+    actual = get_project_details_use_case(project_id)
 
     find_project_by_project_id.assert_called_once()
     find_streams_by_project.assert_called_once()
@@ -113,7 +113,7 @@ def test_should_return_projects_details_one_streams(
 
 
 def test_should_return_projects_details_two_streams(
-    get_project_details_usecase: GetProjectDetailsUseCase,
+    get_project_details_use_case: GetProjectDetailsUseCase,
     find_project_by_project_id: Mock,
     find_streams_by_project: Mock,
 ) -> None:
@@ -142,7 +142,7 @@ def test_should_return_projects_details_two_streams(
     find_project_by_project_id.return_value = Success(project_maybe)
     find_streams_by_project.return_value = Success(StreamList(streams))
 
-    actual = get_project_details_usecase(project_id)
+    actual = get_project_details_use_case(project_id)
 
     find_project_by_project_id.assert_called_once()
     find_streams_by_project.assert_called_once()

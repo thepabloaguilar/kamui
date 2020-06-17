@@ -26,14 +26,14 @@ def save_stream() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def create_new_stream_from_stream_usecase(
+def create_new_stream_from_stream_use_case(
     create_new_stream_from_stream: Mock, save_stream: Mock
 ) -> CreateNewStreamFromStreamUseCase:
     return CreateNewStreamFromStreamUseCase(create_new_stream_from_stream, save_stream)
 
 
 def test_should_return_stream_entity_correctly(
-    create_new_stream_from_stream_usecase: CreateNewStreamFromStreamUseCase,
+    create_new_stream_from_stream_use_case: CreateNewStreamFromStreamUseCase,
     create_new_stream_from_stream: Mock,
     save_stream: Mock,
 ) -> None:
@@ -58,7 +58,7 @@ def test_should_return_stream_entity_correctly(
     create_new_stream_from_stream.return_value = Success(command)
     save_stream.return_value = Success(stream)
 
-    actual = create_new_stream_from_stream_usecase(command)
+    actual = create_new_stream_from_stream_use_case(command)
 
     create_new_stream_from_stream.assert_called_with(command)
     save_stream.assert_called_with(command)
@@ -68,7 +68,7 @@ def test_should_return_stream_entity_correctly(
 
 
 def test_should_return_failure_when_create_new_stream_from_stream_fails(
-    create_new_stream_from_stream_usecase: CreateNewStreamFromStreamUseCase,
+    create_new_stream_from_stream_use_case: CreateNewStreamFromStreamUseCase,
     create_new_stream_from_stream: Mock,
 ) -> None:
     command = CreateNewStreamCommand(
@@ -81,7 +81,7 @@ def test_should_return_failure_when_create_new_stream_from_stream_fails(
     failure = Failure(FailureDetails(reason="TEST_CREATE_NEW_STREAM_FROM_STREAM_FAILS"))
     create_new_stream_from_stream.return_value = failure
 
-    actual = create_new_stream_from_stream_usecase(command)
+    actual = create_new_stream_from_stream_use_case(command)
 
     create_new_stream_from_stream.assert_called_with(command)
     assert isinstance(actual, Result.failure_type)
@@ -91,7 +91,7 @@ def test_should_return_failure_when_create_new_stream_from_stream_fails(
 
 
 def test_should_return_failure_when_save_stream_fails(
-    create_new_stream_from_stream_usecase: CreateNewStreamFromStreamUseCase,
+    create_new_stream_from_stream_use_case: CreateNewStreamFromStreamUseCase,
     create_new_stream_from_stream: Mock,
     save_stream: Mock,
 ) -> None:
@@ -111,7 +111,7 @@ def test_should_return_failure_when_save_stream_fails(
     create_new_stream_from_stream.return_value = Success(command)
     save_stream.return_value = failure
 
-    actual = create_new_stream_from_stream_usecase(command)
+    actual = create_new_stream_from_stream_use_case(command)
 
     create_new_stream_from_stream.assert_called_with(command)
     save_stream.assert_called_with(command)

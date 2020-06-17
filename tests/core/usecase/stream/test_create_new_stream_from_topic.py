@@ -26,7 +26,7 @@ def save_stream() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def create_new_stream_from_topic_usecase(
+def create_new_stream_from_topic_use_case(
     create_new_stream_from_kafka_topic: Mock, save_stream: Mock
 ) -> CreateNewStreamFromTopicUseCase:
     return CreateNewStreamFromTopicUseCase(
@@ -35,7 +35,7 @@ def create_new_stream_from_topic_usecase(
 
 
 def test_should_return_stream_entity_correctly(
-    create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUseCase,
+    create_new_stream_from_topic_use_case: CreateNewStreamFromTopicUseCase,
     create_new_stream_from_kafka_topic: Mock,
     save_stream: Mock,
 ) -> None:
@@ -59,7 +59,7 @@ def test_should_return_stream_entity_correctly(
     create_new_stream_from_kafka_topic.return_value = Success(command)
     save_stream.return_value = Success(stream)
 
-    actual = create_new_stream_from_topic_usecase(command)
+    actual = create_new_stream_from_topic_use_case(command)
 
     create_new_stream_from_kafka_topic.assert_called_with(command)
     save_stream.assert_called_with(command)
@@ -69,7 +69,7 @@ def test_should_return_stream_entity_correctly(
 
 
 def test_should_return_failure_when_create_stream_from_kafka_topic_fails(
-    create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUseCase,
+    create_new_stream_from_topic_use_case: CreateNewStreamFromTopicUseCase,
     create_new_stream_from_kafka_topic: Mock,
 ) -> None:
     command = CreateNewStreamCommand(
@@ -82,7 +82,7 @@ def test_should_return_failure_when_create_stream_from_kafka_topic_fails(
     failure = Failure(FailureDetails(reason="create_new_stream_from_kafka_topic"))
     create_new_stream_from_kafka_topic.return_value = failure
 
-    actual = create_new_stream_from_topic_usecase(command)
+    actual = create_new_stream_from_topic_use_case(command)
 
     create_new_stream_from_kafka_topic.assert_called_with(command)
     assert isinstance(actual, Result.failure_type)
@@ -92,7 +92,7 @@ def test_should_return_failure_when_create_stream_from_kafka_topic_fails(
 
 
 def test_should_return_failure_when_save_stream_fails(
-    create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUseCase,
+    create_new_stream_from_topic_use_case: CreateNewStreamFromTopicUseCase,
     create_new_stream_from_kafka_topic: Mock,
     save_stream: Mock,
 ) -> None:
@@ -112,7 +112,7 @@ def test_should_return_failure_when_save_stream_fails(
     create_new_stream_from_kafka_topic.return_value = Success(command)
     save_stream.return_value = failure
 
-    actual = create_new_stream_from_topic_usecase(command)
+    actual = create_new_stream_from_topic_use_case(command)
 
     create_new_stream_from_kafka_topic.assert_called_with(command)
     save_stream.assert_called_with(command)

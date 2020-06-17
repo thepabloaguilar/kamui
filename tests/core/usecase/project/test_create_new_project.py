@@ -19,12 +19,12 @@ def create_new_project() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def create_new_project_usecase(create_new_project: Mock) -> CreateNewProjectUseCase:
+def create_new_project_use_case(create_new_project: Mock) -> CreateNewProjectUseCase:
     return CreateNewProjectUseCase(create_new_project)
 
 
 def test_create_new_project(
-    create_new_project_usecase: CreateNewProjectUseCase, create_new_project: Mock
+    create_new_project_use_case: CreateNewProjectUseCase, create_new_project: Mock
 ) -> None:
     command = CreateNewProjectCommand(title="Test Project Title")
     expected_project = Project(
@@ -35,7 +35,7 @@ def test_create_new_project(
     )
 
     create_new_project.return_value = expected_project
-    actual_project = create_new_project_usecase(command)
+    actual_project = create_new_project_use_case(command)
 
     create_new_project.assert_called_once()
     create_new_project.assert_called_with("Test Project Title")

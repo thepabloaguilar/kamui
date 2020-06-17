@@ -17,20 +17,20 @@ def get_topic_names() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_available_topic_names_usecase(
+def get_available_topic_names_use_case(
     get_topic_names: Mock,
 ) -> GetAvailableTopicNamesUseCase:
     return GetAvailableTopicNamesUseCase(get_topic_names)
 
 
 def test_should_return_an_empty_list_when_no_topic_names_was_returned(
-    get_available_topic_names_usecase: GetAvailableTopicNamesUseCase,
+    get_available_topic_names_use_case: GetAvailableTopicNamesUseCase,
     get_topic_names: Mock,
 ) -> None:
     topic_names = TopicNames([])
     get_topic_names.return_value = Success(topic_names)
 
-    actual = get_available_topic_names_usecase()
+    actual = get_available_topic_names_use_case()
 
     get_topic_names.assert_called_once()
     assert isinstance(actual, Result.success_type)
@@ -38,13 +38,13 @@ def test_should_return_an_empty_list_when_no_topic_names_was_returned(
 
 
 def test_should_return_an_empty_list_when_no_topic_names_are_valid(
-    get_available_topic_names_usecase: GetAvailableTopicNamesUseCase,
+    get_available_topic_names_use_case: GetAvailableTopicNamesUseCase,
     get_topic_names: Mock,
 ) -> None:
     topic_names = TopicNames(["_firstTopic", "__secondTopic"])
     get_topic_names.return_value = Success(topic_names)
 
-    actual = get_available_topic_names_usecase()
+    actual = get_available_topic_names_use_case()
 
     get_topic_names.assert_called_once()
     assert isinstance(actual, Result.success_type)
@@ -52,13 +52,13 @@ def test_should_return_an_empty_list_when_no_topic_names_are_valid(
 
 
 def test_should_return_a_list_with_one_item_when_one_topic_name_is_valid(
-    get_available_topic_names_usecase: GetAvailableTopicNamesUseCase,
+    get_available_topic_names_use_case: GetAvailableTopicNamesUseCase,
     get_topic_names: Mock,
 ) -> None:
     topic_names = TopicNames(["availableTopic", "_firstTopic", "__secondTopic"])
     get_topic_names.return_value = Success(topic_names)
 
-    actual = get_available_topic_names_usecase()
+    actual = get_available_topic_names_use_case()
 
     get_topic_names.assert_called_once()
     assert isinstance(actual, Result.success_type)
@@ -67,7 +67,7 @@ def test_should_return_a_list_with_one_item_when_one_topic_name_is_valid(
 
 
 def test_should_return_a_list_with_two_items_when_two_topic_name_is_valid(
-    get_available_topic_names_usecase: GetAvailableTopicNamesUseCase,
+    get_available_topic_names_use_case: GetAvailableTopicNamesUseCase,
     get_topic_names: Mock,
 ) -> None:
     topic_names = TopicNames(
@@ -75,7 +75,7 @@ def test_should_return_a_list_with_two_items_when_two_topic_name_is_valid(
     )
     get_topic_names.return_value = Success(topic_names)
 
-    actual = get_available_topic_names_usecase()
+    actual = get_available_topic_names_use_case()
 
     get_topic_names.assert_called_once()
     assert isinstance(actual, Result.success_type)
@@ -84,13 +84,13 @@ def test_should_return_a_list_with_two_items_when_two_topic_name_is_valid(
 
 
 def test_should_return_failure_when_an_error_is_returned_from_get_topic_names(
-    get_available_topic_names_usecase: GetAvailableTopicNamesUseCase,
+    get_available_topic_names_use_case: GetAvailableTopicNamesUseCase,
     get_topic_names: Mock,
 ) -> None:
     failure = Failure(FailureDetails(reason="This is a test failure"))
     get_topic_names.return_value = failure
 
-    actual = get_available_topic_names_usecase()
+    actual = get_available_topic_names_use_case()
 
     assert isinstance(actual, Result.failure_type)
     assert isinstance(actual.failure(), BusinessFailureDetails)

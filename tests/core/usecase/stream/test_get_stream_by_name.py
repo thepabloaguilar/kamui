@@ -17,12 +17,12 @@ def get_stream_by_name() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_stream_by_name_usecase(get_stream_by_name: Mock) -> GetStreamByNameUseCase:
+def get_stream_by_name_use_case(get_stream_by_name: Mock) -> GetStreamByNameUseCase:
     return GetStreamByNameUseCase(get_stream_by_name)
 
 
 def test_should_return_ksql_stream_detailed_correctly(
-    get_stream_by_name_usecase: GetStreamByNameUseCase, get_stream_by_name: Mock
+    get_stream_by_name_use_case: GetStreamByNameUseCase, get_stream_by_name: Mock
 ) -> None:
     ksql_stream_detailed = KSQLStreamDetailed(
         name="SUCCESS_TEST_STREAM",
@@ -33,7 +33,7 @@ def test_should_return_ksql_stream_detailed_correctly(
     )
     get_stream_by_name.return_value = Success(ksql_stream_detailed)
 
-    actual = get_stream_by_name_usecase("SUCCESS_TEST_STREAM")
+    actual = get_stream_by_name_use_case("SUCCESS_TEST_STREAM")
 
     get_stream_by_name.assert_called_once()
     get_stream_by_name.assert_called_with("SUCCESS_TEST_STREAM")
@@ -43,12 +43,12 @@ def test_should_return_ksql_stream_detailed_correctly(
 
 
 def test_should_return_failure_when_an_error_occurred_while_getting_stream_names(
-    get_stream_by_name_usecase: GetStreamByNameUseCase, get_stream_by_name: Mock
+    get_stream_by_name_use_case: GetStreamByNameUseCase, get_stream_by_name: Mock
 ) -> None:
     failure = Failure(FailureDetails(reason="FAILURE_TEST"))
     get_stream_by_name.return_value = failure
 
-    actual = get_stream_by_name_usecase("MY_STREAM_NAME")
+    actual = get_stream_by_name_use_case("MY_STREAM_NAME")
 
     get_stream_by_name.assert_called_once()
     get_stream_by_name.assert_called_with("MY_STREAM_NAME")
