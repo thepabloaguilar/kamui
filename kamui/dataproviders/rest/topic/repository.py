@@ -5,10 +5,10 @@ from returns.result import Result, Success, Failure
 
 from kamui.core.entity.topic import TopicNames
 from kamui.core.entity.topic_schema import TopicSchemaVersions, TopicSchema
-from kamui.core.usecase.failure import DataProviderFailureDetails, FailureDetails
+from kamui.core.use_case.failure import DataProviderFailureDetails, FailureDetails
 from kamui.dataproviders.rest import client, HttpClient, JsonResponse
-from kamui.core.usecase.topic.get_available_topic_names import GetTopicNames
-from kamui.core.usecase.topic.get_topic_schema import (
+from kamui.core.use_case.topic.get_available_topic_names import GetTopicNames
+from kamui.core.use_case.topic.get_topic_schema import (
     GetTopicSchema,
     GetTopicSchemaVersions,
 )

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from returns.result import Result
 
 from kamui.core.entity.stream import StreamList
-from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
+from kamui.core.use_case.failure import FailureDetails, BusinessFailureDetails
 
 
 class FindStreams(ABC):

@@ -6,7 +6,7 @@ import pytest
 
 from kamui.core.entity.project import Project
 from kamui.core.entity.project_status import ProjectStatus
-from kamui.core.usecase.project.create_new_project import (
+from kamui.core.use_case.project.create_new_project import (
     CreateNewProjectUseCase,
     CreateNewProject,
     CreateNewProjectCommand,

@@ -6,7 +6,7 @@ import orjson
 from returns.result import Result, Success, Failure
 from httpx import HTTPError, Response
 
-from kamui.core.usecase.failure import DataProviderFailureDetails
+from kamui.core.use_case.failure import DataProviderFailureDetails
 
 JsonResponse = Union[Dict[Any, Any], List[Any]]
 

@@ -4,8 +4,8 @@ import pytest
 from returns.result import Failure, Result, Success
 
 from kamui.core.entity.stream import KSQLStreamDetailed
-from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.stream.get_stream_by_name import (
+from kamui.core.use_case.failure import FailureDetails, BusinessFailureDetails
+from kamui.core.use_case.stream.get_stream_by_name import (
     GetStreamByName,
     GetStreamByNameUseCase,
 )

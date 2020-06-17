@@ -5,14 +5,14 @@ from returns.maybe import Maybe
 from returns.result import Result, Success
 
 from kamui.core.entity.stream import Stream
-from kamui.core.usecase.failure import FailureDetails
-from kamui.core.usecase.project.get_project_details import FindProjectByProjectId
-from kamui.core.usecase.stream.get_stream_details import FindProjectsByStream
+from kamui.core.use_case.failure import FailureDetails
+from kamui.core.use_case.project.get_project_details import FindProjectByProjectId
+from kamui.core.use_case.stream.get_stream_details import FindProjectsByStream
 from .model import ProjectModel
 from kamui.configuration.database import database_session
 from kamui.core.entity.project import Project
-from kamui.core.usecase.project.create_new_project import CreateNewProject
-from kamui.core.usecase.project.get_projects_list import GetProjectsList
+from kamui.core.use_case.project.create_new_project import CreateNewProject
+from kamui.core.use_case.project.get_projects_list import GetProjectsList
 from ..stream.model import StreamModel
 
 

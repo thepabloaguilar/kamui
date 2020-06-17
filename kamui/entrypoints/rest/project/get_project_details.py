@@ -6,9 +6,9 @@ from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
 from kamui.core.entity.project import Project
-from kamui.core.usecase.failure import FailureDetails
-from kamui.core.usecase.project import GetProjectDetailsUseCase
-from kamui.core.usecase.project.get_project_details import ProjectDetails
+from kamui.core.use_case.failure import FailureDetails
+from kamui.core.use_case.project import GetProjectDetailsUseCase
+from kamui.core.use_case.project.get_project_details import ProjectDetails
 from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 

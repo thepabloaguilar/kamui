@@ -4,8 +4,8 @@ import pytest
 from returns.result import Success, Result, Failure
 
 from kamui.core.entity.topic import TopicNames
-from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.topic.get_available_topic_names import (
+from kamui.core.use_case.failure import FailureDetails, BusinessFailureDetails
+from kamui.core.use_case.topic.get_available_topic_names import (
     GetTopicNames,
     GetAvailableTopicNamesUseCase,
 )

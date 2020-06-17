@@ -6,7 +6,7 @@ from flask import Response, request
 from pydantic import ValidationError
 from returns.result import Result, Success, Failure
 
-from kamui.core.usecase.failure import NewFailureDetails
+from kamui.core.use_case.failure import NewFailureDetails
 
 _SuccessType = TypeVar("_SuccessType")
 _FailureType = TypeVar("_FailureType")

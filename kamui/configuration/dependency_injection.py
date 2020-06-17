@@ -38,6 +38,6 @@ def _register_dataproviders(module_path: str, container: Container) -> None:
     _register_classes(module_path, partial(register, container))
 
 
-_register_usecases("kamui.core.usecase", di_container)
+_register_usecases("kamui.core.use_case", di_container)
 _register_dataproviders("kamui.dataproviders.database", di_container)
 _register_dataproviders("kamui.dataproviders.rest", di_container)

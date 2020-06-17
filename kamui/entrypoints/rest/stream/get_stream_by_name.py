@@ -5,8 +5,8 @@ from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
 from kamui.core.entity.stream import KSQLStreamDetailed
-from kamui.core.usecase.failure import BusinessFailureDetails
-from kamui.core.usecase.stream import GetStreamByNameUseCase
+from kamui.core.use_case.failure import BusinessFailureDetails
+from kamui.core.use_case.stream import GetStreamByNameUseCase
 from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 

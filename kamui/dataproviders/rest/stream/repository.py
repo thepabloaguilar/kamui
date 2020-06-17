@@ -3,11 +3,11 @@ from typing import List
 from returns.result import Result, Failure, Success
 
 from kamui.core.entity.stream import KSQLStream, KSQLStreamDetailed
-from kamui.core.usecase.failure import DataProviderFailureDetails, FailureDetails
-from kamui.core.usecase.stream.get_ksql_streams import GetKSQLStreams
-from kamui.core.usecase.stream.get_stream_by_name import GetStreamByName
+from kamui.core.use_case.failure import DataProviderFailureDetails, FailureDetails
+from kamui.core.use_case.stream.get_ksql_streams import GetKSQLStreams
+from kamui.core.use_case.stream.get_stream_by_name import GetStreamByName
 from kamui.dataproviders.rest import client, HttpClient, JsonResponse
-from kamui.core.usecase.stream.create_new_stream import (
+from kamui.core.use_case.stream.create_new_stream import (
     CreateNewStreamCommand,
     CreateStreamFromKafkaTopic,
     CreateNewStreamFromStream,

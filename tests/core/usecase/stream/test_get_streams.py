@@ -6,8 +6,8 @@ from returns.result import Failure, Result, Success
 
 from kamui.core.entity.source import SourceType
 from kamui.core.entity.stream import Stream
-from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.stream.get_streams import FindStreams, GetStreamsUseCase
+from kamui.core.use_case.failure import FailureDetails, BusinessFailureDetails
+from kamui.core.use_case.stream.get_streams import FindStreams, GetStreamsUseCase
 
 
 @pytest.fixture(scope="function")

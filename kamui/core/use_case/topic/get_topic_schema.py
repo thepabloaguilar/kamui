@@ -4,7 +4,7 @@ from functools import partial
 from returns.result import Result
 
 from kamui.core.entity.topic_schema import TopicSchemaVersions, TopicSchema
-from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
+from kamui.core.use_case.failure import BusinessFailureDetails, FailureDetails
 
 
 class GetTopicSchema(ABC):

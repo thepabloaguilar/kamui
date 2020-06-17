@@ -12,8 +12,8 @@ from returns.result import Result, Success
 
 from kamui.core.entity.project import Project
 from kamui.core.entity.stream import Stream, KSQLStreamDetailed
-from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.stream import GetStreamByNameUseCase
+from kamui.core.use_case.failure import FailureDetails, BusinessFailureDetails
+from kamui.core.use_case.stream import GetStreamByNameUseCase
 
 
 @dataclass

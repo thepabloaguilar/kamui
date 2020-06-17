@@ -8,8 +8,8 @@ from kamui.core.entity.topic_schema import (
     TopicSchema,
     TopicSchemaField,
 )
-from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.topic.get_topic_schema import (
+from kamui.core.use_case.failure import FailureDetails, BusinessFailureDetails
+from kamui.core.use_case.topic.get_topic_schema import (
     GetTopicSchema,
     GetTopicSchemaVersions,
     GetTopicSchemaUseCase,

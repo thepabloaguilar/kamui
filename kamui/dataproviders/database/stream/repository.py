@@ -6,14 +6,14 @@ from returns.result import Result, Success
 from kamui.configuration.database import database_session
 from kamui.core.entity.project import Project
 from kamui.core.entity.stream import StreamList, Stream
-from kamui.core.usecase.failure import FailureDetails
-from kamui.core.usecase.project.get_project_details import FindStreamsByProject
-from kamui.core.usecase.stream.create_new_stream import (
+from kamui.core.use_case.failure import FailureDetails
+from kamui.core.use_case.project.get_project_details import FindStreamsByProject
+from kamui.core.use_case.stream.create_new_stream import (
     SaveStream,
     CreateNewStreamCommand,
 )
-from kamui.core.usecase.stream.get_stream_details import FindStreamByStreamId
-from kamui.core.usecase.stream.get_streams import FindStreams
+from kamui.core.use_case.stream.get_stream_details import FindStreamByStreamId
+from kamui.core.use_case.stream.get_streams import FindStreams
 from kamui.dataproviders.database.stream_project.model import StreamProjectModel
 from kamui.dataproviders.database.stream.model import StreamModel
 

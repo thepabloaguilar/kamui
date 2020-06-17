@@ -5,8 +5,8 @@ import pytest
 from returns.result import Failure, Result, Success
 
 from kamui.core.entity.stream import Stream
-from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.stream.create_new_stream import (
+from kamui.core.use_case.failure import FailureDetails, BusinessFailureDetails
+from kamui.core.use_case.stream.create_new_stream import (
     SaveStream,
     CreateNewStreamCommand,
     SourceType,

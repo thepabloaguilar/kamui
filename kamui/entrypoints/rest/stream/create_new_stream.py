@@ -6,8 +6,8 @@ from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
 from kamui.core.entity.stream import Stream
-from kamui.core.usecase.failure import BusinessFailureDetails
-from kamui.core.usecase.stream.create_new_stream import (
+from kamui.core.use_case.failure import BusinessFailureDetails
+from kamui.core.use_case.stream.create_new_stream import (
     CreateNewStreamCommand,
     CreateNewStreamFromTopicUseCase,
     SourceType,

@@ -4,7 +4,7 @@ from typing import List
 from returns.result import Result
 
 from kamui.core.entity.project import Project
-from kamui.core.usecase.failure import FailureDetails
+from kamui.core.use_case.failure import FailureDetails
 
 
 class GetProjectsList(ABC):

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from returns.result import Result
 
 from kamui.core.entity.stream import KSQLStreamDetailed
-from kamui.core.usecase.failure import BusinessFailureDetails, FailureDetails
+from kamui.core.use_case.failure import BusinessFailureDetails, FailureDetails
 
 
 class GetStreamByName(ABC):

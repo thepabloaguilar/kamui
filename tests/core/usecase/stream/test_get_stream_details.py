@@ -10,9 +10,9 @@ from kamui.core.entity.project import Project
 from kamui.core.entity.project_status import ProjectStatus
 from kamui.core.entity.source import SourceType
 from kamui.core.entity.stream import Stream, KSQLStreamDetailed
-from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.stream import GetStreamByNameUseCase
-from kamui.core.usecase.stream.get_stream_details import (
+from kamui.core.use_case.failure import FailureDetails, BusinessFailureDetails
+from kamui.core.use_case.stream import GetStreamByNameUseCase
+from kamui.core.use_case.stream.get_stream_details import (
     FindStreamByStreamId,
     FindProjectsByStream,
     GetStreamDetailsUseCase,

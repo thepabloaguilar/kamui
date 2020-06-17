@@ -5,9 +5,9 @@ from flask_restful import Resource
 from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
-from kamui.core.usecase.failure import FailureDetails
-from kamui.core.usecase.stream import GetStreamDetailsUseCase
-from kamui.core.usecase.stream.get_stream_details import StreamDetails
+from kamui.core.use_case.failure import FailureDetails
+from kamui.core.use_case.stream import GetStreamDetailsUseCase
+from kamui.core.use_case.stream.get_stream_details import StreamDetails
 from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 

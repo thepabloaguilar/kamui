@@ -9,7 +9,7 @@ from returns.result import Result, Success, Failure
 
 from kamui.core.entity.project import Project
 from kamui.core.entity.stream import Stream, StreamList
-from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
+from kamui.core.use_case.failure import FailureDetails, BusinessFailureDetails
 
 
 @dataclass
