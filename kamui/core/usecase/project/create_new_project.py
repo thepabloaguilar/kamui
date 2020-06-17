@@ -18,7 +18,7 @@ class CreateNewProject(ABC):
         pass
 
 
-class CreateNewProjectUsecase:
+class CreateNewProjectUseCase:
     def __init__(self, create_new_project: CreateNewProject) -> None:
         self.__create_new_project = create_new_project
 

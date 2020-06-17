@@ -10,7 +10,7 @@ from kamui.core.usecase.stream.create_new_stream import (
     SaveStream,
     CreateNewStreamCommand,
     SourceType,
-    CreateNewStreamFromStreamUsecase,
+    CreateNewStreamFromStreamUseCase,
     CreateNewStreamFromStream,
 )
 
@@ -28,12 +28,12 @@ def save_stream() -> Mock:
 @pytest.fixture(scope="function")
 def create_new_stream_from_stream_usecase(
     create_new_stream_from_stream: Mock, save_stream: Mock
-) -> CreateNewStreamFromStreamUsecase:
-    return CreateNewStreamFromStreamUsecase(create_new_stream_from_stream, save_stream)
+) -> CreateNewStreamFromStreamUseCase:
+    return CreateNewStreamFromStreamUseCase(create_new_stream_from_stream, save_stream)
 
 
 def test_should_return_stream_entity_correctly(
-    create_new_stream_from_stream_usecase: CreateNewStreamFromStreamUsecase,
+    create_new_stream_from_stream_usecase: CreateNewStreamFromStreamUseCase,
     create_new_stream_from_stream: Mock,
     save_stream: Mock,
 ) -> None:
@@ -68,7 +68,7 @@ def test_should_return_stream_entity_correctly(
 
 
 def test_should_return_failure_when_create_new_stream_from_stream_fails(
-    create_new_stream_from_stream_usecase: CreateNewStreamFromStreamUsecase,
+    create_new_stream_from_stream_usecase: CreateNewStreamFromStreamUseCase,
     create_new_stream_from_stream: Mock,
 ) -> None:
     command = CreateNewStreamCommand(
@@ -91,7 +91,7 @@ def test_should_return_failure_when_create_new_stream_from_stream_fails(
 
 
 def test_should_return_failure_when_save_stream_fails(
-    create_new_stream_from_stream_usecase: CreateNewStreamFromStreamUsecase,
+    create_new_stream_from_stream_usecase: CreateNewStreamFromStreamUseCase,
     create_new_stream_from_stream: Mock,
     save_stream: Mock,
 ) -> None:

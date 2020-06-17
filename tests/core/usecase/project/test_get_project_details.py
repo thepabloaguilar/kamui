@@ -14,7 +14,7 @@ from kamui.core.usecase.failure import BusinessFailureDetails
 from kamui.core.usecase.project.get_project_details import (
     FindProjectByProjectId,
     FindStreamsByProject,
-    GetProjectDetailsUsecase,
+    GetProjectDetailsUseCase,
 )
 
 
@@ -31,12 +31,12 @@ def find_streams_by_project() -> Mock:
 @pytest.fixture(scope="function")
 def get_project_details_usecase(
     find_project_by_project_id: Mock, find_streams_by_project: Mock
-) -> GetProjectDetailsUsecase:
-    return GetProjectDetailsUsecase(find_project_by_project_id, find_streams_by_project)
+) -> GetProjectDetailsUseCase:
+    return GetProjectDetailsUseCase(find_project_by_project_id, find_streams_by_project)
 
 
 def test_should_return_failure_not_found_when_project_was_not_found(
-    get_project_details_usecase: GetProjectDetailsUsecase,
+    get_project_details_usecase: GetProjectDetailsUseCase,
     find_project_by_project_id: Mock,
 ) -> None:
     project_id = uuid4()
@@ -52,7 +52,7 @@ def test_should_return_failure_not_found_when_project_was_not_found(
 
 
 def test_should_return_projects_details_without_streams(
-    get_project_details_usecase: GetProjectDetailsUsecase,
+    get_project_details_usecase: GetProjectDetailsUseCase,
     find_project_by_project_id: Mock,
     find_streams_by_project: Mock,
 ) -> None:
@@ -78,7 +78,7 @@ def test_should_return_projects_details_without_streams(
 
 
 def test_should_return_projects_details_one_streams(
-    get_project_details_usecase: GetProjectDetailsUsecase,
+    get_project_details_usecase: GetProjectDetailsUseCase,
     find_project_by_project_id: Mock,
     find_streams_by_project: Mock,
 ) -> None:
@@ -113,7 +113,7 @@ def test_should_return_projects_details_one_streams(
 
 
 def test_should_return_projects_details_two_streams(
-    get_project_details_usecase: GetProjectDetailsUsecase,
+    get_project_details_usecase: GetProjectDetailsUseCase,
     find_project_by_project_id: Mock,
     find_streams_by_project: Mock,
 ) -> None:

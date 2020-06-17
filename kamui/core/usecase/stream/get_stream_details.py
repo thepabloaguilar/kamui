@@ -13,7 +13,7 @@ from returns.result import Result, Success
 from kamui.core.entity.project import Project
 from kamui.core.entity.stream import Stream, KSQLStreamDetailed
 from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.stream import GetStreamByNameUsecase
+from kamui.core.usecase.stream import GetStreamByNameUseCase
 
 
 @dataclass
@@ -45,12 +45,12 @@ class FindProjectsByStream(ABC):
         pass
 
 
-class GetStreamDetailsUsecase:
+class GetStreamDetailsUseCase:
     def __init__(
         self,
         find_stream_by_stream_id: FindStreamByStreamId,
         find_projects_by_stream: FindProjectsByStream,
-        get_stream_by_name: GetStreamByNameUsecase,
+        get_stream_by_name: GetStreamByNameUseCase,
     ):
         self.__find_stream_by_stream_id = find_stream_by_stream_id
         self.__find_projects_by_stream = find_projects_by_stream

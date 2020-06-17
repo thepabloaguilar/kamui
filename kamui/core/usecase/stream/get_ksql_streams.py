@@ -13,7 +13,7 @@ class GetKSQLStreams(ABC):
         pass
 
 
-class GetKSQLStreamsUsecase:
+class GetKSQLStreamsUseCase:
     def __init__(self, get_ksql_streams: GetKSQLStreams) -> None:
         self.__get_ksql_streams = get_ksql_streams
 

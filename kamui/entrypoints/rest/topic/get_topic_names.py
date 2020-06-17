@@ -6,7 +6,7 @@ from returns.result import Result
 from kamui.configuration.dependency_injection import di_container
 from kamui.core.entity.topic import TopicNames
 from kamui.core.usecase.failure import BusinessFailureDetails
-from kamui.core.usecase.topic import GetAvailableTopicNamesUsecase
+from kamui.core.usecase.topic import GetAvailableTopicNamesUseCase
 from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 
@@ -15,8 +15,8 @@ class GetTopicNamesResource(Resource):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.__get_available_topic_names: GetAvailableTopicNamesUsecase = (
-            di_container.resolve(GetAvailableTopicNamesUsecase)
+        self.__get_available_topic_names: GetAvailableTopicNamesUseCase = (
+            di_container.resolve(GetAvailableTopicNamesUseCase)
         )
 
     @json_response

@@ -6,7 +6,7 @@ from returns.result import Result
 from kamui.configuration.dependency_injection import di_container
 from kamui.core.entity.stream import KSQLStream
 from kamui.core.usecase.failure import BusinessFailureDetails
-from kamui.core.usecase.stream import GetKSQLStreamsUsecase
+from kamui.core.usecase.stream import GetKSQLStreamsUseCase
 from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 
@@ -15,8 +15,8 @@ class GetKSQLStreamsListResource(Resource):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.__get_ksql_streams: GetKSQLStreamsUsecase = di_container.resolve(
-            GetKSQLStreamsUsecase
+        self.__get_ksql_streams: GetKSQLStreamsUseCase = di_container.resolve(
+            GetKSQLStreamsUseCase
         )
 
     @json_response

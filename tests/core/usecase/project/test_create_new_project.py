@@ -7,7 +7,7 @@ import pytest
 from kamui.core.entity.project import Project
 from kamui.core.entity.project_status import ProjectStatus
 from kamui.core.usecase.project.create_new_project import (
-    CreateNewProjectUsecase,
+    CreateNewProjectUseCase,
     CreateNewProject,
     CreateNewProjectCommand,
 )
@@ -19,12 +19,12 @@ def create_new_project() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def create_new_project_usecase(create_new_project: Mock) -> CreateNewProjectUsecase:
-    return CreateNewProjectUsecase(create_new_project)
+def create_new_project_usecase(create_new_project: Mock) -> CreateNewProjectUseCase:
+    return CreateNewProjectUseCase(create_new_project)
 
 
 def test_create_new_project(
-    create_new_project_usecase: CreateNewProjectUsecase, create_new_project: Mock
+    create_new_project_usecase: CreateNewProjectUseCase, create_new_project: Mock
 ) -> None:
     command = CreateNewProjectCommand(title="Test Project Title")
     expected_project = Project(

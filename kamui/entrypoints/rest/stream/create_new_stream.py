@@ -9,9 +9,9 @@ from kamui.core.entity.stream import Stream
 from kamui.core.usecase.failure import BusinessFailureDetails
 from kamui.core.usecase.stream.create_new_stream import (
     CreateNewStreamCommand,
-    CreateNewStreamFromTopicUsecase,
+    CreateNewStreamFromTopicUseCase,
     SourceType,
-    CreateNewStreamFromStreamUsecase,
+    CreateNewStreamFromStreamUseCase,
 )
 from kamui.entrypoints.rest.helpers import (
     json_response,
@@ -25,11 +25,11 @@ class CreateNewStreamResource(Resource):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.__create_new_stream_from_topic: CreateNewStreamFromTopicUsecase = (
-            di_container.resolve(CreateNewStreamFromTopicUsecase)
+        self.__create_new_stream_from_topic: CreateNewStreamFromTopicUseCase = (
+            di_container.resolve(CreateNewStreamFromTopicUseCase)
         )
-        self.__create_new_stream_from_stream: CreateNewStreamFromStreamUsecase = (
-            di_container.resolve(CreateNewStreamFromStreamUsecase)
+        self.__create_new_stream_from_stream: CreateNewStreamFromStreamUseCase = (
+            di_container.resolve(CreateNewStreamFromStreamUseCase)
         )
 
     @json_response

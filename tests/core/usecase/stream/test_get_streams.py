@@ -7,7 +7,7 @@ from returns.result import Failure, Result, Success
 from kamui.core.entity.source import SourceType
 from kamui.core.entity.stream import Stream
 from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.stream.get_streams import FindStreams, GetStreamsUsecase
+from kamui.core.usecase.stream.get_streams import FindStreams, GetStreamsUseCase
 
 
 @pytest.fixture(scope="function")
@@ -16,12 +16,12 @@ def find_streams() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_streams_usecase(find_streams: Mock) -> GetStreamsUsecase:
-    return GetStreamsUsecase(find_streams)
+def get_streams_usecase(find_streams: Mock) -> GetStreamsUseCase:
+    return GetStreamsUseCase(find_streams)
 
 
 def test_should_return_streams_correctly(
-    get_streams_usecase: GetStreamsUsecase, find_streams: Mock
+    get_streams_usecase: GetStreamsUseCase, find_streams: Mock
 ) -> None:
     streams_list = [
         Stream(
@@ -48,7 +48,7 @@ def test_should_return_streams_correctly(
 
 
 def test_should_return_failure_when_find_streams_fails(
-    get_streams_usecase: GetStreamsUsecase, find_streams: Mock
+    get_streams_usecase: GetStreamsUseCase, find_streams: Mock
 ) -> None:
     failure = FailureDetails(reason="TEST_FIND_STREAMS_FAIL")
     find_streams.return_value = Failure(failure)

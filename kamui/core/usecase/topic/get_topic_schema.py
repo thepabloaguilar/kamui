@@ -21,7 +21,7 @@ class GetTopicSchemaVersions(ABC):
         pass
 
 
-class GetTopicSchemaUsecase:
+class GetTopicSchemaUseCase:
     def __init__(
         self,
         get_topic_schema: GetTopicSchema,

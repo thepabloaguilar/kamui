@@ -12,7 +12,7 @@ class GetStreamByName(ABC):
         pass
 
 
-class GetStreamByNameUsecase:
+class GetStreamByNameUseCase:
     def __init__(self, get_stream_by_name: GetStreamByName) -> None:
         self.__get_stream_by_name = get_stream_by_name
 

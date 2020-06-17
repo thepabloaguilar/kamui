@@ -6,7 +6,7 @@ from returns.result import Result
 
 from kamui.configuration.dependency_injection import di_container
 from kamui.core.usecase.failure import FailureDetails
-from kamui.core.usecase.stream import GetStreamDetailsUsecase
+from kamui.core.usecase.stream import GetStreamDetailsUseCase
 from kamui.core.usecase.stream.get_stream_details import StreamDetails
 from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
@@ -16,8 +16,8 @@ class GetStreamDetailsResource(Resource):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.__get_stream_details: GetStreamDetailsUsecase = di_container.resolve(
-            GetStreamDetailsUsecase
+        self.__get_stream_details: GetStreamDetailsUseCase = di_container.resolve(
+            GetStreamDetailsUseCase
         )
 
     @json_response

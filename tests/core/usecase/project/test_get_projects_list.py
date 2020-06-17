@@ -7,7 +7,7 @@ import pytest
 from kamui.core.entity.project import Project
 from kamui.core.entity.project_status import ProjectStatus
 from kamui.core.usecase.project.get_projects_list import (
-    GetProjectsListUsecase,
+    GetProjectsListUseCase,
     GetProjectsList,
 )
 
@@ -18,12 +18,12 @@ def get_projects_list() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_projects_list_usecase(get_projects_list: Mock) -> GetProjectsListUsecase:
-    return GetProjectsListUsecase(get_projects_list)
+def get_projects_list_usecase(get_projects_list: Mock) -> GetProjectsListUseCase:
+    return GetProjectsListUseCase(get_projects_list)
 
 
 def test_get_projects_details(
-    get_projects_list_usecase: GetProjectsListUsecase, get_projects_list: Mock
+    get_projects_list_usecase: GetProjectsListUseCase, get_projects_list: Mock
 ) -> None:
     expected_projects_list = [
         Project(

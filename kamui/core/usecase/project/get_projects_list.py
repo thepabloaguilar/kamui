@@ -13,7 +13,7 @@ class GetProjectsList(ABC):
         pass
 
 
-class GetProjectsListUsecase:
+class GetProjectsListUseCase:
     def __init__(self, get_projects_list: GetProjectsList):
         self.__get_projects_list = get_projects_list
 

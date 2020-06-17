@@ -7,7 +7,7 @@ from returns.result import Result
 from kamui.configuration.dependency_injection import di_container
 from kamui.core.entity.project import Project
 from kamui.core.usecase.failure import FailureDetails
-from kamui.core.usecase.project import CreateNewProjectUsecase
+from kamui.core.usecase.project import CreateNewProjectUseCase
 from kamui.core.usecase.project.create_new_project import CreateNewProjectCommand
 from kamui.entrypoints.rest.helpers import (
     parse_request_body,
@@ -21,8 +21,8 @@ class CreateNewProjectResource(Resource):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.__create_new_project: CreateNewProjectUsecase = di_container.resolve(
-            CreateNewProjectUsecase
+        self.__create_new_project: CreateNewProjectUseCase = di_container.resolve(
+            CreateNewProjectUseCase
         )
 
     @json_response

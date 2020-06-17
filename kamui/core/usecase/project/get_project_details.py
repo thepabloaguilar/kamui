@@ -30,7 +30,7 @@ class FindStreamsByProject(ABC):
         pass
 
 
-class GetProjectDetailsUsecase:
+class GetProjectDetailsUseCase:
     def __init__(
         self,
         find_project_by_project_id: FindProjectByProjectId,

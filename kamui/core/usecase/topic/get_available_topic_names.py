@@ -12,7 +12,7 @@ class GetTopicNames(ABC):
         pass
 
 
-class GetAvailableTopicNamesUsecase:
+class GetAvailableTopicNamesUseCase:
     def __init__(self, get_topic_names: GetTopicNames) -> None:
         self.__get_topic_names = get_topic_names
 

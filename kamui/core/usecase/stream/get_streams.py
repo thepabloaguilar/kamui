@@ -12,7 +12,7 @@ class FindStreams(ABC):
         pass
 
 
-class GetStreamsUsecase:
+class GetStreamsUseCase:
     def __init__(self, find_streams: FindStreams):
         self.__find_streams = find_streams
 

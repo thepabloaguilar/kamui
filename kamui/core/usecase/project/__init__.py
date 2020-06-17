@@ -1,3 +1,3 @@
-from .create_new_project import CreateNewProjectUsecase
-from .get_project_details import GetProjectDetailsUsecase
-from .get_projects_list import GetProjectsListUsecase
+from .create_new_project import CreateNewProjectUseCase
+from .get_project_details import GetProjectDetailsUseCase
+from .get_projects_list import GetProjectsListUseCase

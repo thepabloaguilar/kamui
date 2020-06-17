@@ -11,11 +11,11 @@ from kamui.core.entity.project_status import ProjectStatus
 from kamui.core.entity.source import SourceType
 from kamui.core.entity.stream import Stream, KSQLStreamDetailed
 from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
-from kamui.core.usecase.stream import GetStreamByNameUsecase
+from kamui.core.usecase.stream import GetStreamByNameUseCase
 from kamui.core.usecase.stream.get_stream_details import (
     FindStreamByStreamId,
     FindProjectsByStream,
-    GetStreamDetailsUsecase,
+    GetStreamDetailsUseCase,
     StreamDetails,
 )
 
@@ -32,7 +32,7 @@ def find_projects_by_stream() -> Mock:
 
 @pytest.fixture(scope="function")
 def get_stream_by_name() -> Mock:
-    return Mock(spec=GetStreamByNameUsecase)
+    return Mock(spec=GetStreamByNameUseCase)
 
 
 @pytest.fixture(scope="function")
@@ -40,14 +40,14 @@ def get_stream_details_usecase(
     find_stream_by_stream_id: Mock,
     find_projects_by_stream: Mock,
     get_stream_by_name: Mock,
-) -> GetStreamDetailsUsecase:
-    return GetStreamDetailsUsecase(
+) -> GetStreamDetailsUseCase:
+    return GetStreamDetailsUseCase(
         find_stream_by_stream_id, find_projects_by_stream, get_stream_by_name
     )
 
 
 def test_should_return_stream_details_correctly(
-    get_stream_details_usecase: GetStreamDetailsUsecase,
+    get_stream_details_usecase: GetStreamDetailsUseCase,
     find_stream_by_stream_id: Mock,
     find_projects_by_stream: Mock,
     get_stream_by_name: Mock,
@@ -103,7 +103,7 @@ def test_should_return_stream_details_correctly(
 
 
 def test_should_return_failure_when_stream_not_found(
-    get_stream_details_usecase: GetStreamDetailsUsecase, find_stream_by_stream_id: Mock
+    get_stream_details_usecase: GetStreamDetailsUseCase, find_stream_by_stream_id: Mock
 ) -> None:
     stream_id = uuid4()
     stream = Nothing
@@ -119,7 +119,7 @@ def test_should_return_failure_when_stream_not_found(
 
 
 def test_should_return_failure_when_find_stream_by_stream_id_fails(
-    get_stream_details_usecase: GetStreamDetailsUsecase, find_stream_by_stream_id: Mock
+    get_stream_details_usecase: GetStreamDetailsUseCase, find_stream_by_stream_id: Mock
 ) -> None:
     stream_id = uuid4()
     failure = FailureDetails(reason="TEST_FIND_STREAM_FAILS")
@@ -135,7 +135,7 @@ def test_should_return_failure_when_find_stream_by_stream_id_fails(
 
 
 def test_should_return_failure_when_find_projects_by_stream_fails(
-    get_stream_details_usecase: GetStreamDetailsUsecase,
+    get_stream_details_usecase: GetStreamDetailsUseCase,
     find_stream_by_stream_id: Mock,
     find_projects_by_stream: Mock,
 ) -> None:
@@ -161,7 +161,7 @@ def test_should_return_failure_when_find_projects_by_stream_fails(
 
 
 def test_should_return_failure_when_get_stream_by_name_fails(
-    get_stream_details_usecase: GetStreamDetailsUsecase,
+    get_stream_details_usecase: GetStreamDetailsUseCase,
     find_stream_by_stream_id: Mock,
     find_projects_by_stream: Mock,
     get_stream_by_name: Mock,

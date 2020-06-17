@@ -6,7 +6,7 @@ from returns.result import Result
 from kamui.configuration.dependency_injection import di_container
 from kamui.core.entity.topic_schema import TopicSchema
 from kamui.core.usecase.failure import BusinessFailureDetails
-from kamui.core.usecase.topic.get_topic_schema import GetTopicSchemaUsecase
+from kamui.core.usecase.topic.get_topic_schema import GetTopicSchemaUseCase
 from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 
@@ -15,8 +15,8 @@ class GetTopicSchemaResource(Resource):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.get_topic_schema: GetTopicSchemaUsecase = di_container.resolve(
-            GetTopicSchemaUsecase
+        self.get_topic_schema: GetTopicSchemaUseCase = di_container.resolve(
+            GetTopicSchemaUseCase
         )
 
     @json_response

@@ -68,7 +68,7 @@ class SaveStream(ABC):
         pass
 
 
-class CreateNewStreamFromTopicUsecase:
+class CreateNewStreamFromTopicUseCase:
     def __init__(
         self,
         create_stream_from_kafka_topic: CreateStreamFromKafkaTopic,
@@ -96,7 +96,7 @@ class CreateNewStreamFromTopicUsecase:
         )
 
 
-class CreateNewStreamFromStreamUsecase:
+class CreateNewStreamFromStreamUseCase:
     def __init__(
         self,
         create_new_stream_from_stream: CreateNewStreamFromStream,

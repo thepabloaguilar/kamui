@@ -12,7 +12,7 @@ from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
 from kamui.core.usecase.topic.get_topic_schema import (
     GetTopicSchema,
     GetTopicSchemaVersions,
-    GetTopicSchemaUsecase,
+    GetTopicSchemaUseCase,
 )
 
 
@@ -29,12 +29,12 @@ def get_topic_schema_versions() -> Mock:
 @pytest.fixture(scope="function")
 def get_topic_schema_usecase(
     get_topic_schema: Mock, get_topic_schema_versions: Mock
-) -> GetTopicSchemaUsecase:
-    return GetTopicSchemaUsecase(get_topic_schema, get_topic_schema_versions)
+) -> GetTopicSchemaUseCase:
+    return GetTopicSchemaUseCase(get_topic_schema, get_topic_schema_versions)
 
 
 def test_should_return_correctly_topic_schema(
-    get_topic_schema_usecase: GetTopicSchemaUsecase,
+    get_topic_schema_usecase: GetTopicSchemaUseCase,
     get_topic_schema_versions: Mock,
     get_topic_schema: Mock,
 ) -> None:
@@ -61,7 +61,7 @@ def test_should_return_correctly_topic_schema(
 
 
 def test_should_return_failure_when_get_topic_schema_versions_fails(
-    get_topic_schema_usecase: GetTopicSchemaUsecase, get_topic_schema_versions: Mock
+    get_topic_schema_usecase: GetTopicSchemaUseCase, get_topic_schema_versions: Mock
 ) -> None:
     topic_name = "TopicName"
     failure = Failure(FailureDetails(reason="get_topic_schema_versions"))
@@ -77,7 +77,7 @@ def test_should_return_failure_when_get_topic_schema_versions_fails(
 
 
 def test_should_return_failure_when_get_topic_schema_fails(
-    get_topic_schema_usecase: GetTopicSchemaUsecase,
+    get_topic_schema_usecase: GetTopicSchemaUseCase,
     get_topic_schema_versions: Mock,
     get_topic_schema: Mock,
 ) -> None:

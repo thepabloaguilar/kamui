@@ -6,7 +6,7 @@ from returns.result import Result
 from kamui.configuration.dependency_injection import di_container
 from kamui.core.entity.project import Project
 from kamui.core.usecase.failure import FailureDetails
-from kamui.core.usecase.project import GetProjectsListUsecase
+from kamui.core.usecase.project import GetProjectsListUseCase
 from kamui.entrypoints.rest.helpers import json_response, unwrap_result_response
 
 
@@ -15,8 +15,8 @@ class GetProjectListResource(Resource):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.__get_projects_list: GetProjectsListUsecase = di_container.resolve(
-            GetProjectsListUsecase
+        self.__get_projects_list: GetProjectsListUseCase = di_container.resolve(
+            GetProjectsListUseCase
         )
 
     @json_response

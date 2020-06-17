@@ -1,8 +1,8 @@
 from .create_new_stream import (
-    CreateNewStreamFromTopicUsecase,
-    CreateNewStreamFromStreamUsecase,
+    CreateNewStreamFromTopicUseCase,
+    CreateNewStreamFromStreamUseCase,
 )
-from .get_ksql_streams import GetKSQLStreamsUsecase
-from .get_stream_by_name import GetStreamByNameUsecase
-from .get_streams import GetStreamsUsecase
-from .get_stream_details import GetStreamDetailsUsecase
+from .get_ksql_streams import GetKSQLStreamsUseCase
+from .get_stream_by_name import GetStreamByNameUseCase
+from .get_streams import GetStreamsUseCase
+from .get_stream_details import GetStreamDetailsUseCase

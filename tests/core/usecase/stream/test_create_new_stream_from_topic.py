@@ -9,7 +9,7 @@ from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
 from kamui.core.usecase.stream.create_new_stream import (
     CreateStreamFromKafkaTopic,
     SaveStream,
-    CreateNewStreamFromTopicUsecase,
+    CreateNewStreamFromTopicUseCase,
     CreateNewStreamCommand,
     SourceType,
 )
@@ -28,14 +28,14 @@ def save_stream() -> Mock:
 @pytest.fixture(scope="function")
 def create_new_stream_from_topic_usecase(
     create_new_stream_from_kafka_topic: Mock, save_stream: Mock
-) -> CreateNewStreamFromTopicUsecase:
-    return CreateNewStreamFromTopicUsecase(
+) -> CreateNewStreamFromTopicUseCase:
+    return CreateNewStreamFromTopicUseCase(
         create_new_stream_from_kafka_topic, save_stream
     )
 
 
 def test_should_return_stream_entity_correctly(
-    create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUsecase,
+    create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUseCase,
     create_new_stream_from_kafka_topic: Mock,
     save_stream: Mock,
 ) -> None:
@@ -69,7 +69,7 @@ def test_should_return_stream_entity_correctly(
 
 
 def test_should_return_failure_when_create_stream_from_kafka_topic_fails(
-    create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUsecase,
+    create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUseCase,
     create_new_stream_from_kafka_topic: Mock,
 ) -> None:
     command = CreateNewStreamCommand(
@@ -92,7 +92,7 @@ def test_should_return_failure_when_create_stream_from_kafka_topic_fails(
 
 
 def test_should_return_failure_when_save_stream_fails(
-    create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUsecase,
+    create_new_stream_from_topic_usecase: CreateNewStreamFromTopicUseCase,
     create_new_stream_from_kafka_topic: Mock,
     save_stream: Mock,
 ) -> None:

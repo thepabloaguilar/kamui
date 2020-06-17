@@ -7,7 +7,7 @@ from kamui.core.entity.stream import KSQLStreamDetailed
 from kamui.core.usecase.failure import FailureDetails, BusinessFailureDetails
 from kamui.core.usecase.stream.get_stream_by_name import (
     GetStreamByName,
-    GetStreamByNameUsecase,
+    GetStreamByNameUseCase,
 )
 
 
@@ -17,12 +17,12 @@ def get_stream_by_name() -> Mock:
 
 
 @pytest.fixture(scope="function")
-def get_stream_by_name_usecase(get_stream_by_name: Mock) -> GetStreamByNameUsecase:
-    return GetStreamByNameUsecase(get_stream_by_name)
+def get_stream_by_name_usecase(get_stream_by_name: Mock) -> GetStreamByNameUseCase:
+    return GetStreamByNameUseCase(get_stream_by_name)
 
 
 def test_should_return_ksql_stream_detailed_correctly(
-    get_stream_by_name_usecase: GetStreamByNameUsecase, get_stream_by_name: Mock
+    get_stream_by_name_usecase: GetStreamByNameUseCase, get_stream_by_name: Mock
 ) -> None:
     ksql_stream_detailed = KSQLStreamDetailed(
         name="SUCCESS_TEST_STREAM",
@@ -43,7 +43,7 @@ def test_should_return_ksql_stream_detailed_correctly(
 
 
 def test_should_return_failure_when_an_error_occurred_while_getting_stream_names(
-    get_stream_by_name_usecase: GetStreamByNameUsecase, get_stream_by_name: Mock
+    get_stream_by_name_usecase: GetStreamByNameUseCase, get_stream_by_name: Mock
 ) -> None:
     failure = Failure(FailureDetails(reason="FAILURE_TEST"))
     get_stream_by_name.return_value = failure
