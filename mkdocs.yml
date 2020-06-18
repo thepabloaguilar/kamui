@@ -1,0 +1,49 @@
+# Project Information
+site_name: Kamui
+site_url: https://thepabloaguilar.github.io/kamui/
+site_author: Pablo Aguilar
+site_description: Tool to make easy streams creation on KSQL
+
+# Repository
+repo_name: thepabloaguilar/kamui
+repo_url: https://github.com/thepabloaguilar/kamui
+edit_uri: ""
+
+# Copyright
+copyright: Copyright &copy; 2020 Pablo Aguilar
+
+# Configuration
+theme:
+  name: material
+  features:
+    - tabs
+  palette:
+    primary: white
+    accent: deep purple
+  font:
+    text: Roboto
+    code: Roboto Mono
+  logo: images/kamui-favicon.png
+  favicon: images/kamui-favicon.png
+
+# Plugins
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  - git-revision-date
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.details
+
+# Extras
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/thepabloaguilar/
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/pablohaguilar/
