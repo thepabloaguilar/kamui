@@ -47,3 +47,10 @@ extra:
       link: https://github.com/thepabloaguilar/
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/pablohaguilar/
+
+nav:
+  - Home:
+      - Introduction: index.md
+  - Projects:
+      - Projects: projects.md
+      - Project Details: project_details.md
