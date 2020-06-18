@@ -1,0 +1,38 @@
+name: docs
+
+on:
+  push:
+    branchs:
+      - master
+
+jobs:
+  build:
+    name: Deploy documentation
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install Poetry
+        run: |
+          curl -sSL "https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py" | python
+      - name: Install dependencies
+        run: |
+          source "$HOME/.poetry/env"
+
+          poetry config virtualenvs.in-project true
+          poetry install
+      - name: Build docs
+        run: |
+          source "$HOME/.poetry/env"
+
+          poetry run mkdocs build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          full_commit_message: ${{ github.event.head_commit.message }}
