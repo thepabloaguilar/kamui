@@ -79,7 +79,7 @@ function ProjectDetails(props) {
                         <Grid.Col width={6}>
                           <Header.H6>Created At</Header.H6>
                           <p>{
-                            new Date(projectDetails.project.created_at * 1000)
+                            new Date(projectDetails.project.created_at)
                               .toLocaleString("en-US")
                               .replace(',', '')
                           }</p>
