@@ -7,6 +7,9 @@
     <a href="https://github.com/thepabloaguilar/kamui/actions?query=workflow%3Atest">
         <img alt="test" src="https://github.com/thepabloaguilar/kamui/workflows/test/badge.svg?branch=master">
     </a>
+    <a href="https://thepabloaguilar.github.io/kamui/">
+        <img alt="docs" src="https://github.com/thepabloaguilar/kamui/workflows/docs/badge.svg?branch=master">
+    </a>
     <a href="LICENSE">
         <img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg">
     </a>
