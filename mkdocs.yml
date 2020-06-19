@@ -54,3 +54,5 @@ nav:
   - Projects:
       - Projects: projects.md
       - Project Details: project_details.md
+  - Streams:
+      - Streams: streams.md
