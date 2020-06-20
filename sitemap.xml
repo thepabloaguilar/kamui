@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://thepabloaguilar.github.io/kamui/</loc>
-     <lastmod>2020-06-19</lastmod>
+     <lastmod>2020-06-20</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://thepabloaguilar.github.io/kamui/projects/</loc>
-     <lastmod>2020-06-19</lastmod>
+     <lastmod>2020-06-20</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://thepabloaguilar.github.io/kamui/project_details/</loc>
-     <lastmod>2020-06-19</lastmod>
+     <lastmod>2020-06-20</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://thepabloaguilar.github.io/kamui/streams/</loc>
-     <lastmod>2020-06-19</lastmod>
+     <lastmod>2020-06-20</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://thepabloaguilar.github.io/kamui/create_stream_from_topic/</loc>
+     <lastmod>2020-06-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
