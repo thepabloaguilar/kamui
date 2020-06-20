@@ -56,3 +56,4 @@ nav:
       - Project Details: project_details.md
   - Streams:
       - Streams: streams.md
+      - Create stream from Topic: create_stream_from_topic.md
