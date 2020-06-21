@@ -61,7 +61,7 @@ class SiteWrapper extends React.Component {
               <Grid.Col auto={true}>
                 <List className="list-inline list-inline-dots mb-0">
                   <List.Item className="list-inline-item">
-                    <a href="https://github.com/thepabloaguilar/kamui/">Documentation</a>
+                    <a href="https://thepabloaguilar.github.io/kamui/">Documentation</a>
                   </List.Item>
                 </List>
               </Grid.Col>
