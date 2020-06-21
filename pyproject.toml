@@ -7,6 +7,7 @@ license = "Apache-2.0"
 readme = "README.md"
 homepage = "https://github.com/thepabloaguilar/kamui"
 repository = "https://github.com/thepabloaguilar/kamui"
+documentation = "https://thepabloaguilar.github.io/kamui/"
 keywords = [
     "ksql",
     "kafka",
