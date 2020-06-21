@@ -1,6 +1,6 @@
 # Project Details
 
-In the Project Details screen we can see some useful information and create new streams.
+In the Project Details page we can see some useful information and create new streams.
 
 [![ProjectDetails](images/projects/project_details.png)](images/projects/project_details.png)
 
