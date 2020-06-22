@@ -5,7 +5,7 @@
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/user-event": "^12.0.6",
     "axios": "^0.19.2",
     "dagre-d3-react": "^0.2.4",
     "dotenv": "^8.2.0",
