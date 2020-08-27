@@ -455,7 +455,7 @@ description = "A Material Design theme for MkDocs"
 name = "mkdocs-material"
 optional = false
 python-versions = "*"
-version = "5.3.2"
+version = "5.5.9"
 
 [package.dependencies]
 Pygments = ">=2.4"
@@ -869,7 +869,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "69d82436e57f682ff0ee920f5655974e29505b69edacf4da73280c797eb6b41c"
+content-hash = "219d1c42e942ac7b68232016e5fa667808983d98ffefe177c859cd3a616d5c99"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1086,8 +1086,8 @@ mkdocs-git-revision-date-plugin = [
     {file = "mkdocs_git_revision_date_plugin-0.3-py3-none-any.whl", hash = "sha256:331ace946115d03bff8d69f91a13e5c5e620425d54555d3a622c9591747e03aa"},
 ]
 mkdocs-material = [
-    {file = "mkdocs-material-5.3.2.tar.gz", hash = "sha256:a7510485d59b745de18bb75b57c3e2a285dbb334961dcb22c9934b0c937e8849"},
-    {file = "mkdocs_material-5.3.2-py2.py3-none-any.whl", hash = "sha256:cecf3ef4f2ec6f421b3e8833bd541347c965f595cf924dd15a5f2ddeb9b451d7"},
+    {file = "mkdocs-material-5.5.9.tar.gz", hash = "sha256:37d60947993b939318945c170c7b3a153646976badf57648fd70befc3b54c830"},
+    {file = "mkdocs_material-5.5.9-py2.py3-none-any.whl", hash = "sha256:c8cb3c8c44bf10ed7ac1eb568d93a4346efe03fee2994b6a80e96559421cec49"},
 ]
 mkdocs-material-extensions = [
     {file = "mkdocs-material-extensions-1.0.tar.gz", hash = "sha256:17d7491e189af75700310b7ec33c6c48a22060b8b445001deca040cb60471cde"},
