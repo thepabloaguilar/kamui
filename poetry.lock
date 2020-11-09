@@ -701,11 +701,11 @@ python-versions = "*"
 
 [[package]]
 name = "returns"
-version = "0.14.0"
+version = "0.15.0"
 description = "Make your functions return something meaningful, typed, and safe!"
 category = "main"
 optional = false
-python-versions = ">=3.6,<4.0"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 typing-extensions = ">=3.7,<4.0"
@@ -835,7 +835,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "ac1a6f3477521005823236531e3628d1c1f3593522642959dab9c144a1cda8ee"
+content-hash = "ac090423c8f4ddabf91ee09c66a0584b6df4d96d461c633743e416c6957cbf68"
 
 [metadata.files]
 aniso8601 = [
@@ -1149,6 +1149,8 @@ psycopg2-binary = [
     {file = "psycopg2_binary-2.8.6-cp39-cp39-macosx_10_9_x86_64.macosx_10_9_intel.macosx_10_10_intel.macosx_10_10_x86_64.whl", hash = "sha256:89705f45ce07b2dfa806ee84439ec67c5d9a0ef20154e0e475e2b2ed392a5b83"},
     {file = "psycopg2_binary-2.8.6-cp39-cp39-manylinux1_i686.whl", hash = "sha256:42ec1035841b389e8cc3692277a0bd81cdfe0b65d575a2c8862cec7a80e62e52"},
     {file = "psycopg2_binary-2.8.6-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:7312e931b90fe14f925729cde58022f5d034241918a5c4f9797cac62f6b3a9dd"},
+    {file = "psycopg2_binary-2.8.6-cp39-cp39-win32.whl", hash = "sha256:6422f2ff0919fd720195f64ffd8f924c1395d30f9a495f31e2392c2efafb5056"},
+    {file = "psycopg2_binary-2.8.6-cp39-cp39-win_amd64.whl", hash = "sha256:15978a1fbd225583dd8cdaf37e67ccc278b5abecb4caf6b2d6b8e2b948e953f6"},
 ]
 punq = [
     {file = "punq-0.4.1.tar.gz", hash = "sha256:570494d52215611334d0d604853ac3ddfe1b62fccb4ad95ea5158618d1a90914"},
@@ -1245,8 +1247,8 @@ regex = [
     {file = "regex-2020.4.4.tar.gz", hash = "sha256:295badf61a51add2d428a46b8580309c520d8b26e769868b922750cf3ce67142"},
 ]
 returns = [
-    {file = "returns-0.14.0-py3-none-any.whl", hash = "sha256:6b529544ec64dffce72dd183165ed76acfd41bb1a17eb08f2fc0df85c74c9e89"},
-    {file = "returns-0.14.0.tar.gz", hash = "sha256:42e490d7e35ce6ba939bcfedaf1173b4b8cec286bdd1c3792043368f08cd0125"},
+    {file = "returns-0.15.0-py3-none-any.whl", hash = "sha256:5c96ca1c3ec12051ea159c1115470520d83ad0413c461b98f94b0f8f88b57ad6"},
+    {file = "returns-0.15.0.tar.gz", hash = "sha256:32f0595da0a1e2401520204eee64cae937fedaf95c516e892287e0c9275d3f6b"},
 ]
 rfc3986 = [
     {file = "rfc3986-1.4.0-py2.py3-none-any.whl", hash = "sha256:af9147e9aceda37c91a05f4deb128d4b4b49d6b199775fd2d2927768abdc8f50"},
