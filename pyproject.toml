@@ -41,7 +41,7 @@ httpx = "^0.13.3"
 orjson = "^3.4.1"
 flask-cors = "^3.0.9"
 returns = "^0.14.0"
-pydantic = "^1.6.1"
+pydantic = "^1.7.2"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
